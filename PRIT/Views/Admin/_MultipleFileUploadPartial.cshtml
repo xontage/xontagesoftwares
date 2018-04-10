@@ -1,0 +1,105 @@
+﻿
+@model IEnumerable<PRIT.Entity.tbl_FileUpload>
+@{
+    Layout = null;
+}
+
+<table style="width:100%" id="exampleFileUpload" class="display" cellspacing="0">
+    <thead>
+        <tr>
+            <th>File</th>
+            <th>FileName</th>
+            <th>Title</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td><img src="~/UploadedFiles/@item.FileName" width="50" height="50" /></td>
+                <td><strong>@item.FileName</strong></td>
+                <td>@item.Title</td>
+
+                <td>
+                    <button type="button" class="delete btn btn-danger" data-fileid=@item.FileID>Delete</button>
+                    @*<button type="button" class="download btn btn-success" style="margin-left:10px" data-fileid=@item.FileID>Download</button>*@
+                    @Html.ActionLink("Download", "Download", new { controller = "Admin", id = item.FileID }, new { @class = " downloadC btn btn-success" })
+
+
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $('#exampleFileUpload').DataTable({
+            "pagingType": "full_numbers"
+        });
+
+
+        //$(".delete").on("click", function () {
+        //    var tr = $(this).closest('tr');
+        //    tr.remove();
+        //});
+       
+
+
+    });
+
+
+
+    $('.delete').on('click', function () {
+        var id = $(this).data("fileid");
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover record!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel please!",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }, function (isConfirm) {
+            if (isConfirm) {
+
+                $.ajax({
+                    type: "POST",
+                    url: "../Admin/DeleteUploadedFile/" + id,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "html",
+                    success: function (result) {
+                        
+                        swal('Deleted!', 'Your imaginary file has been deleted.', 'success');
+                        $('#multiFileData').html(result);
+                    },
+                    error: function (xhr, status, error) {
+                        sweetAlert("Oops...", "Something went wrong!", "error");
+
+                    }
+                });
+
+            } else {
+                swal("Cancelled", "Your imaginary file is safe :)", "error");
+            }
+        });
+    });
+
+
+   
+
+
+
+
+
+</script>

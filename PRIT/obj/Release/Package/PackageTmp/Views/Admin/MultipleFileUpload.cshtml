@@ -1,0 +1,261 @@
+﻿@model IEnumerable<PRIT.Entity.tbl_FileUpload>
+@{
+    ViewBag.Title = "Multiple File Upload";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<head>
+  
+    <style>
+        .downloadC {
+            margin-left: 10px
+        }
+    </style>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <link href="~/css/fileinput.css" rel="stylesheet" />
+    <script src="~/js/fileinput.js"></script>
+</head>
+
+<div class="container">
+
+    <button id="fileUploadModel" style="margin-left:96px; margin-top: 35px;" type="button" class="btn btn-info btn-lg" data-toggle="modal" @*data-target="#myModal"*@>Add File/Files</button>
+
+    @*bind  popup to this div*@
+    <div id="multipleFileUploadPopUp">
+
+        <div class="modal fade" id="myFileUploadModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">"Add File/Files</h4>
+                    </div>
+                    <div class="modal-body">
+                                                                             
+                                <div class="row main">
+                                    <div class="main-login main-center">
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">
+                                                Attachment(s)
+                                                (Attach multiple files.)
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <span class="btn btn-default btn-file">
+                                                    <input id="input-2" name="postedFiles" type="file" class="file"  multiple data-show-upload="true" data-show-caption="true">
+                                                </span>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>                           
+                       
+                    </div>
+                    @*<div class="modal-footer footer-bottom">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>*@
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <br /><br />
+    <div id="multiFileData">
+        @{ Html.RenderPartial("_MultipleFileUploadPartial", Model);}
+    </div>
+
+
+
+</div>
+
+
+
+
+
+<script>
+    
+    $(document).ready(function () {
+
+        $('#fileUploadModel').click(function () {
+            debugger;
+            $('#myFileUploadModal').modal('show');
+
+            //$.ajax({
+            //    type: "GET",
+            //    url: '../Admin/AddEditCollege?CollegeId=0',
+            //    success: function (status) {
+            //        if (status != null) {
+            //            debugger;
+            //            $('#collegeRegistationPopUp').html(status);
+            //            $('#myCollgeModal').modal('show');
+            //            //$('#resourceCategoryModal').html(status);
+            //            //$('#resourceCategoryModal').modal('show');
+            //            //$.validator.unobtrusive.parse($("#resourceCategoryModal"));
+            //            //$('#resourceCategoryModal').on('shown.bs.modal', function () {
+            //            //    setFields();
+            //            //});
+
+            //        }
+            //    },
+            //    error: function (err, status) {
+            //        sweetAlert("Oops...", data.message, "error");
+            //        //showStatusMessage('Something is wrong. Please contact Administrator', 'error');
+            //    }
+            //});
+        });
+
+        $(document).on('click', '.fileinput-upload', function () {
+            debugger;
+            // Checking whether FormData is available in browser  
+            if (window.FormData !== undefined) {
+
+                var fileUpload = $("#input-2").get(0);
+                var files = fileUpload.files;
+
+                // Create FormData object  
+                var fileData = new FormData();
+
+                // Looping over all files and add it to FormData object  
+                for (var i = 0; i < files.length; i++) {
+                    fileData.append(files[i].name, files[i]);
+                }
+
+                // Adding one more key to FormData object  
+                //fileData.append('username', 'Manas');
+
+                $.ajax({
+                    url: "../Admin/UploadFiles",
+                    type: "POST",
+                    contentType: false, // Not to set any content header  
+                    processData: false, // Not to process data  
+                    data: fileData,
+                    success: function (Data) {                        
+                        swal('Uploaded!', Data.message, 'success')                      
+                        $('#myFileUploadModal').modal('hide');                       
+                        $('#multiFileData').html(Data.result);
+                        $(".fileinput-remove-button").click();
+                    },
+                    error: function (err) {
+                        //alert(err.statusText);
+                        sweetAlert("Oops...", err.statusText, "error");
+                    }
+                });
+            } else {
+               // alert("FormData is not supported.");
+                sweetAlert("Oops...", "FormData is not supported.", "warning");
+            }
+
+
+
+        });
+
+      
+
+     
+    });
+
+
+   
+</script>
+
+
+
+
+@*<div class="container" style="padding-top: 20px;">
+    <div class="row fileupload-buttonbar">
+        <div class="col-lg-7">
+            <!-- The fileinput-button span is used to style the file input field as button -->
+            <span class="btn btn-success fileinput-button">
+                <i class="glyphicon glyphicon-plus"></i>
+                <span>Add files...</span>
+                <input type="file" name="files[]" multiple="">
+            </span>
+            <button type="submit" class="btn btn-primary start">
+                    <i class="glyphicon glyphicon-upload"></i>
+                    <span>Start upload</span>
+                </button>
+                <button type="reset" class="btn btn-warning cancel">
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <span>Cancel upload</span>
+                </button>
+                <button type="button" class="btn btn-danger delete">
+                    <i class="glyphicon glyphicon-trash"></i>
+                    <span>Delete</span>
+                </button>
+                <input type="checkbox" class="toggle">
+            <!-- The global file processing state -->
+            <span class="fileupload-process"></span>
+        </div>
+        <!-- The global progress state -->
+        <div class="col-lg-5 fileupload-progress fade">
+            <!-- The global progress bar -->
+            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+            </div>
+            <!-- The extended global progress state -->
+            <div class="progress-extended">&nbsp;</div>
+        </div>
+    </div>
+</div>
+<table role="presentation" class="table table-striped">
+    <tbody class="files">
+        <tr class="template-upload fade in">
+            <td>
+                <span class="preview"><canvas width="80" height="8"></canvas></span>
+            </td>
+            <td>
+                <p class="name">about-us - Copy (2).jpg</p>
+                <strong class="error text-danger"></strong>
+            </td>
+            <td>
+                <p class="size">13.22 KB</p>
+                <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
+            </td>
+            <td>
+
+                <button class="btn btn-primary start">
+                    <i class="glyphicon glyphicon-upload"></i>
+                    <span>Start</span>
+                </button>
+
+
+                <button class="btn btn-warning cancel">
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <span>Cancel</span>
+                </button>
+
+            </td>
+        </tr>
+        <tr class="template-upload fade in">
+            <td>
+                <span class="preview"><canvas width="80" height="8"></canvas></span>
+            </td>
+            <td>
+                <p class="name">about-us - Copy.jpg</p>
+                <strong class="error text-danger"></strong>
+            </td>
+            <td>
+                <p class="size">13.22 KB</p>
+                <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
+            </td>
+            <td>
+
+                <button class="btn btn-primary start">
+                    <i class="glyphicon glyphicon-upload"></i>
+                    <span>Start</span>
+                </button>
+
+
+                <button class="btn btn-warning cancel">
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <span>Cancel</span>
+                </button>
+
+            </td>
+        </tr>
+    </tbody>
+</table>*@

@@ -1,0 +1,115 @@
+﻿@model IEnumerable<PRIT.Entity.tbl_Registration>
+@{
+    ViewBag.Title = "Registration";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@*@{
+    PRIT.Entity.PRITEntities db = new PRIT.Entity.PRITEntities();
+}*@
+
+<head>
+
+    @*<link href="~/css/jquery.dataTables.min.css" rel="stylesheet" />*@
+    <link href="~/css/Registration.css" rel="stylesheet" />
+   
+    <style type="text/css">
+        .downloadC {
+            margin-left: 10px
+        }
+    </style>
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+ 
+
+
+</head>
+<br />
+<br />
+
+
+<button id="registerModel" style="margin-left:96px;" type="button" class="btn btn-info btn-lg" data-toggle="modal" @*data-target="#myModal"*@>New Registration</button>
+
+@*bind  popup to this div*@
+<div id="userRegistationPopUp"></div>
+
+    <div id="regData">
+        @{ Html.RenderPartial("_RegistrationPartial", Model); }
+    </div>
+
+
+
+
+@*<div id="progress" class="modal">
+    <div class="center">
+        <img src="~/images/loader4.gif" />
+    </div>
+</div>*@
+
+ 
+<script>
+    $(document).ready(function () {
+
+        $('#registerModel').click(function () {
+            debugger;
+            $.ajax({
+                type: "GET",
+                url: '../Admin/AddEditUser?UserId=0',
+                success: function (status) {
+                    if (status != null) {
+                        debugger;
+                        $('#userRegistationPopUp').html(status);
+                        $('#myModal').modal('show');
+                        //$('#resourceCategoryModal').html(status);
+                        //$('#resourceCategoryModal').modal('show');
+                        //$.validator.unobtrusive.parse($("#resourceCategoryModal"));
+                        //$('#resourceCategoryModal').on('shown.bs.modal', function () {
+                        //    setFields();
+                        //});
+
+                    }
+                },
+                error: function (err, status) {
+                    sweetAlert("Oops...", data.message, "error");
+                    //showStatusMessage('Something is wrong. Please contact Administrator', 'error');
+                }
+            });
+        });
+    
+        
+    });
+
+    function fnOnUserSuccess(data)
+    {      
+        $('#myModal').find("[data-dismiss=modal]").trigger({ type: "click" });
+        if (data.success == true) {
+            swal('Saved!', data.message, 'success')
+        }
+        else if (data.success == false)
+        {
+            sweetAlert("Oops...", data.message, "error");
+        }       
+        if (data.result != "" || data.result!=null)
+        {
+            $('#regData').html(data.result);
+        }
+
+
+    }
+    
+    //function OnSuccess(response) {
+    //    debugger;
+    //    $("#myModal").modal("hide");
+    //    swal("Good job!", "Data saved successfully!", "success");
+    //}
+    //function OnFailure(response) {
+    //    debugger;
+    //    sweetAlert("Oops...", "Something went wrong!", "error");
+    //    //swal("Error!", "Error in saving data!", "error")
+    //    // alert("Error occured.");
+    //}
+
+
+</script>

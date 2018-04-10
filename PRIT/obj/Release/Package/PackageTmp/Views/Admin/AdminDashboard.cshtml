@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "AdminDashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<br/>
+<br/>
+<h3>Welcome  @ViewBag.name !!</h3>
+
+@*@if (User.Identity.IsAuthenticated)
+{
+    <h1>Welcome  @(User.Identity.IsAuthenticated ? HttpContext.Current.User.Identity.Name : "Guest")</h1>
+   
+}*@

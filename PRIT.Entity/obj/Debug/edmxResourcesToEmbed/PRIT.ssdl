@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PRITModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tbl_Colleges">
+    <Key>
+      <PropertyRef Name="collegeId" />
+    </Key>
+    <Property Name="collegeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="registrationId" Type="varchar" MaxLength="50" />
+    <Property Name="collegeName" Type="varchar" MaxLength="50" />
+    <Property Name="Address" Type="varchar(max)" />
+    <Property Name="contact1" Type="bigint" />
+    <Property Name="contact2" Type="bigint" />
+    <Property Name="website" Type="varchar" MaxLength="50" />
+    <Property Name="email" Type="varchar" MaxLength="50" />
+    <Property Name="TPOName" Type="varchar" MaxLength="50" />
+    <Property Name="PrincipalName" Type="varchar" MaxLength="50" />
+    <Property Name="Description" Type="varchar(max)" />
+    <Property Name="Degree" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="tbl_Contact">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date" Type="varchar" MaxLength="50" />
+    <Property Name="InquirySpecification" Type="varchar" MaxLength="25" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="Email" Type="varchar" MaxLength="25" />
+    <Property Name="ContactNo" Type="bigint" />
+    <Property Name="InquiryText" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="tbl_Degree">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DegreeName" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PRIT.dbo.tbl_Feedback' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="tbl_Feedback">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date" Type="varchar" MaxLength="50" />
+    <Property Name="FeedbackById" Type="int" />
+    <Property Name="Reason" Type="varchar(max)" />
+    <Property Name="Description" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="tbl_FileUpload">
+    <Key>
+      <PropertyRef Name="FileID" />
+    </Key>
+    <Property Name="FileID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="varchar(max)" />
+    <Property Name="FileName" Type="varchar(max)" />
+    <Property Name="ContentType" Type="varchar" MaxLength="100" />
+    <Property Name="Contents" Type="binary" MaxLength="50" />
+    <Property Name="FileType" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="tbl_Notification">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date" Type="varchar" MaxLength="50" />
+    <Property Name="Description" Type="varchar(max)" />
+    <Property Name="Title" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="tbl_Registration">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="Password" Type="varchar" MaxLength="50" />
+    <Property Name="FullName" Type="varchar" MaxLength="50" />
+    <Property Name="UserName" Type="varchar" MaxLength="50" />
+    <Property Name="ContactNo" Type="bigint" />
+    <Property Name="Designation" Type="varchar" MaxLength="50" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="RoleId" Type="int" />
+    <Property Name="CollegeID" Type="int" />
+    <Property Name="Gender" Type="char" MaxLength="1" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+    <Property Name="ModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="tbl_UserRole">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="int" Nullable="false" />
+    <Property Name="RolName" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_tbl_Registration_tbl_Colleges">
+    <End Role="tbl_Colleges" Type="Self.tbl_Colleges" Multiplicity="0..1" />
+    <End Role="tbl_Registration" Type="Self.tbl_Registration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Colleges">
+        <PropertyRef Name="collegeId" />
+      </Principal>
+      <Dependent Role="tbl_Registration">
+        <PropertyRef Name="CollegeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_Registration_tbl_UserRole">
+    <End Role="tbl_UserRole" Type="Self.tbl_UserRole" Multiplicity="0..1" />
+    <End Role="tbl_Registration" Type="Self.tbl_Registration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_UserRole">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="tbl_Registration">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PRITModelStoreContainer">
+    <EntitySet Name="tbl_Colleges" EntityType="Self.tbl_Colleges" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Contact" EntityType="Self.tbl_Contact" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Degree" EntityType="Self.tbl_Degree" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_FileUpload" EntityType="Self.tbl_FileUpload" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Notification" EntityType="Self.tbl_Notification" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Registration" EntityType="Self.tbl_Registration" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_UserRole" EntityType="Self.tbl_UserRole" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Feedback" EntityType="Self.tbl_Feedback" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [tbl_Feedback].[Id] AS [Id], 
+    [tbl_Feedback].[Date] AS [Date], 
+    [tbl_Feedback].[FeedbackById] AS [FeedbackById], 
+    [tbl_Feedback].[Reason] AS [Reason], 
+    [tbl_Feedback].[Description] AS [Description]
+    FROM [dbo].[tbl_Feedback] AS [tbl_Feedback]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_tbl_Registration_tbl_Colleges" Association="Self.FK_tbl_Registration_tbl_Colleges">
+      <End Role="tbl_Colleges" EntitySet="tbl_Colleges" />
+      <End Role="tbl_Registration" EntitySet="tbl_Registration" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_Registration_tbl_UserRole" Association="Self.FK_tbl_Registration_tbl_UserRole">
+      <End Role="tbl_UserRole" EntitySet="tbl_UserRole" />
+      <End Role="tbl_Registration" EntitySet="tbl_Registration" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

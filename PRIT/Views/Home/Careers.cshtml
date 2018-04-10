@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewBag.Title = "Careers";
+}
+
+<script>
+    $(document).ready(function () {
+        if ('@ViewBag.Message' == 'Sent') {
+            swal('Mail Sent!', 'Your Job Application sent successfully', 'success');
+        }
+    });
+</script>
+
+<section id="section-page-header" class="no-space">
+    <p class="page-header"><img src="~/images/carrersNew.png" /></p>
+</section>
+<section id="section-page-content" class="no-space">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="" id="">
+                    <div class="">
+                        <div class="item">
+                            <div class="row">
+                                <div class="col-md-8 wow slideInLeft">
+                                    <div class="about-details">
+                                        <h3>Join us</h3>
+                                        <div>
+                                            <p><b>Xontage Software Solutions</b> offers an opportunity to realize your personal and professional goals. Join our team and watch your career graph match your aspirations. We are looking for people with talent, interest and the drive to excel – in whichever field they choose. We assure a motivating work environment where teamwork is encouraged and individual performance is recognized. Whether you are a fresher or an experienced professional,<b> Xontage Software Solutions</b>is an ideal platform to grow in your chosen field.</p><p><strong>If you are interested in any of the following positions, send us your CV now. Mail us on</strong>&nbsp;<strong><a href="mailto:hr@xontagesoftwares.com"><span style="color: #0066CC;"><u>hr@xontagesoftwares.com</u></span></a></strong></p><p>- Current Openings.</p><p>- Jr. Software Engineer.</p><p>- Jr. Software Developer.</p><p>- Sr. Software Developer.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                @using (@Html.BeginForm("Careers", "Home", FormMethod.Post, new { @id = "form1", @enctype = "multipart/form-data" }))
+                                {
+                                    <div class="col-md-4 wow sideRight career-form">
+                                        <div class="" id="section-career">
+                                            <div class="">
+                                                <div class="">
+                                                    <h3>Upload Your CV</h3>
+                                                    <p>Fill the form below.</p>
+                                                    <form class="cvform" name="cvform" id="cvform" action="" method="POST" enctype="multipart/form-data" novalidate="novalidate">
+                                                        <div class="form-group">
+                                                            <div class="" data-title="Enter your name">
+                                                                <input type="text" class="form-control" name="Subject" id="Subject" placeholder="Subject" maxlength="40">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <div class="tooltip-me" data-title="Enter message">
+                                                                <textarea class="form-control" name="Body" id="Body" placeholder="Message" rows="5"></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="tooltip-me" data-title="Select file*">
+                                                                <input type="file" name="files" class="form-control" style="height: auto;" required="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input type="submit" class="btn btn-primary black" name="submit" value="Submit" id="booksubmit">
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <!-- row end -->
+                                            </div>
+                                            <!-- container end -->
+                                        </div>
+                                    </div>
+                                }
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

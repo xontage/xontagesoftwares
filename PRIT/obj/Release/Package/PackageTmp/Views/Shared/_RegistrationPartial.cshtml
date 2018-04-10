@@ -1,0 +1,136 @@
+﻿@model IEnumerable<PRIT.Entity.tbl_Registration>
+    @{ 
+        Layout = null;
+    }
+
+<div class="container">
+    <br />
+    <br />
+
+    <table style="width:100%" id="example" class="display" cellspacing="0">
+        <thead>
+            <tr>
+                <th>RegId</th>
+                <th>Full Name</th>
+                <th>User Name</th>
+                <th>Contact No</th>
+                <th>Designation</th>
+                <th>College Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id </td>
+                    <td>@item.FullName</td>
+                    <td><strong>@item.UserName</strong></td>
+                    <td>@item.ContactNo</td>
+                    <td>@item.Designation</td>
+                    <td>@item.CollegeName</td>
+                    <td>
+                        <input type="button" value="Delete" class="btn btn-danger btnUserDelete" data-regid=@item.Id />
+                        @*@Ajax.ActionLink("Delete", "DeleteRegisteredUser", new { Id = item.Id }, new AjaxOptions
+                            { UpdateTargetId = "regData", HttpMethod = "POST",OnBegin="OnAjaxBegin", OnSuccess="swal('Deleted!', 'Your imaginary file has been deleted.', 'success')" },
+                            new { Class = "btn btn-danger btnDelete" })*@
+
+                        @*@Ajax.ActionLink("Delete", "DeleteRegisteredUser", new { Id = item.Id }, new AjaxOptions
+                            { UpdateTargetId = "regData", HttpMethod = "POST" },
+                            new { Class = "btn btn-danger btnDelete" })*@
+
+                        @*<button type="button" class="deleteRegUser btn btn-danger" onclick="CallDeleteModal(@item.Id)" data-regid=@item.Id>Delete</button>*@
+                        @*<button type="button" class="download btn-success" style="margin-left:10px">Download</button>*@
+                        @*Html.ActionLink("Update", "UpdateRegUser", new { controller = "Admin", id = item.Id }, new { @class = " downloadC btn btn-success" })-->*@
+                        <input type="button" value="Update" class="btnUpdateuser btn btn-success" data-regid=@item.Id />
+
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+
+
+
+<script type="text/javascript">
+   
+    $(document).ready(function () {
+      
+        $('#example').DataTable({
+            "pagingType": "full_numbers"
+        });     
+    });
+
+
+
+    $('.btnUserDelete').on('click', function () {
+        var id = $(this).data("regid");
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover record!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel please!",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }, function (isConfirm) {
+            if (isConfirm) {
+
+                $.ajax({
+                    type: "POST",
+                    url: "../Admin/DeleteRegisteredUser/" + id,
+                    //contentType: "application/json; charset=utf-8",
+                    //contentType: "html",
+                    //dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "html",
+                    success: function (result) {
+                        $('#regData').html(result);
+                        swal('Deleted!', 'Your imaginary file has been deleted.', 'success')
+                    },
+                    error: function (xhr, status, error) {
+                        sweetAlert("Oops...", "Something went wrong!", "error");
+                       
+                    }
+                });
+
+            } else {
+                swal("Cancelled", "Your imaginary file is safe :)", "error");
+            }
+        });
+    });
+
+
+    $(".btnUpdateuser").click(function () {
+        debugger
+        var id = $(this).data("regid");
+        $.ajax({
+            type: "GET",
+            url: "../Admin/AddEditUser?UserId="+id,
+            //contentType: "application/json; charset=utf-8",
+            //dataType: "json",
+            success: function (result) {
+                debugger;
+            
+                $('#userRegistationPopUp').html(result);
+                $('#myModal').modal('show');
+               
+            },
+            error: function (xhr, status, error) {
+                sweetAlert("Oops...", "Something went wrong!", "error");
+                //alert('Error in downloading File');
+            }
+        });
+    })
+
+
+
+
+
+</script>

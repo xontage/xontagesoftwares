@@ -1,0 +1,439 @@
+﻿
+@{
+    ViewBag.Title = "IEEEProjects";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    *, *:before, *:after {
+        box-sizing: border-box;
+    }
+
+    .feature-layout-title {
+        color: #555;
+        font-size: 40px;
+        font-weight: unset;
+        position: relative;
+        text-align: center;
+        /*margin-bottom: -38px;*/
+    }
+    .portfolio .feature-layout-title > span {
+        background: none repeat scroll 0 0 #fff;
+        position: relative;
+    }
+
+    .feature-layout-title > span {
+        text-align: center;
+        font-size: 28px;
+    }
+    html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+        border: 0 none;
+        /*font-family: 'Trebuchet MS';*/
+        /*font-size: 100%;*/        
+        /*margin: 0;*/
+        outline: 0 none;
+        padding: 0;
+        vertical-align: baseline;
+    }
+    .portfolio-desc {
+        font-size: 20px;
+        margin: 5px;
+        padding-bottom: 10px;
+        text-align: center;
+    }
+
+    figure.effect-sarah {
+        background: rgba(7, 171, 239, 1) none repeat scroll 0 0;
+    }
+
+    .grid figure {
+        cursor: pointer;
+        float: left;
+        margin: 3px;
+        overflow: hidden;
+        position: relative;
+        text-align: center;
+        width: 19.5%;
+        border-radius: 5px;
+        border: 1px solid #212121;
+    }
+
+    /*.fadeIn {
+        -webkit-animation-name: fadeIn;
+        animation-name: fadeIn;
+    }*/
+
+    .animated {
+        /*-webkit-animation-duration: 1s;*/
+        animation-duration: 1s;
+        /*-webkit-animation-fill-mode: both;*/
+        animation-fill-mode: both;
+    }
+
+    figure {
+        margin: 0;
+    }
+
+    article, aside, details, figcaption, figure, footer, header, main, nav, section {
+        display: block;
+    }
+
+
+        figure.effect-sarah img {
+            max-width: none;
+            /*width: -webkit-calc(100% + 20px);*/
+            width: calc(100% + 20px);
+            /*-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;*/
+            transition: opacity 0.35s, transform 0.35s;
+            /*-webkit-transform: translate3d(-10px,0,0);*/
+            transform: translate3d(-10px,0,0);
+            /*-webkit-backface-visibility: hidden;*/
+            backface-visibility: hidden;
+        }
+
+    img {
+        height: auto;
+        /*max-width: 100%;*/
+        vertical-align: middle;
+    }
+    .grid figure figcaption, .grid figure figcaption > a {
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+
+    figure.effect-sarah figcaption {
+        position: absolute;
+        text-align: left;
+        top: 0;
+        padding: 5px;
+        width: 100%;
+        color: #ffffff;
+    }
+
+    figcaption {
+        padding-top: 13px !important;
+    }
+
+
+</style>
+
+<div class="portfolio-container">
+    <h2>
+        <span class="line"> </span>
+        <div class="feature-layout-title"><span class="portfolio_section_title">Projects</span></div>
+    </h2>
+    <div class="portfolio-desc portfolio_section_description"></div>
+    <div class="grid">
+        <figure class="effect-sarah wow fadeIn animated animated" data-wow-delay="0.8s" style="visibility: visible; animation-delay: 0.8s; animation-name: fadeIn;">
+            <img src="http://www.projectsgoal.com/wp-content/uploads/2016/01/cc02-337x200.jpg" alt="Cloud Computing">
+            <figcaption>
+                <h3>Cloud Computing</h3>
+                <ul class="portfolio_tag">
+                    <li class="first-child last-child"><a href="#">Projects</a></li>
+                </ul>
+                <div class="dtl_link">
+                    <a href="#"><i class="fa fa-link"></i></a>
+                </div>
+
+            </figcaption>
+
+            <h4 style="color:#000;">Cloud Computing</h4>
+        </figure>
+
+
+        <figure class="effect-sarah wow fadeIn animated animated" data-wow-delay="0.8s" style="visibility: visible; animation-delay: 0.8s; animation-name: fadeIn;">
+            <img src="http://www.projectsgoal.com/wp-content/uploads/2016/01/data-mining-techniques-create-business-value-337x200.jpg" alt="Data Mining">
+            <figcaption>
+                <h3>Data Mining</h3>
+                <ul class="portfolio_tag">
+                    <li class="first-child last-child"><a href="#">Projects</a></li>
+                </ul>
+                <div class="dtl_link">
+                    <a href="#"><i class="fa fa-link"></i></a>
+                </div>
+
+            </figcaption>
+
+            <h4 style="color:#000;">Data Mining</h4>
+        </figure>
+
+
+        <figure class="effect-sarah wow fadeIn animated animated" data-wow-delay="0.8s" style="visibility: visible; animation-delay: 0.8s; animation-name: fadeIn;">
+            <img src="http://www.projectsgoal.com/wp-content/uploads/2016/01/alvin_part05-337x200.png" alt="Image Processing">
+            <figcaption>
+                <h3>Image Processing</h3>
+                <ul class="portfolio_tag">
+                    <li class="first-child last-child"><a href="#">Projects</a></li>
+                </ul>
+                <div class="dtl_link">
+                    <a href="#"><i class="fa fa-link"></i></a>
+                </div>
+
+            </figcaption>
+
+            <h4 style="color:#000;">Image Processing</h4>
+        </figure>
+
+
+        <figure class="effect-sarah wow fadeIn animated animated" data-wow-delay="0.8s" style="visibility: visible; animation-delay: 0.8s; animation-name: fadeIn;">
+            <img src="http://www.projectsgoal.com/wp-content/uploads/2016/01/mobile_technology-337x200.jpg" alt="Mobile Computing">
+            <figcaption>
+                <h3>Mobile Computing</h3>
+                <ul class="portfolio_tag">
+                    <li class="first-child last-child"><a href="#">Projects</a></li>
+                </ul>
+                <div class="dtl_link">
+                    <a href="#"><i class="fa fa-link"></i></a>
+                </div>
+
+            </figcaption>
+
+            <h4 style="color:#000;">Mobile Computing</h4>
+        </figure>
+
+
+
+
+        <figure class="effect-sarah wow fadeIn animated animated" data-wow-delay="0.8s" style="visibility: visible; animation-delay: 0.8s; animation-name: fadeIn;">
+            <img src="http://www.projectsgoal.com/wp-content/uploads/2016/01/5-Unusual-Job-Networking-Strategies-that-Work-337x200.jpg" alt="Networking">
+            <figcaption>
+                <h3>Networking</h3>
+                <ul class="portfolio_tag">
+                    <li class="first-child last-child"><a href="#">Projects</a></li>
+                </ul>
+                <div class="dtl_link">
+                    <a href="#"><i class="fa fa-link"></i></a>
+                </div>
+
+            </figcaption>
+
+            <h4 style="color:#000;">Networking</h4>
+        </figure>
+
+
+        <figure class="effect-sarah wow fadeIn animated animated" data-wow-delay="0.8s" style="visibility: visible; animation-delay: 0.8s; animation-name: fadeIn;">
+            <img src="http://www.projectsgoal.com/wp-content/uploads/2016/01/0004235221_10-337x200.jpg" alt="Parallel &amp; Distributed">
+            <figcaption>
+                <h3>Parallel &amp; Distributed</h3>
+                <ul class="portfolio_tag">
+                    <li class="first-child last-child"><a href="#">Projects</a></li>
+                </ul>
+                <div class="dtl_link">
+                    <a href="#"><i class="fa fa-link"></i></a>
+                </div>
+
+            </figcaption>
+
+            <h4 style="color:#000;">Parallel &amp; Distributed</h4>
+        </figure>
+
+
+        <figure class="effect-sarah wow fadeIn animated animated" data-wow-delay="0.8s" style="visibility: visible; animation-delay: 0.8s; animation-name: fadeIn;">
+            <img src="http://www.projectsgoal.com/wp-content/uploads/2016/01/3D-Desktop-Wallpaper-For-Android-337x200.jpg" alt="Android">
+            <figcaption>
+                <h3>Android</h3>
+                <ul class="portfolio_tag">
+                    <li class="first-child last-child"><a href="#">Projects</a></li>
+                </ul>
+                <div class="dtl_link">
+                    <a href="#"><i class="fa fa-link"></i></a>
+                </div>
+
+            </figcaption>
+
+            <h4 style="color:#000;">Android</h4>
+        </figure>
+
+
+        <figure class="effect-sarah wow fadeIn animated animated" data-wow-delay="0.8s" style="visibility: visible; animation-delay: 0.8s; animation-name: fadeIn;">
+            <img src="http://www.projectsgoal.com/wp-content/uploads/2016/08/ns2-337x200.jpg" alt="NS2 / NS3">
+            <figcaption>
+                <h3>NS2 / NS3</h3>
+                <ul class="portfolio_tag">
+                    <li class="first-child last-child"><a href="#">Projects</a></li>
+                </ul>
+                <div class="dtl_link">
+                    <a href="#"><i class="fa fa-link"></i></a>
+                </div>
+
+            </figcaption>
+
+            <h4 style="color:#000;">NS2 / NS3</h4>
+        </figure>
+
+
+
+
+        <figure class="effect-sarah wow fadeIn animated animated" data-wow-delay="0.8s" style="visibility: visible; animation-delay: 0.8s; animation-name: fadeIn;">
+            <img src="http://www.projectsgoal.com/wp-content/uploads/2016/08/security-337x200.jpg" alt="Secure Computing">
+            <figcaption>
+                <h3>Secure Computing</h3>
+                <ul class="portfolio_tag">
+                    <li class="first-child last-child"><a href="#">Projects</a></li>
+                </ul>
+                <div class="dtl_link">
+                    <a href="#"><i class="fa fa-link"></i></a>
+                </div>
+
+            </figcaption>
+
+            <h4 style="color:#000;">Secure Computing</h4>
+        </figure>
+
+
+
+        <figure class="effect-sarah wow fadeIn animated animated animated" data-wow-delay="0.8s" style="visibility: visible; animation-delay: 0.8s; animation-name: fadeIn;">
+            <img src="http://www.projectsgoal.com/wp-content/uploads/2016/08/hadoop-big-data1-337x200.jpg" alt="Secure Computing">
+            <figcaption>
+                <h3>Big Data Hadoop</h3>
+                <ul class="portfolio_tag">
+                    <li class="first-child last-child"><a href="#">Projects</a></li>
+                </ul>
+                <div class="dtl_link">
+                    <a href="#"><i class="fa fa-link"></i></a>
+                </div>
+            </figcaption>
+            <h4 style="color:#000;">Big Data Hadoop</h4>
+        </figure>
+
+        <figure class="effect-sarah wow fadeIn animated animated animated" data-wow-delay="0.8s" style="visibility: visible; animation-delay: 0.8s; animation-name: fadeIn;">
+            <img src="http://www.projectsgoal.com/wp-content/uploads/2016/08/5210558726_3e3f144e3a_b-337x200.jpg" alt="Matlab">
+            <figcaption>
+                <h3>Matlab</h3>
+                <ul class="portfolio_tag">
+                    <li class="first-child last-child"><a href="#">Projects</a></li>
+                </ul>
+                <div class="dtl_link">
+                    <a href="#"><i class="fa fa-link"></i></a>
+                </div>
+            </figcaption>
+            <h4 style="color:#000;">Matlab</h4>
+        </figure>
+
+        <figure class="effect-sarah wow fadeIn animated animated animated" data-wow-delay="0.8s" style="visibility: visible; animation-delay: 0.8s; animation-name: fadeIn;">
+            <img src="http://www.projectsgoal.com/wp-content/uploads/2016/09/zigbee-337x200.png" alt="Matlab">
+            <figcaption>
+                <h3>ZigBee</h3>
+                <ul class="portfolio_tag">
+                    <li class="first-child last-child"><a href="#">Projects</a></li>
+                </ul>
+                <div class="dtl_link">
+                    <a href="#"><i class="fa fa-link"></i></a>
+                </div>
+            </figcaption>
+            <h4 style="color:#000;">ZigBee</h4>
+        </figure>
+
+        <figure class="effect-sarah wow fadeIn animated animated animated" data-wow-delay="0.8s" style="visibility: visible; animation-delay: 0.8s; animation-name: fadeIn;">
+            <img src="http://www.projectsgoal.com/wp-content/uploads/2016/08/theinternetofthings-337x200.jpg" alt="Matlab">
+            <figcaption>
+                <h3>Internet Of Things</h3>
+                <ul class="portfolio_tag">
+                    <li class="first-child last-child"><a href="#">Projects</a></li>
+                </ul>
+                <div class="dtl_link">
+                    <a href="#"><i class="fa fa-link"></i></a>
+                </div>
+            </figcaption>
+            <h4 style="color:#000;">Internet Of Things</h4>
+        </figure>
+        <figure class="effect-sarah wow fadeIn animated animated animated" data-wow-delay="0.8s" style="visibility: visible; animation-delay: 0.8s; animation-name: fadeIn;">
+            <img src="http://www.projectsgoal.com/wp-content/uploads/2016/08/5g.0-337x200.jpg" alt="Matlab">
+            <figcaption>
+                <h3>5G MIMO</h3>
+                <ul class="portfolio_tag">
+                    <li class="first-child last-child"><a href="#">Projects</a></li>
+                </ul>
+                <div class="dtl_link">
+                    <a href="#"><i class="fa fa-link"></i></a>
+                </div>
+            </figcaption>
+            <h4 style="color:#000;">5G MIMO</h4>
+        </figure>
+        <figure class="effect-sarah wow fadeIn animated animated animated" data-wow-delay="0.8s" style="visibility: visible; animation-delay: 0.8s; animation-name: fadeIn;">
+            <img src="http://www.projectsgoal.com/wp-content/uploads/2016/08/large_13305554615-337x200.jpg" alt="Matlab">
+            <figcaption>
+                <h3>Other Domains</h3>
+                <ul class="portfolio_tag">
+                    <li class="first-child last-child"><a href="#">Projects</a></li>
+                </ul>
+                <div class="dtl_link">
+                    <a href="#"><i class="fa fa-link"></i></a>
+                </div>
+            </figcaption>
+            <h4 style="color:#000;">Other Domains</h4>
+        </figure>
+        <figure class="effect-sarah wow fadeIn animated animated animated" data-wow-delay="0.8s" style="visibility: visible; animation-delay: 0.8s; animation-name: fadeIn;">
+            <img src="http://www.projectsgoal.com/wp-content/uploads/2016/09/digital-forensics-337x200.jpg" alt="Information forensic">
+            <figcaption>
+                <h3>Information forensic</h3>
+                <ul class="portfolio_tag">
+                    <li class="first-child last-child"><a href="#">Projects</a></li>
+                </ul>
+                <div class="dtl_link">
+                    <a href="#"><i class="fa fa-link"></i></a>
+                </div>
+            </figcaption>
+            <h4 style="color:#000;">Information forensic</h4>
+        </figure>
+        <figure class="effect-sarah wow fadeIn animated animated animated" data-wow-delay="0.8s" style="visibility: visible; animation-delay: 0.8s; animation-name: fadeIn;">
+            <img src="http://www.projectsgoal.com/wp-content/uploads/2016/09/joinus-java-337x200.png" alt="Information forensic">
+            <figcaption>
+                <h3>Manet</h3>
+                <ul class="portfolio_tag">
+                    <li class="first-child last-child"><a href="#">Projects</a></li>
+                </ul>
+                <div class="dtl_link">
+                    <a href="#"><i class="fa fa-link"></i></a>
+                </div>
+            </figcaption>
+            <h4 style="color:#000;">Manet</h4>
+        </figure>
+        <figure class="effect-sarah wow fadeIn animated animated animated" data-wow-delay="0.8s" style="visibility: visible; animation-delay: 0.8s; animation-name: fadeIn;">
+            <img src="http://www.projectsgoal.com/wp-content/uploads/2016/09/0331.sdt-alation-337x200.jpg" alt="Information forensic">
+            <figcaption>
+                <h3>NLP</h3>
+                <ul class="portfolio_tag">
+                    <li class="first-child last-child"><a href="#">Projects</a></li>
+                </ul>
+                <div class="dtl_link">
+                    <a href="#"><i class="fa fa-link"></i></a>
+                </div>
+            </figcaption>
+            <h4 style="color:#000;">NLP</h4>
+        </figure>
+        <figure class="effect-sarah wow fadeIn animated animated animated" data-wow-delay="0.8s" style="visibility: visible; animation-delay: 0.8s; animation-name: fadeIn;">
+            <img src="http://www.projectsgoal.com/wp-content/uploads/2016/09/vanet-ppt-8-638-337x200.jpg" alt="Information forensic">
+            <figcaption>
+                <h3 style="font-size: 18px;">VANET</h3>
+                <ul class="portfolio_tag">
+                    <li class="first-child last-child"><a href="#">Projects</a></li>
+                </ul>
+                <div class="dtl_link">
+                    <a href="#"><i class="fa fa-link"></i></a>
+                </div>
+            </figcaption>
+            <h4 style="color:#000;">VANET</h4>
+        </figure>
+        <figure class="effect-sarah wow fadeIn animated animated animated" data-wow-delay="0.8s" style="visibility: visible; animation-delay: 0.8s; animation-name: fadeIn;">
+            <img src="http://www.projectsgoal.com/wp-content/uploads/2016/09/sensor_network_big-337x200.gif" alt="Information forensic">
+            <figcaption>
+                <h3 style="font-size: 18px;">WSN</h3>
+                <ul class="portfolio_tag">
+                    <li class="first-child last-child"><a href="#">Projects</a></li>
+                </ul>
+                <div class="dtl_link">
+                    <a href="#"><i class="fa fa-link"></i></a>
+                </div>
+            </figcaption>
+            <h4 style="color:#000;">WSN</h4>
+        </figure>
+
+
+
+    </div>
+
+</div>

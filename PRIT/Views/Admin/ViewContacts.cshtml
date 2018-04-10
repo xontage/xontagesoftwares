@@ -1,0 +1,156 @@
+﻿@model PRIT.Entity.tbl_Contact
+@{
+    ViewBag.Title = "ViewContacts";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<head>
+
+    <link href="~/css/jquery.dataTables.min.css" rel="stylesheet" />
+
+    <style>
+        .downloadC {
+            margin-left: 10px
+        }
+    </style>
+
+</head>
+@{
+    PRIT.Entity.PRITEntities db = new PRIT.Entity.PRITEntities();
+}
+
+<div class="container">
+    <br />
+    <br />
+    <label><b>All Inquiries(Contacts)</b></label>
+
+    <br />
+    <br />
+    <table style="width:100%" id="exampleContact" class="display" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>InquirySpecification</th>
+                <th>Name</th>
+                <th>Email </th>
+                <th>ContactNo</th>
+                <th>InquiryText</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in db.tbl_Contact)
+            {
+                <tr>
+
+                    <td>@item.Id </td>
+                    <td>@item.Date </td>
+                    <td>@item.InquirySpecification </td>
+                    <td>@item.Name </td>
+                    <td>@item.Email </td>
+                    <td>@item.ContactNo</td>
+                    <td>@item.InquiryText</td>
+
+                    <td>
+                        <button type="button" class="deleteContact btn btn-danger">Delete</button>
+
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $('#exampleContact').DataTable({
+            "pagingType": "full_numbers"
+        });
+
+
+        $('.deleteContact').on('click', function () {
+            var tr = $(this).closest('tr');
+            var col11 = tr.find("td:eq(0)").text(); // get current row 1st TD value        
+            var objData = { contactId: col11 };
+
+            swal({
+                title: "Are you sure?",
+                text: "You will not be able to recover record!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel please!",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            }, function (isConfirm) {
+                if (isConfirm) {
+
+                    $.ajax({
+                type: "POST",
+                url: "../Admin/DeleteContact",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(objData),
+                dataType: "json",
+                success: function (result, status, xhr) {
+                    debugger;                    
+                    swal('Deleted!', 'Your imaginary file has been deleted.', 'success')                   
+                    tr.remove();
+                },
+                error: function (xhr, status, error) {                                      
+                    sweetAlert("Oops...", "Something went wrong!", "error");
+                }
+            });                    
+
+                } else {
+                    swal("Cancelled", "Your imaginary file is safe :)", "error");
+                }
+            });
+        });
+
+
+
+
+        //$(".deleteContact").on("click", function () {
+        //    var tr = $(this).closest('tr');
+        //    var col11 = tr.find("td:eq(0)").text(); // get current row 1st TD value
+
+        //    debugger;
+        //    //  var fileName = $('#unameId').val(); ;
+        //    var objData = { contactId: col11 };
+
+        //    $.ajax({
+        //        type: "POST",
+        //        url: "../Admin/DeleteContact",
+        //        contentType: "application/json; charset=utf-8",
+        //        data: JSON.stringify(objData),
+        //        dataType: "json",
+        //        success: function (result, status, xhr) {
+                   
+        //            alert('deleted successfully');
+        //            tr.remove();
+        //        },
+        //        error: function (xhr, status, error) {
+        //            // $("#dataDiv").html("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+        //            alert('Error in deleting contact');
+        //        }
+        //    });
+
+        //    return false;
+        //});
+
+
+        //$(".download").on("click", function () {
+        //    debugger;
+        //    var tr = $(this).closest('tr');
+        //});
+
+
+
+
+    });
+</script>

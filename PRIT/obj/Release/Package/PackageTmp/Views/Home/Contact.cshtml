@@ -1,0 +1,268 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = null;
+}
+<style>
+
+    .main-title {
+        font-size: 25px;
+        font-family: 'Volkhov', serif;
+        font-style: italic;
+        text-transform: initial;
+        font-weight: 500;
+        color: #0066CC;
+    }
+    .titsize h3 {
+        font-family: "Roboto Condensed",sans-serif;
+        font-weight: 700;
+        margin-top: 0px;
+        margin-bottom: 10px;
+        color: #0066CC;
+    }
+    .form-control:hover, .form-control:focus {
+        border-color: #0066CC;
+    }
+
+    .form-group .form-control {
+        border: 1px solid #99CCFF;
+        padding: 7px 12px;
+    }
+
+    .form-control {
+        border-radius: 2px;
+        box-shadow: none !important;
+        height: 45px;
+    }
+
+    .btn-primary.black:hover {
+        border-color: #333;
+        background: #fff;
+        color: #2A2A2A;
+    }
+  
+    .text-center {
+        text-align: center;
+    }
+
+    h3 {
+        font-size: 21px;
+        /*letter-spacing: 2px;*/
+        line-height: 32px;
+        font-family: "Roboto Condensed",sans-serif;
+        font-weight: 700;
+        margin-top: 0px;
+        margin-bottom: 10px;
+        color: #0066CC;
+    }
+
+    .i-am-centered {
+        margin: auto;
+        max-width: 300px;
+    }
+    .special-gmap {
+        margin: 0;
+        margin-bottom: 60px;
+        margin-top:60px;
+    }
+</style>
+@*<link href="~/css/theme.css" rel="stylesheet" />*@
+<section id="section-page-header" class="no-space"><p></p><p></p></section>
+<section id="section-page-content" class="no-space">
+    <div class="container">
+        <div class="row" id="contact-section">
+            <div class="col-md-12">
+                <div class="section-heading text-center">
+                    <h2 class="main-title wow slideInLeft animated" style="visibility: visible;">How to Reach Us?</h2>
+                    <hr>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="" id="">
+                                <div class="">
+                                    <div class="item">
+                                        <div class="row">
+                                            <div class="col-md-7 wow fadeInRight">
+                                                <div class="" id="section-contact">
+                                                    <div class="contact-heading titsize row-fluid">
+                                                        <div class="col-md-12 contact-box2">
+                                                            <h3 class="text-center">Contact</h3>
+                                                        </div>
+                                                        <div class="success"></div>
+                                                        <form name="contact" id="cvform1" action="#contact-section" method="post" novalidate="novalidate">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <input type="text" name="uname" id="uname" class="form-control" placeholder="NAME*" required="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <input type="email" name="email" id="email" class="form-control" placeholder="EMAIL*" required="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <input type="text" name="mobileno"  id="mobileno" class="form-control" placeholder="CONTACT NO*" minlength="6" maxlength="12" required="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <div class="tooltip-me" data-title="Please select our specifications.">
+                                                                        <select class="form-control" name="specifications" id="specifications" required="">
+                                                                            <option value="No Select specifications" selected="">SELECT OUR SERVICES</option>                                                                            
+                                                                                <option value="SoftwareTraining" label="SoftwareTraining">Software Training</option>
+                                                                                <option value="IEEEProjects" label="IEEEProjects">IEEE Projects</option>
+                                                                               
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <textarea name="message" id="message" cols="30" rows="10" class="form-control" placeholder="MESSAGE"> </textarea>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12  text-right wow fadeInUp">
+                                                                <button class="btn btn-primary black" name="submit" type="submit" id="IdSubmit">Submit now</button>
+                                                                <!-- <input type="submit" name="submit" value="Submit" class="submit" /> -->
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                    @*<div class="contact-heading">
+
+                                                    </div>*@
+                                                    <div class="contact-des">
+                                                        <div class="text-center"><h3><br></h3><h3>India HQ </h3><table width="100%"><tbody><tr><td><p><img class="fr-fin fr-dib" alt="Image title" src="http://www.xontagesoftwares.com/images/companyLogo.jpg" width="113"></p><p><br></p></td><td><h3 style="text-align: left;">&nbsp; &nbsp;Xontage Software Solutions.</h3><p style="text-align: left;">&nbsp; &nbsp; &nbsp;Pimpri Chinchwad ,</p><p style="text-align: left;">&nbsp; &nbsp; &nbsp; Pune, INDIA.</p><p style="text-align: left;"><strong>&nbsp; &nbsp; &nbsp; www.xontagesoftwares.com</strong></p></td></tr></tbody></table><div><h4>Contact Number:</h4><p><strong>Marketing:</strong> +91 9067885167 </p></div><div><h4>Email:</h4><p><strong>For Jobs:</strong><a href="mailto:jobs@xontagesoftwares.com"> jobs@xontagesoftwares.com</a></p><p><strong>For Queries of services:</strong><a href="mailto:support@xontagesoftwares.com"> support@xontagesoftwares.com</a></p></div></div>                       
+                                                    </div>
+
+                                                </div>
+
+                                            @*<div class="col-md-5">
+                                                <div class="contact-des">
+                                                    <div id="dvMap" class="" style="width: 500px; height: 300px">
+                                                    </div>
+                                                </div>
+
+                                            </div>*@
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- row end -->
+                </div>
+                <!-- container end -->
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container special-gmap">
+        <div class="i-am-centered">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="contact-des">
+                        <div id="dvMap" class="" style="width: 500px; height: 300px">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbZk1r81rueIjBmkfffB6IlfQNkYnws3M"></script>
+<script type="text/javascript">
+    var markers = [
+        {
+
+            "title": "Chinchwad",
+            "lat": 18.626076,
+            "lng": 73.812157,
+            "description": "Chinchwad"
+        },
+        {
+            "title": "Pune",
+            "lat": 18.516726,
+            "lng": 73.856255,
+            "description": "Pune"
+        }];
+
+    window.onload = function () {
+        var mapOptions = {
+            center: new google.maps.LatLng(markers[0].lat, markers[0].lng),
+            zoom: 10,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var infoWindow = new google.maps.InfoWindow();
+        var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
+        for (i = 0; i < markers.length; i++) {
+            var data = markers[i]
+            var myLatlng = new google.maps.LatLng(data.lat, data.lng);
+            var marker = new google.maps.Marker({
+                position: myLatlng,
+                map: map,
+                title: data.title
+            });
+            (function (marker, data) {
+                google.maps.event.addListener(marker, "click", function (e) {
+                    infoWindow.setContent(data.description);
+                    infoWindow.open(map, marker);
+                });
+            })(marker, data);
+        }
+    }
+</script>
+
+<script>
+
+    $(document).ready(function () {
+        $("#IdSubmit").click(function (e) {
+            debugger;
+            var email = $('#email').val(); 
+            var name = $('#uname').val();
+            var specification = $('#specifications option:selected').text();
+            var contatcNo = $('#mobileno').val();
+            var inquiryText = $('#message').val();
+            
+            var objData = { Name: name, Email: email, InquirySpecification: specification, ContactNo: contatcNo, InquiryText: inquiryText  };
+            //
+          
+            //$.get(url, { input: name }, function (data) {
+            //    $("#rData").html(data);
+            //});
+                $.ajax({
+                    type: "POST",
+                    url: "../Home/Contact",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(objData),
+                    dataType: "json",
+                    success: function (result, status, xhr) {
+                       // $("#dataDiv").html(result);
+
+                        swal('Saved!', 'Inquiry sent successfully ', 'success')
+                        $('#email').val('');
+                        $('#uname').val('');
+                        $("#specifications")[0].selectedIndex = 0;
+                        $('#mobileno').val('');
+                        $('#message').val('');
+                    },
+                    error: function (xhr, status, error) {
+                       // $("#dataDiv").html("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+                        sweetAlert("Oops...","Something went wrong" , "error");
+                    }
+                });
+           
+            return false;
+        });
+    });
+</script>  

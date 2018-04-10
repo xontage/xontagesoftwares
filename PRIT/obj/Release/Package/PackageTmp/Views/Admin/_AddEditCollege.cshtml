@@ -1,0 +1,225 @@
+﻿@model PRIT.Entity.tbl_Colleges
+@{
+    Layout = null;
+}
+
+<link href="~/css/bootstrap-multiselect.css" rel="stylesheet" />
+<script src="~/js/bootstrap-multiselect.js"></script>
+
+
+<div class="modal fade" id="myCollgeModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">@(Model.collegeId == 0 ? "Add College" : "Update College")</h4>
+            </div>
+            <div class="modal-body">
+                @using (Ajax.BeginForm("AddEditCollege", "Admin", new { area = "" }, new AjaxOptions { OnSuccess = "fnOnAddEditCollegeSuccess", HttpMethod = "POST" }, new { @class = "form-horizontal", @id = "frmCollege" }))
+                {
+                    @Html.ValidationSummary(true)
+                    @Html.HiddenFor(r => r.collegeId)
+                    <input type="hidden" id="selectedValues" name="selectedValues" />
+
+                    <div class="container">
+                        <div class="row main">
+                            <div class="main-login main-center">                             
+                                
+                                        <div class="form-group">
+                                            <label for="name" class="cols-sm-2 control-label">College Name</label>
+                                            <div class="cols-sm-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                                    @*<input type="text" class="form-control" name="name" id="name" placeholder="Enter College Name" />*@
+                                                    @Html.TextBoxFor(model => model.collegeName, new
+                                                {
+                                                    @class = "form-control",
+                                                    id = "collegeName",
+                                                    placeholder = "Enter your College Name" })
+                                                    @Html.ValidationMessageFor(model => model.collegeName, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="username" class="cols-sm-2 control-label">College Address</label>
+                                            <div class="cols-sm-10">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                                                    @*<input type="text" class="form-control" name="Address" id="Address" placeholder="Enter College Address" />*@
+
+                                                    @Html.TextBoxFor(model => model.Address, new { @class = "form-control", id = "Address", placeholder = "Enter Address" })
+                                                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="email" class="cols-sm-2 control-label">College Email</label>
+                                            <div class="cols-sm-10">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                                                    @*<input type="text" class="form-control" name="email" id="email" placeholder="Enter College Email" />*@
+
+                                                    @Html.TextBoxFor(model => model.email, new { @class = "form-control", id = "email", placeholder = "Enter Email" })
+                                                    @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="username" class="cols-sm-2 control-label">Website</label>
+                                            <div class="cols-sm-10">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                                                  @*  <input type="text" class="form-control" name="Website" id="Website" placeholder="Enter College Website" />*@
+
+                                                    @Html.TextBoxFor(model => model.website, new { @class = "form-control", id = "website", placeholder = "Enter College Website" })
+                                                    @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="username" class="cols-sm-2 control-label">College Contact 1</label>
+                                            <div class="cols-sm-10">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                                                    @*<input type="text" class="form-control" name="Contact1" id="Contact1" placeholder="Enter College Contact 1" />*@
+                                                    @Html.TextBoxFor(model => model.contact1, new { @class = "form-control", id = "contact1", placeholder = "Enter College contact1" })
+                                                    @Html.ValidationMessageFor(model => model.contact1, "", new { @class = "text-danger" })
+
+
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="username" class="cols-sm-2 control-label">College Contact 2</label>
+                                            <div class="cols-sm-10">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                                                    @*<input type="text" class="form-control" name="Contact2" id="Contact2" placeholder="Enter College Contact 2" />*@
+
+                                                    @Html.TextBoxFor(model => model.contact2, new { @class = "form-control", id = "contact2", placeholder = "Enter College contact2" })
+                                                    @Html.ValidationMessageFor(model => model.contact2, "", new { @class = "text-danger" })
+
+
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="name" class="cols-sm-2 control-label">College TPO Name</label>
+                                            <div class="cols-sm-10">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                                    @*<input type="text" class="form-control" name="TPOName" id="TPOName" placeholder="Enter College TPO Name" />*@
+                                                    @Html.TextBoxFor(model => model.TPOName, new { @class = "form-control", id = "TPOName", placeholder = "Enter College TPO Name" })
+                                                    @Html.ValidationMessageFor(model => model.TPOName, "", new { @class = "text-danger" })
+
+
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="name" class="cols-sm-2 control-label">College Principle Name</label>
+                                            <div class="cols-sm-10">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                                   @* <input type="text" class="form-control" name="PrincipleName" id="PrincipleName" placeholder="Enter College Principle Name" />*@
+
+                                                    @Html.TextBoxFor(model => model.PrincipalName, new { @class = "form-control", id = "PrincipalName", placeholder = "Enter College Principal Name" })
+                                                    @Html.ValidationMessageFor(model => model.PrincipalName, "", new { @class = "text-danger" })
+
+
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="name" class="cols-sm-2 control-label">Degree</label>
+                                            <div>
+                                                <ul id="check-list-box" class="list-group checked-list-box" style="color:#913f3f">
+                                                    @Html.ListBoxFor(m => m.DegreeIds,Model.Degrees, new { @class = "listbox" })    
+                                                    @*@Html.ValidationMessageFor(m => m.Sections, "", new { @class = "text-danger" })*@
+                                                </ul>                                             
+                                            </div>
+                                           
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="name" class="cols-sm-2 control-label">College Description</label>
+                                            <div class="cols-sm-10">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                                   @* <input type="text" class="form-control" name="CollegeDescription" id="CollegeDescription" placeholder="Enter College Description" />*@
+
+                                                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control", id = "Description", placeholder = "Enter College Description" })
+                                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+
+
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="clear: both;"></div>
+                                        <div class="form-group" style="margin-left: 190px !important;">
+                                            @* <a href="#"  type="submit" class="btn btn-primary btn-lg btn-block login-button">Register</a>*@
+                                            <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Save </button>
+                                        </div>
+                                   
+                              
+                            </div>
+                        </div>
+                    </div>
+                                                        }
+            </div>
+            @*<div class="modal-footer footer-bottom">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>*@
+        </div>
+
+    </div>
+</div>
+
+
+
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+    
+        $('.listbox').multiselect({
+            includeSelectAllOption: true
+        });
+
+        $('.listbox').change(function () {
+            var $hidden = $("#selectedValues");
+            $hidden.val($(this).find('option:selected').map(function () {
+                return $(this).val();
+            }).get().join(", "));
+        });
+
+
+        
+    });
+
+</script>

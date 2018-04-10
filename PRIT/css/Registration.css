@@ -1,0 +1,37 @@
+﻿.form-group {
+    margin-bottom: 15px;
+    float: left;
+    width: 38%;
+    margin-right: 51px !important;
+    margin-top: 10px !important;
+    margin-left: 22px !important;
+}
+
+.modal-content {
+    width: 750px;
+    margin: 0 auto;
+}
+.input-group{
+    width:500px;
+}
+.center {
+    z-index: 1000;
+    margin: 50px auto;
+    padding: 10px;
+    width: 130px;
+    background-color: White;
+    border-radius: 10px;
+    filter: alpha(opacity=100);
+    opacity: 1;
+    -moz-opacity: 1;
+}
+
+    .center img {
+        height: 128px;
+        width: 128px;
+    }
+
+.footer-bottom {
+    padding: 10px 20px 20px !important;
+    margin:0 !important;
+}

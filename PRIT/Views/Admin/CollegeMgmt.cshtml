@@ -1,0 +1,137 @@
+﻿@model IEnumerable<PRIT.Entity.tbl_Colleges>
+@{
+    ViewBag.Title = "CollegeMgmt";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<head>  
+   
+    @*<style>
+        /* CSS REQUIRED */
+        .state-icon {
+            left: -5px;
+        }
+
+        .list-group-item-primary {
+            color: rgb(255, 255, 255);
+            background-color: rgb(66, 139, 202);
+        }
+
+        /* DEMO ONLY - REMOVES UNWANTED MARGIN */
+        .well .list-group {
+            margin-bottom: 0px;
+        }
+
+    </style>*@
+
+    <style>
+        .modal-content {
+            width: 750px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            float: left;
+            width: 38%;
+            margin-right: 51px !important;
+            margin-top: 10px !important;
+            margin-left: 22px !important;
+        }
+    </style>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+</head>
+
+
+<button id="collegeModel" style="margin-left:96px; margin-top: 35px;" type="button" class="btn btn-info btn-lg" data-toggle="modal" @*data-target="#myModal"*@>New College</button>
+
+@*bind  popup to this div*@
+<div id="collegeRegistationPopUp"></div>
+
+<div id="collegeData">
+    @{ Html.RenderPartial("_CollegePartial", Model);}  
+</div>
+
+
+<script>
+
+    $(function () {
+        
+
+        $('#collegeModel').click(function () {
+            debugger;
+            $.ajax({
+                type: "GET",
+                url: '../Admin/AddEditCollege?CollegeId=0',
+                success: function (status) {
+                    if (status != null) {
+                        debugger;
+                        $('#collegeRegistationPopUp').html(status);
+                        $('#myCollgeModal').modal('show');
+                        //$('#resourceCategoryModal').html(status);
+                        //$('#resourceCategoryModal').modal('show');
+                        //$.validator.unobtrusive.parse($("#resourceCategoryModal"));
+                        //$('#resourceCategoryModal').on('shown.bs.modal', function () {
+                        //    setFields();
+                        //});
+
+                    }
+                },
+                error: function (err, status) {
+                    sweetAlert("Oops...", data.message, "error");
+                    //showStatusMessage('Something is wrong. Please contact Administrator', 'error');
+                }
+            });
+        });
+
+
+
+        //$('.clgForm').submit(function (e) {
+        //    debugger;
+        //    $.fn.serializeObject = function () {
+        //        var o = {};
+        //        var a = this.serializeArray();
+        //        $.each(a, function () {
+        //            if (o[this.name] !== undefined) {
+        //                if (!o[this.name].push) {
+        //                    o[this.name] = [o[this.name]];
+        //                }
+        //                o[this.name].push(this.value || '');
+        //            } else {
+        //                o[this.name] = this.value || '';
+        //            }
+        //        });
+        //        return o;
+        //    };
+
+        //    formData = JSON.stringify($('#collegeMgmt').serializeObject());
+
+
+        //});
+
+
+
+    });
+
+    function fnOnAddEditCollegeSuccess(data) {
+        debugger;
+        $('#myCollgeModal').find("[data-dismiss=modal]").trigger({ type: "click" });
+        if (data.success == true) {
+            swal('Saved!', data.message, 'success')
+        }
+        else if (data.success == false) {
+            sweetAlert("Oops...", data.message, "error");
+        }
+        if (data.result != "" || data.result != null) {
+            $('#collegeData').html(data.result);
+        }
+
+
+    }
+
+
+</script>
+

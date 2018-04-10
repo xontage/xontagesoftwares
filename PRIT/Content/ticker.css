@@ -1,0 +1,88 @@
+﻿
+
+
+
+body {
+    padding-bottom: 5rem;
+}
+
+h1, h2, p {
+    padding: 0 5%;
+}
+
+.text-color {
+    color:black !important;
+}
+
+.glyphicon-ok:before {
+    color: #993366 !important;
+}
+
+
+
+
+
+
+
+
+@-webkit-keyframes ticker {
+0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    visibility: visible;
+}
+
+100% {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+}
+
+}
+
+@keyframes ticker {
+    0% {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+        visibility: visible;
+    }
+
+    100% {
+        -webkit-transform: translate3d(-100%, 0, 0);
+        transform: translate3d(-100%, 0, 0);
+    }
+}
+
+.ticker-wrap {
+    position: relative;
+    bottom: 0;
+    /*width: 100%;*/
+    overflow: hidden;
+    height: 4rem;
+    background-color: black;
+    padding-left: 100%;
+}
+
+.ticker {
+    display: inline-block;
+    height: 4rem;
+    line-height: 4rem;
+    white-space: nowrap;
+    animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    -webkit-animation-name: ticker;
+    animation-name: ticker;
+    -webkit-animation-duration: 15s;
+    animation-duration: 15s;
+    padding-right:100%;
+}
+.tickerItem {
+        display: inline-block;
+        padding: 0 2rem;
+        font-size: 2rem;
+        color: white;
+    }
+
+
+
+

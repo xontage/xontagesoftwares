@@ -1,0 +1,161 @@
+﻿
+@{
+    ViewBag.Title = "MobileDevelopment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+
+     .gray-blk-img {
+         background-image: url('../../images/devices-sprit.png');
+         height: 114px;
+         width: 80px;
+         margin: 0 auto;
+     }
+     .hov-bord #a {
+         background-position: -93px -113px;
+         opacity: 0;
+         transition: opacity 0.5s;
+     }
+
+     .hov-bord a:hover #a{
+         opacity: 1 !important;
+     }
+
+    /*.hov-bord a:hover #m {
+         opacity: 1;
+     }
+     .hov-bord a:hover #h {
+         opacity: 1;
+     }*/
+
+     .hov-bord a {
+         width: 100%;
+         min-height: 211px;
+         display: inline-block;
+         border: 1px solid #fff;
+         box-shadow: 0 0 10px 2px #fff;
+         padding-bottom: 20px;
+         margin-bottom: 10px;
+         transition-duration: 0.5s;
+     }
+
+     .hov-bord a:hover {
+         display: inline-block;
+         border: 1px solid #eaeaea;
+         box-shadow: 0 0 10px 2px #eaeaea;
+         color: #3a80ea;
+         border-radius: 5px;
+     }
+
+      /*.hov-bord #h {
+         background-position: -349px -113px;
+         opacity: 0;
+         transition: opacity 0.5s;
+     }*/
+
+     #mamas {
+         background-position: -442px 0px;
+     }
+
+     #wearable {
+         background-position: -525px 0px;
+     }
+
+     #had {
+         background-position: -349px 0px;
+     }
+
+     #cpad {
+         background-position: -253px 0px;
+     }
+     #iad {
+         background-position: -170px 0px;
+     }
+     #apd {
+         background-position: -93px 0px;
+     }
+
+</style>
+
+<div class="container">
+    <div>
+        <div class="sec-head-cont col-md-10 col-md-offset-1" style="color: black;">
+            <div class="tech-sec-heading">
+                <h2>Mobile App Development Services</h2>
+            </div>
+            <div class="tech-sec-sub-head">
+                <p class="tech-sec-sub-head text-center">Our passion for providing the best and comprehensive mobility services and solutions to our customers is realized through our expertise in mobility gained through the experience of a strong 100+ top mobile app developers team that has a career-long experience in mobile technologies and a dedicated mobility user experience design, mobility QA team that is committed to leveraging the unique native capabilities of each device platform.</p>
+                <p class="tech-sec-sub-head mrg-btm-30 text-center">Mobisoft is among the top app development companies which deliver best in class mobility services and solutions with complete mobility lifecycle consultation and custom mobile app development in India. One of the best mobile app development companies that provide services along with customization on top of the pre-built solutions add value for our customers.</p>
+            </div>
+        </div>
+    </div>
+    <div class="hov-cont">
+
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+
+                <div class="col-md-4 col-xs-6 hov-bord">
+                    <a href="#">
+                        <div class="gray-blk-img" id="apd">
+                            <div class="below" id="a">
+                            </div>
+                        </div>
+                        <li class="text-center brd-text">Android App Development<br>(Smartphone, Tablet)</li>
+                    </a>
+                </div>
+                <div class="col-md-4 col-xs-6 hov-bord">
+                    <a href="#">
+                        <div class="gray-blk-img" id="iad">
+                            <div class="below" id="i">
+                            </div>
+                        </div>
+                        <li class="text-center brd-text">iOS App Development<br>(iPhone, iPad)</li>
+                    </a>
+                </div>
+                <div class="col-md-4 col-xs-6 hov-bord">
+                    <a href="#">
+                        <div class="gray-blk-img" id="cpad">
+                            <div class="below" id="c"></div>
+                        </div>
+                        <li class="text-center brd-text">Cross-Platform Mobile App Development Services<br>( Xamarin, React Native )</li>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="col-md-4 col-xs-6 hov-bord">
+                    <a href="#">
+                        <div class="gray-blk-img" id="had">
+                            <div class="below" id="h">
+                            </div>
+                        </div>
+                        <li class="text-center brd-text">Hybrid App Development<br>(HTML5, PhoneGap, Ionic)</li>
+                    </a>
+                </div>
+                <div class="col-md-4 col-xs-6 hov-bord">
+                    <a href="#">
+                        <div class="gray-blk-img" id="mamas">
+                            <div class="below" id="m">
+
+                            </div>
+                        </div>
+                        <li class="text-center brd-text">Mobile App Maintenance<br>And Support</li>
+                    </a>
+                </div>
+                <div class="col-md-4 col-xs-6 hov-bord">
+                    <a href="#">
+                        <div class="gray-blk-img" id="wearable">
+                            <div class="below" id="w">
+                            </div>
+                        </div>
+                        <li class="text-center brd-text">Wearable App Development</li>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
