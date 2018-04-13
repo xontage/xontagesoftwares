@@ -20,5 +20,9 @@ namespace PRIT.Entity
         /// </summary>
 
         public string CollegeName { get; set; }
+
+
+       
+
     }
 }

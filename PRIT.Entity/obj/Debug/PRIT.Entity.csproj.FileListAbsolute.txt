@@ -27,3 +27,4 @@ E:\PracticeProjects\PRIT\PRIT.Entity\bin\Debug\en-US\System.Web.Mvc.Extensions.r
 E:\PracticeProjects\PRIT\PRIT.Entity\obj\Debug\PRIT.Entity.csproj.CoreCompileInputs.cache
 E:\PracticeProjects\PRIT\PRIT.Entity\obj\Debug\PRIT.Entity.dll
 E:\PracticeProjects\PRIT\PRIT.Entity\obj\Debug\PRIT.Entity.pdb
+E:\PracticeProjects\PRIT\PRIT.Entity\obj\Debug\PRIT.Entity.csprojResolveAssemblyReference.cache

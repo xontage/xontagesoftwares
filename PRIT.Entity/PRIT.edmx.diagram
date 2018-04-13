@@ -4,17 +4,17 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="023fbee88cda4e0ca5e487ba5d2b79a5" Name="Diagram1">
-        <EntityTypeShape EntityType="PRITModel.tbl_Colleges" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PRITModel.tbl_Contact" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PRITModel.tbl_Degree" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PRITModel.tbl_FileUpload" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PRITModel.tbl_Notification" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PRITModel.tbl_Registration" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="PRITModel.tbl_UserRole" Width="1.5" PointX="0.75" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PRITModel.tbl_Feedback" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
-        <AssociationConnector Association="PRITModel.FK_tbl_Registration_tbl_Colleges" ManuallyRouted="false" />
-        <AssociationConnector Association="PRITModel.FK_tbl_Registration_tbl_UserRole" ManuallyRouted="false" />
+      <Diagram DiagramId="b4449c9365644d99927fce6b8fe71f75" Name="Diagram1">
+        <EntityTypeShape EntityType="PRITModel.tbl_Colleges" Width="1.5" PointX="0.75" PointY="1.625" />
+        <EntityTypeShape EntityType="PRITModel.tbl_Contact" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="PRITModel.tbl_Degree" Width="1.5" PointX="5.75" PointY="4.75" />
+        <EntityTypeShape EntityType="PRITModel.tbl_FileUpload" Width="1.5" PointX="2.75" PointY="6.75" />
+        <EntityTypeShape EntityType="PRITModel.tbl_Notification" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="PRITModel.tbl_Registration" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="PRITModel.tbl_UserRole" Width="1.5" PointX="0.75" PointY="7.625" />
+        <EntityTypeShape EntityType="PRITModel.tbl_Feedback" Width="1.5" PointX="7.75" PointY="3.75" />
+        <AssociationConnector Association="PRITModel.FK_tbl_Registration_tbl_Colleges" />
+        <AssociationConnector Association="PRITModel.FK_tbl_Registration_tbl_UserRole" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

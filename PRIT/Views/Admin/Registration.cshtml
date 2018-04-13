@@ -4,13 +4,11 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-@*@{
-    PRIT.Entity.PRITEntities db = new PRIT.Entity.PRITEntities();
-}*@
+
 
 <head>
 
-    @*<link href="~/css/jquery.dataTables.min.css" rel="stylesheet" />*@
+   
     <link href="~/css/Registration.css" rel="stylesheet" />
    
     <style type="text/css">
@@ -43,8 +41,6 @@
     <div id="regData">
         @{ Html.RenderPartial("_RegistrationPartial", Model); }
     </div>
-
-
 
 
 @*<div id="progress" class="modal">
@@ -87,7 +83,8 @@
     });
 
     function fnOnUserSuccess(data)
-    {      
+    {
+        debugger;
         $('#myModal').find("[data-dismiss=modal]").trigger({ type: "click" });
         if (data.success == true) {
             swal('Saved!', data.message, 'success')

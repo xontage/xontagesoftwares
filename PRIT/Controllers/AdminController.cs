@@ -126,7 +126,7 @@ namespace PRIT.Controllers
             return View(lstFile);
         }
 
-       
+
 
 
         [HttpPost]
@@ -162,16 +162,16 @@ namespace PRIT.Controllers
                         // Create a temporary file name to use for checking duplicates.
                         string tempfileName = "";
                         string physicalPath = Server.MapPath("~/UploadedFiles/" + fname);
-                        
+
                         // Check to see if a file already exists with the
                         // same name as the file to upload.
                         if (System.IO.File.Exists(physicalPath))
                         {
-                            
+
                             // if a file with this name already exists,
                             // prefix the filename with a number.
-                            var fileN = fname.Split('.');                                                                           
-                            tempfileName = fileN[0] + "- Copy" + "(" + DateTime.Now.ToString().Replace(':', '-').Replace('/','-') + ")" + "." + fileN[1];                                                      
+                            var fileN = fname.Split('.');
+                            tempfileName = fileN[0] + "- Copy" + "(" + DateTime.Now.ToString().Replace(':', '-').Replace('/', '-') + ")" + "." + fileN[1];
                             fname = tempfileName;
 
                             // Notify the user that the file name was changed.
@@ -183,17 +183,17 @@ namespace PRIT.Controllers
                             // Notify the user that the file was saved successfully.
                             //UploadStatusLabel.Text = "Your file was uploaded successfully.";
                         }
-                      
+
 
                         // Get the complete folder path and store the file inside it.  
                         fname = Path.Combine(Server.MapPath("~/UploadedFiles/"), fname);
                         file.SaveAs(fname);
 
-                      
+
                         var docFile = new tbl_FileUpload
                         {
 
-                            FileName = System.IO.Path.GetFileName(fname) ,
+                            FileName = System.IO.Path.GetFileName(fname),
                             FileType = Path.GetExtension(file.FileName),
                             ContentType = file.ContentType,
                             //Title = objFile.Title
@@ -202,8 +202,8 @@ namespace PRIT.Controllers
                         db.tbl_FileUpload.Add(docFile);
                         db.SaveChanges();
 
-                       
-                        
+
+
                     }
 
                     lstN = db.tbl_FileUpload.OrderByDescending(person => person.FileID).ToList();
@@ -227,7 +227,7 @@ namespace PRIT.Controllers
             }
         }
 
-        
+
         public FileResult Download(string id)
         {
             DataClasses objData = new DataClasses();
@@ -257,7 +257,7 @@ namespace PRIT.Controllers
             return View();
         }
 
-      
+
 
         public ActionResult CollegeMgmt()
         {
@@ -266,8 +266,8 @@ namespace PRIT.Controllers
         }
 
 
-        
-            public ActionResult EmployeeMgmt()
+
+        public ActionResult EmployeeMgmt()
         {
             //List<tbl_Registration> lst = db.tbl_Registration.OrderByDescending(person => person.Id).ToList();
 
@@ -288,20 +288,16 @@ namespace PRIT.Controllers
         public ActionResult Registration()
         {
             List<tbl_Registration> lst = db.tbl_Registration.OrderByDescending(person => person.Id).ToList();
-
-            foreach(var item in lst)
+            //get college name from collegeId and assign it on datatable
+            foreach (var item in lst)
             {
-               
-
-                      item.CollegeName = (from c in db.tbl_Colleges
-                                      join R in db.tbl_Registration on c.collegeId equals R.CollegeID
-                                     // where u.Guid == userModel.Guid
-                                      select c.collegeName).FirstOrDefault();
+                item.CollegeName = (from c in db.tbl_Colleges
+                                    join R in db.tbl_Registration on c.collegeId equals R.CollegeID
+                                    // where u.Guid == userModel.Guid
+                                    select c.collegeName).FirstOrDefault();
             }
-
             return View(lst);
-
-        }  
+        }
 
         [HttpGet]
         public ActionResult AddEditUser(int? UserId)
@@ -309,7 +305,8 @@ namespace PRIT.Controllers
             tbl_Registration model = new tbl_Registration();
             if (UserId > 0)
             {
-                model = db.tbl_Registration.Where(x => x.Id == UserId).FirstOrDefault();
+                model = db.tbl_Registration.Where(x => x.Id == UserId).FirstOrDefault();                
+               
             }
 
             ViewBag.ddlDestination = new SelectList(GetDestination(), "Value", "Text");
@@ -324,21 +321,41 @@ namespace PRIT.Controllers
         [HttpPost]
         public ActionResult AddEditUser(tbl_Registration model)
         {
-            List<tbl_Registration> lstN = new List<tbl_Registration>();
-
-            if (ModelState.IsValid)
+            try
             {
-                registrationBL.Registration(model, User.Identity.Name);
-                lstN = db.tbl_Registration.OrderByDescending(person => person.Id).ToList();
-                var aa = RenderRazorViewToString("_RegistrationPartial", lstN);
-
-                return new JsonResult()
+                List<tbl_Registration> lstN = new List<tbl_Registration>();
+                if (ModelState.IsValid)
                 {
-                    JsonRequestBehavior = JsonRequestBehavior.AllowGet,
-                    Data = new { message = model.Id == 0 ? "user has been created successfully" : "user has been updated successfully", success = true, result = aa }
-                };
-            }
+                    //save user data
+                    long insertedUserId = registrationBL.Registration(model, User.Identity.Name);
 
+                    //get list of all registered users
+                    lstN = db.tbl_Registration.OrderByDescending(person => person.Id).ToList();
+                    
+                    //get college name from collegeId and assign it on datatable
+                    foreach (var item in lstN)
+                    {
+
+                        item.CollegeName = (from c in db.tbl_Colleges
+                                            join R in db.tbl_Registration on c.collegeId equals R.CollegeID                                           
+                                            select c.collegeName).FirstOrDefault();
+                    }                    
+
+                    var aa = RenderRazorViewToString("_RegistrationPartial", lstN);
+
+                    return new JsonResult()
+                    {
+                        JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                        //Data = new { message = model.Id == 0 ? "user has been created successfully" : "user has been updated successfully", success = true, result = aa }
+                        Data = new { message = insertedUserId == 0 ? "user has been created successfully" : "user has been updated successfully", success = true, result = aa }
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                // ExceptionManager.Publish(ex, MethodBase.GetCurrentMethod().DeclaringType.Namespace + "-" + MethodBase.GetCurrentMethod().DeclaringType.Name, "FrameWork");
+                throw ex;
+            }
             return new JsonResult()
             {
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet,
@@ -381,7 +398,7 @@ namespace PRIT.Controllers
             List<tbl_FileUpload> lstN = new List<tbl_FileUpload>();
             uploadedFileBL.DeleteUploadedFile(id);
             lstN = db.tbl_FileUpload.OrderByDescending(file => file.FileID).ToList();
-            return PartialView("_MultipleFileUploadPartial", lstN);          
+            return PartialView("_MultipleFileUploadPartial", lstN);
 
         }
 
@@ -450,7 +467,7 @@ namespace PRIT.Controllers
                 List<tbl_Degree> lstColleges = new List<tbl_Degree>();
                 lstColleges = db.tbl_Degree.OrderByDescending(person => person.Id).ToList();
                 List<DropdownModelGeneric> ddlList = lstColleges.Select(x => new DropdownModelGeneric() { Value = x.Id.ToString(), Text = x.DegreeName }).ToList();
-              //  ddlList.Add(new DropdownModelGeneric() { Value = "0", Text = "PLEASE SELECT DEGREE" });
+                //  ddlList.Add(new DropdownModelGeneric() { Value = "0", Text = "PLEASE SELECT DEGREE" });
 
                 return ddlList;
             }
@@ -483,7 +500,7 @@ namespace PRIT.Controllers
             tbl_Colleges model = new tbl_Colleges();
             tbl_Colleges model1 = new tbl_Colleges();
             List<SelectListItem> items = new List<SelectListItem>();
-          
+
             int[] DegreeIds = new int[20];
 
             if (CollegeId > 0)
@@ -493,21 +510,21 @@ namespace PRIT.Controllers
                 string[] Sections = model.Degree.Split(',');
                 int id;
 
-              
+
                 int i = 0;
                 foreach (var Id in Sections)
-                {                    
+                {
                     id = Convert.ToInt32(Id);
-                    tbl_Degree Item = new tbl_Degree();                   
-                    DegreeIds[i] = id;                    
+                    tbl_Degree Item = new tbl_Degree();
+                    DegreeIds[i] = id;
                     i++;
                 }
-                      
+
                 var selectedItemIds = DegreeIds;
                 var a = db.tbl_Degree.ToList();
                 model1 = new tbl_Colleges
                 {
-                    Degrees = new MultiSelectList(                     
+                    Degrees = new MultiSelectList(
                      a,
                          "Id",
                          "DegreeName",
@@ -536,7 +553,7 @@ namespace PRIT.Controllers
                      )
                 };
             }
-            
+
             return PartialView("~/Views/Admin/_AddEditCollege.cshtml", model);
 
         }
@@ -548,25 +565,26 @@ namespace PRIT.Controllers
 
             if (ModelState.IsValid)
             {
-                if (!string.IsNullOrEmpty(Request.Form["selectedValues"]) )
+                if (!string.IsNullOrEmpty(Request.Form["selectedValues"]))
                 {
                     model.Degree = Request.Form["selectedValues"];
                 }
-                else {
+                else
+                {
 
                     string degId = "";
                     foreach (var item in model.DegreeIds)
                     {
-                        degId += item+",";
+                        degId += item + ",";
                     }
-                    
+
                     model.Degree = degId.TrimEnd(',');
                 }
-                
+
 
                 collegeBL.AddEditCollege(model);
                 lstN = db.tbl_Colleges.OrderByDescending(person => person.collegeId).ToList();
-                
+
                 var aa = RenderRazorViewToString("_CollegePartial", lstN);
 
                 return new JsonResult()
@@ -588,7 +606,7 @@ namespace PRIT.Controllers
 
 
         public ActionResult AdminDashboard()
-        {          
+        {
             ViewBag.name = User.Identity.Name;
             return View();
         }
@@ -599,7 +617,7 @@ namespace PRIT.Controllers
             FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Home");
         }
-       
+
 
     }
 }

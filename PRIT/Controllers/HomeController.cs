@@ -11,6 +11,7 @@ using System.Net.Mail;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using PRIT.Entity.MetaModel;
 
 namespace PRIT.Controllers
 {
@@ -158,7 +159,7 @@ namespace PRIT.Controllers
         /// <returns>Login succeed or fail</returns>
         [HttpPost]
        
-        public ActionResult Loginxxx(tbl_Registration model, string returnUrl)
+        public ActionResult Loginxxx(LoginViewModel model, string returnUrl)
         {
             try
             {
@@ -167,7 +168,7 @@ namespace PRIT.Controllers
 
 
 
-                    var p = db.tbl_Registration.Where(x => x.UserName == model.UserName && x.Password == model.Password).FirstOrDefault();
+                    var p = db.tbl_Registration.Where(x => x.UserName == model.Email && x.Password == model.Password).FirstOrDefault();
                     if (p != null)
                     {
                         FormsAuthentication.SetAuthCookie(p.UserName, false);

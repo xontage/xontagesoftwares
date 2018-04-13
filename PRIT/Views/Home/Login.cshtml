@@ -1,4 +1,6 @@
-﻿@model PRIT.Entity.tbl_Registration
+﻿
+@*@model PRIT.Entity.MetaModel.LoginViewModel*@
+@model PRIT.Entity.tbl_Registration
 @{
     ViewBag.Title = "Login";
 }
@@ -80,7 +82,7 @@ span.psw {
         </div>
 
         <div class="container myContainer">
-            <label><b>Username</b></label>
+            <label><b>Email</b></label>
             @*<input type="text" placeholder="Enter Username" name="uname" id="unameId" required>*@
             @Html.ValidationMessage("spnmsg", new { @class = "alert-danger fade in", @style = "position: relative;color:red" })        
             @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger error-msg" })
@@ -113,10 +115,8 @@ span.psw {
 <script>
 
     $(document).ready(function () {
-
-
        
-        $('#UserName').focus();
+        $('#Email').focus();
 
             localStorage.clear();
         

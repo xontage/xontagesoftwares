@@ -39,4 +39,24 @@ namespace PRIT.Entity.MetaModel
         public string Gender { get; set; }
 
     }
+
+
+
+    /// <summary>
+    /// loginview model is for storing login credential
+    /// </summary>
+    public class LoginViewModel
+    {
+        [Required]
+        [Display(Name = "Email")]
+        [RegularExpression("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", ErrorMessage = "Invalid Email")]
+        public string Email { get; set; }
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string Password { get; set; }
+        // [Display(Name = "Remember me?")]
+        // public bool RememberMe { get; set; }
+    }
+
 }

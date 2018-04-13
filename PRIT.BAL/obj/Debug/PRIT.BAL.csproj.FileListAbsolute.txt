@@ -2,7 +2,6 @@ E:\PracticeProjects\PRIT\PRIT.BAL\bin\Debug\PRIT.BAL.dll
 E:\PracticeProjects\PRIT\PRIT.BAL\bin\Debug\PRIT.BAL.pdb
 E:\PracticeProjects\PRIT\PRIT.BAL\bin\Debug\PRIT.DAL.dll
 E:\PracticeProjects\PRIT\PRIT.BAL\bin\Debug\PRIT.Entity.dll
-E:\PracticeProjects\PRIT\PRIT.BAL\bin\Debug\EntityFramework.dll
 E:\PracticeProjects\PRIT\PRIT.BAL\bin\Debug\System.Web.Mvc.dll
 E:\PracticeProjects\PRIT\PRIT.BAL\bin\Debug\System.Web.Razor.dll
 E:\PracticeProjects\PRIT\PRIT.BAL\bin\Debug\System.Web.WebPages.Razor.dll

@@ -11,24 +11,57 @@ namespace PRIT.DAL
     {
         PRITEntities db = new PRITEntities();
 
-        public void Registration(tbl_Registration obj)
+        /// <summary>
+        /// 2017/05/18 
+        /// Insert register data
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public long Registration(tbl_Registration obj)
         {
+
             try
             {
                 if (obj.Id > 0)
                 {
-                    db.Entry(obj).State = System.Data.Entity.EntityState.Modified;
+                    
+                    var lst = db.tbl_Registration.Where(Ind => Ind.Id == obj.Id).FirstOrDefault();
+                    //modify individual information                                    
+                    lst.FullName = obj.FullName;
+                    lst.Email = obj.Email;
+                    lst.ContactNo = obj.ContactNo;
+                    lst.Designation = obj.Designation;
+                    lst.CollegeID = obj.CollegeID;
+                    lst.RoleId = obj.RoleId;
+                    lst.UserName = obj.UserName;
+                    lst.Gender = obj.Gender;
+                    lst.ModifiedDate = obj.ModifiedDate;
+                
+                    lst.ModifiedBy = obj.ModifiedBy;
+                    db.Configuration.ValidateOnSaveEnabled = false;
+                    //error "An entity object cannot be referenced by multiple instances of IEntityChangeTracker
+                    //db.Entry(obj).State = System.Data.Entity.EntityState.Modified;
+
                 }
                 else
                 {
+                    db.Configuration.ValidateOnSaveEnabled = false;
                     db.tbl_Registration.Add(obj);
                 }
-                db.SaveChanges();
+                //Save changes
+                var result = db.SaveChanges();
+                db.Configuration.ValidateOnSaveEnabled = true;
+
+                if (result >= 0)
+                    return obj.Id;
+                else
+                    return 0;
+
             }
             catch (Exception ex)
             {
-
-                throw ex;
+                return 0;
+                // throw ex;
             }
         }
 
@@ -37,14 +70,14 @@ namespace PRIT.DAL
         {
             try
             {
-              var user=  db.tbl_Registration.Where(x => x.Id == Id).FirstOrDefault();
+                var user = db.tbl_Registration.Where(x => x.Id == Id).FirstOrDefault();
                 if (user != null)
                 {
                     db.tbl_Registration.Remove(user);
                     db.SaveChanges();
 
                 }
-             
+
             }
             catch (Exception ex)
             {
