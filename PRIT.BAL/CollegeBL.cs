@@ -8,7 +8,7 @@ using PRIT.DAL;
 
 namespace PRIT.BAL
 {
-    public class CollegeBL
+    public class CollegeBL 
     {
         CollegeDL collegeDL = new CollegeDL();
         PRITEntities db = new PRITEntities();
@@ -26,15 +26,9 @@ namespace PRIT.BAL
                 throw ex;
             }
         }
-
-
         public void DeleteCollege(int Id)
         {
             collegeDL.DeleteCollege(Id);
         }
-
-
-
-
     }
 }
