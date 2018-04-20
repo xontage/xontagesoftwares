@@ -12,6 +12,7 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using PRIT.Entity.MetaModel;
+using System.Configuration;
 
 namespace PRIT.Controllers
 {
@@ -129,161 +130,92 @@ namespace PRIT.Controllers
         {
             return View();
         }
-        public ActionResult Login()
+        public ActionResult Login(string returnUrl)
         {
-
-            return View();
-
+            try
+            {
+                TempData["returnURL"] = returnUrl;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
         }
         public ActionResult Login1()
         {
-
             return View();
-
         }
 
         public ActionResult LoginNew()
         {
-
             return View();
-
         }
 
 
-
         /// <summary>
-        /// 2017/05/18 - it will check credential of user and with valid credentials it give access to framework //commented by Noman
+        /// - it will check credential of user and with valid credentials it give access to framework 
         /// </summary>
         /// <param name="loginViewModel">Login Credntials</param>
         /// <param name="returnUrl">return url</param>
         /// <returns>Login succeed or fail</returns>
         [HttpPost]
        
-        public ActionResult Loginxxx(LoginViewModel model, string returnUrl)
+        public ActionResult Login(LoginViewModel loginViewModel, string returnUrl="")
         {
             try
             {
                 if (ModelState.IsValid)
-                {
+                {                  
+                    tbl_Registration user = null;
+                    string Expiretime = ConfigurationManager.AppSettings["ExpireTime"];
 
+                    if (string.IsNullOrEmpty(Expiretime))
+                        Expiretime = "60";
 
-
-                    var p = db.tbl_Registration.Where(x => x.UserName == model.Email && x.Password == model.Password).FirstOrDefault();
-                    if (p != null)
+                    if (string.IsNullOrWhiteSpace(returnUrl))
                     {
-                        FormsAuthentication.SetAuthCookie(p.UserName, false);
-
-                        if (p.RoleId == 1 && p.IsActive == true)
-                        {
-                            return RedirectToAction("AdminDashboard", "Admin");
-                        }
-                        else if (p.RoleId == 2 && p.IsActive == true)
-                        {
-                            return RedirectToAction("StaffDashboard", "Staff");
-                        }
-
-                        string message1 = "YOUR ACCOUNT HAS BEEN DEACTIVATED TEMPORARY !!!";
-                        ViewBag.Message = message1;
-
+                        returnUrl = Convert.ToString(TempData["returnURL"]);
                     }
-                    //}
+
+                    RegistrationBL userBL = new RegistrationBL();
+                    user = userBL.CheckUserNameExistsOrNot(loginViewModel.Email);
+
+                    if (user != null)
+                    {                       
+                        user = userBL.LoginVerification(loginViewModel.Email, loginViewModel.Password);//objUserBL.GetUserByUserName(loginViewModel.Email);//get userdetail by email id               
+
+                        if (user != null)
+                        {
+                            FormsAuthentication.SetAuthCookie(user.Email, false);
+
+                            if (user.RoleId == 1)
+                            {
+                                if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/") && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
+                                    return Redirect(returnUrl);
+                                else
+                                    return RedirectToAction("AdminDashboard", "Admin");
+
+                            }
+                            else if (user.RoleId == 2)
+                            {
+                                if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/") && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
+                                    return Redirect(returnUrl);
+                                else
+                                    return RedirectToAction("StaffDashboard", "Staff");
+                            }
+                          
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("spnmsg", "Invalid credentials.");
+                        }
+                    }
                     else
                     {
-                        string message = "ENTER CORRECT USERNAME AND PASSWORD";
-                        ViewBag.Message = message;
+                        ModelState.AddModelError("spnmsg", "User not exist!!!");
                     }
-
-
-                    return View();
-
-
-                    //FrameWorkSettingsModel frameWorkSettingsModel = new FrameWorkSettingsModel();
-                    //string IncryptApplUsrName = "";
-                    //User user = null;
-                    //double TotalDays = 1;
-                    //string Expiretime = ConfigurationManager.AppSettings["ExpireTime"];
-                    //if (string.IsNullOrEmpty(Expiretime))
-                    //    Expiretime = "60";
-
-                    //if (string.IsNullOrWhiteSpace(returnUrl))
-                    //{
-                    //    returnUrl = Convert.ToString(TempData["ReturnURL"]);
-                    //}
-
-                    //UserBL userBL = new UserBL();
-                    //user = userBL.CheckUserNameExistsOrNot(loginViewModel.Email);
-                    //frameWorkSettingsModel = frameWorkSettingsBL.GetSettingsInfo();
-                    //if (frameWorkSettingsModel != null)
-                    //{
-                    //    if (frameWorkSettingsModel.ApplicationSalt != null)
-                    //    {
-                    //        IncryptApplUsrName = CommonMasterBL.EncryptPassword(loginViewModel.Email, frameWorkSettingsModel.ApplicationSalt);
-                    //    }
-                    //}
-                    //Response.Cookies["UserName"].Value = IncryptApplUsrName;
-
-                    //if (user != null)
-                    //{                        
-                    //    user = userBL.LoginVerification(loginViewModel.Email, loginViewModel.Password);//objUserBL.GetUserByUserName(loginViewModel.Email);//get userdetail by email id               
-                    //    if (user != null)
-                    //    {
-                    //        string[] roles = null;
-                    //        string[] types = null;
-                    //        if (user.RoleId != null && user.RoleId > 0)
-                    //            roles = user.UserRoleName.Split(',');
-                    //        if (user.UserTypeId != null && user.UserTypeId > 0)
-                    //        {
-                    //            if (user.userType != null)
-                    //                types = user.userType.Split(',');
-                    //        }
-                    //        CustomPrincipalSerializeModel serializeModel = new CustomPrincipalSerializeModel();
-                    //        serializeModel.Id = user.Id;
-                    //        serializeModel.FirstName = user.FirstName;
-                    //        serializeModel.LastName = user.LastName;
-                    //        serializeModel.roles = roles.Union(types).ToArray();
-                    //        serializeModel.RoleName = user.UserRoleName;
-                    //        serializeModel.EmailID = user.AccountEmail;
-                    //        serializeModel.UserTypeId = Convert.ToInt32(user.UserTypeId);
-                    //        JavaScriptSerializer objJavaScriptSerializer = new JavaScriptSerializer();
-                    //        string userData = objJavaScriptSerializer.Serialize(serializeModel);
-                    //        FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(
-                    //        1,
-                    //        user.Id.ToString(),
-                    //        DateTime.Now,
-                    //       DateTime.Now.AddMinutes(FormsAuthentication.Timeout.TotalMinutes),
-                    //      false, //  model.RememberMe, //pass here true, if you want to implement remember me functionality
-                    //        userData,
-                    //        FormsAuthentication.FormsCookiePath);
-
-                    //        string encTicket = FormsAuthentication.Encrypt(authTicket);
-                    //        var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket)
-                    //        {
-                    //            HttpOnly = true,
-                    //            Secure = FormsAuthentication.RequireSSL,
-                    //            Path = FormsAuthentication.FormsCookiePath,
-                    //            Domain = FormsAuthentication.CookieDomain
-                    //        };
-                    //        Response.AppendCookie(cookie);
-
-
-                    //        Response.Cookies["UserName"].Value = IncryptApplUsrName;
-                    //        if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/") && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
-                    //            return Redirect(returnUrl);
-                    //        else
-                    //            return RedirectToAction("Index", "Home");
-                    //    }
-                    //    else
-                    //    {
-                    //        ModelState.AddModelError("spnmsg", "Invalid credentials.");
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    ModelState.AddModelError("spnmsg", "User not exist!!!");
-                    //}
-
-
-
                 }
             }
             catch (Exception ex)
@@ -292,14 +224,14 @@ namespace PRIT.Controllers
                 throw ex;
                 
             }
-            return View();
+            return View(loginViewModel);
         }
 
 
 
 
         [HttpPost]
-        public ActionResult Login(tbl_Registration model, string returnUrl)
+        public ActionResult LoginOld(tbl_Registration model, string returnUrl)
         {
             //var cust = db.tbl_Registration.Where(x => x.UserName.Contains(model.UserName)).FirstOrDefault();
 
