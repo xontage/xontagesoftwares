@@ -1,0 +1,76 @@
+﻿@model IEnumerable<PRIT.Entity.tbl_Employee>
+@{
+    ViewBag.Title = "EmployeeMgmt";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+ 
+<head>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+</head>
+<br />
+<br />
+
+
+@*<button id="employeeModel" style="margin-left:1030px;" type="button" class="btn btn-primary ribbon" data-toggle="modal" >Add New Employee</button>*@
+<button id="btnAddEmployee" style="margin-left:96px;" type="button" class="btn btn-info btn-lg" data-toggle="modal">Add New Employee</button>
+@*bind  popup to this div*@
+<div id="employeePopUp"></div>
+
+<div id="employeeData">
+    @{ Html.RenderPartial("_EmployeePartial", Model); }
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+
+        $('#btnAddEmployee').click(function () {
+            debugger;
+            $.ajax({
+                type: "GET",
+                url: '../Admin/AddEditEmployee?UserId=0',
+                success: function (status) {
+                    debugger;
+                    if (status != null) {
+                        debugger;
+                        $('#employeePopUp').html(status);
+                        $('#employeeModal').modal('show');
+
+                    }
+                },
+                error: function (err, status) {
+                    sweetAlert("Oops...", data.message, "error");
+
+                }
+            });
+        });
+
+
+    });
+
+    function fnOnEmployeeSuccess(data) {
+        $('#employeeModal').find("[data-dismiss=modal]").trigger({ type: "click" });
+        if (data.success == true) {
+            swal('Saved!', data.message, 'success')
+        }
+        else if (data.success == false) {
+            sweetAlert("Oops...", data.message, "error");
+        }
+        if (data.result != "" || data.result != null) {
+            $('#employeeData').html(data.result);
+        }
+
+
+    }
+
+
+
+
+</script>
+
+

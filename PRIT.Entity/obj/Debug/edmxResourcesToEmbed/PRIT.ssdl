@@ -6,13 +6,13 @@
     </Key>
     <Property Name="collegeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="registrationId" Type="varchar" MaxLength="50" />
-    <Property Name="collegeName" Type="varchar" MaxLength="50" />
-    <Property Name="Address" Type="varchar(max)" />
-    <Property Name="contact1" Type="bigint" />
+    <Property Name="collegeName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Address" Type="varchar(max)" Nullable="false" />
+    <Property Name="contact1" Type="bigint" Nullable="false" />
     <Property Name="contact2" Type="bigint" />
     <Property Name="website" Type="varchar" MaxLength="50" />
-    <Property Name="email" Type="varchar" MaxLength="50" />
-    <Property Name="TPOName" Type="varchar" MaxLength="50" />
+    <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="TPOName" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="PrincipalName" Type="varchar" MaxLength="50" />
     <Property Name="Description" Type="varchar(max)" />
     <Property Name="Degree" Type="varchar(max)" />
@@ -36,8 +36,63 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="DegreeName" Type="varchar" MaxLength="50" />
   </EntityType>
+  <EntityType Name="tbl_Employee">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Gender" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="MaritalStatus" Type="nvarchar" MaxLength="20" />
+    <Property Name="DateofBirth" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="EmailId" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Designation" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="MobileNo" Type="bigint" Nullable="false" />
+    <Property Name="AltMobileNo" Type="bigint" />
+    <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="City" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Pincode" Type="bigint" Nullable="false" />
+    <Property Name="State" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Country" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="EmployeeId" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="HighestEducation" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Specialization" Type="nvarchar" MaxLength="50" />
+    <Property Name="InstituteName" Type="nvarchar" MaxLength="50" />
+    <Property Name="YearOfPassing" Type="int" Nullable="false" />
+    <Property Name="University" Type="nvarchar" MaxLength="50" />
+    <Property Name="InstituteLocation" Type="nvarchar" MaxLength="50" />
+    <Property Name="Percentage" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="EmployeeType" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="AdharCardNo" Type="bigint" Nullable="false" />
+    <Property Name="PassportNo" Type="nvarchar(max)" />
+    <Property Name="PANNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="BloodGroup" Type="nchar" MaxLength="10" />
+    <Property Name="BankName" Type="nvarchar(max)" />
+    <Property Name="AccountNo" Type="bigint" />
+  </EntityType>
+  <EntityType Name="tbl_EmploymentDetails">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DepartmentName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CompanyName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Role" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="DateOfJoining" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="JoinedAs" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="TotalRelevantExperienced" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PreviousCompanyName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PreviousCompanyLocation" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PreviousCompanyCTC" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ReasonForLeaving" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PreviousCompanyLastDay" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="EmplD" Type="int" />
+  </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'PRIT.dbo.tbl_Feedback' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'xontagesoftwares_RP.dbo.tbl_Feedback' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="tbl_Feedback">
     <Key>
       <PropertyRef Name="Id" />
@@ -73,17 +128,15 @@ warning 6002: The table/view 'PRIT.dbo.tbl_Feedback' does not have a primary key
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="Password" Type="varchar" MaxLength="100" Nullable="false" />
-    <Property Name="UserSalt" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="Password" Type="varchar" MaxLength="50" />
     <Property Name="FullName" Type="varchar" MaxLength="50" />
-    <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="ContactNo" Type="bigint" Nullable="false" />
+    <Property Name="UserName" Type="varchar" MaxLength="50" />
+    <Property Name="ContactNo" Type="bigint" />
     <Property Name="Designation" Type="varchar" MaxLength="50" />
-    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-    <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" />
     <Property Name="RoleId" Type="int" />
     <Property Name="CollegeID" Type="int" />
     <Property Name="Gender" Type="char" MaxLength="1" />
@@ -97,6 +150,18 @@ warning 6002: The table/view 'PRIT.dbo.tbl_Feedback' does not have a primary key
     <Property Name="RoleId" Type="int" Nullable="false" />
     <Property Name="RolName" Type="varchar" MaxLength="50" />
   </EntityType>
+  <Association Name="FK_tbl_EmploymentDetails_tbl_Employee">
+    <End Role="tbl_Employee" Type="Self.tbl_Employee" Multiplicity="0..1" />
+    <End Role="tbl_EmploymentDetails" Type="Self.tbl_EmploymentDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Employee">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tbl_EmploymentDetails">
+        <PropertyRef Name="EmplD" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_tbl_Registration_tbl_Colleges">
     <End Role="tbl_Colleges" Type="Self.tbl_Colleges" Multiplicity="0..1" />
     <End Role="tbl_Registration" Type="Self.tbl_Registration" Multiplicity="*" />
@@ -125,6 +190,8 @@ warning 6002: The table/view 'PRIT.dbo.tbl_Feedback' does not have a primary key
     <EntitySet Name="tbl_Colleges" EntityType="Self.tbl_Colleges" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tbl_Contact" EntityType="Self.tbl_Contact" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tbl_Degree" EntityType="Self.tbl_Degree" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_Employee" EntityType="Self.tbl_Employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_EmploymentDetails" EntityType="Self.tbl_EmploymentDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tbl_FileUpload" EntityType="Self.tbl_FileUpload" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tbl_Notification" EntityType="Self.tbl_Notification" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tbl_Registration" EntityType="Self.tbl_Registration" Schema="dbo" store:Type="Tables" />
@@ -138,6 +205,10 @@ warning 6002: The table/view 'PRIT.dbo.tbl_Feedback' does not have a primary key
     [tbl_Feedback].[Description] AS [Description]
     FROM [dbo].[tbl_Feedback] AS [tbl_Feedback]</DefiningQuery>
     </EntitySet>
+    <AssociationSet Name="FK_tbl_EmploymentDetails_tbl_Employee" Association="Self.FK_tbl_EmploymentDetails_tbl_Employee">
+      <End Role="tbl_Employee" EntitySet="tbl_Employee" />
+      <End Role="tbl_EmploymentDetails" EntitySet="tbl_EmploymentDetails" />
+    </AssociationSet>
     <AssociationSet Name="FK_tbl_Registration_tbl_Colleges" Association="Self.FK_tbl_Registration_tbl_Colleges">
       <End Role="tbl_Colleges" EntitySet="tbl_Colleges" />
       <End Role="tbl_Registration" EntitySet="tbl_Registration" />

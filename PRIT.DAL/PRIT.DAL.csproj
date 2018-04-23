@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="CollegeDL.cs" />
     <Compile Include="ContactDL.cs" />
+    <Compile Include="EmployeeDL.cs" />
+    <Compile Include="EmploymentDL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegistrationDL.cs" />
     <Compile Include="UploadedFileDL.cs" />

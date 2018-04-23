@@ -1,40 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="PRITModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="tbl_Colleges" EntityType="PRITModel.tbl_Colleges" />
-    <EntitySet Name="tbl_Contact" EntityType="PRITModel.tbl_Contact" />
-    <EntitySet Name="tbl_Degree" EntityType="PRITModel.tbl_Degree" />
-    <EntitySet Name="tbl_FileUpload" EntityType="PRITModel.tbl_FileUpload" />
-    <EntitySet Name="tbl_Notification" EntityType="PRITModel.tbl_Notification" />
-    <EntitySet Name="tbl_Registration" EntityType="PRITModel.tbl_Registration" />
-    <EntitySet Name="tbl_UserRole" EntityType="PRITModel.tbl_UserRole" />
-    <EntitySet Name="tbl_Feedback" EntityType="PRITModel.tbl_Feedback" />
-    <AssociationSet Name="FK_tbl_Registration_tbl_Colleges" Association="PRITModel.FK_tbl_Registration_tbl_Colleges">
-      <End Role="tbl_Colleges" EntitySet="tbl_Colleges" />
-      <End Role="tbl_Registration" EntitySet="tbl_Registration" />
-    </AssociationSet>
-    <AssociationSet Name="FK_tbl_Registration_tbl_UserRole" Association="PRITModel.FK_tbl_Registration_tbl_UserRole">
-      <End Role="tbl_UserRole" EntitySet="tbl_UserRole" />
-      <End Role="tbl_Registration" EntitySet="tbl_Registration" />
-    </AssociationSet>
-  </EntityContainer>
   <EntityType Name="tbl_Colleges">
     <Key>
       <PropertyRef Name="collegeId" />
     </Key>
     <Property Name="collegeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="registrationId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="collegeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="contact1" Type="Int64" />
+    <Property Name="collegeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="contact1" Type="Int64" Nullable="false" />
     <Property Name="contact2" Type="Int64" />
     <Property Name="website" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="TPOName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TPOName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="PrincipalName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="Degree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="tbl_Registration" Relationship="PRITModel.FK_tbl_Registration_tbl_Colleges" FromRole="tbl_Colleges" ToRole="tbl_Registration" />
+    <NavigationProperty Name="tbl_Registration" Relationship="Self.FK_tbl_Registration_tbl_Colleges" FromRole="tbl_Colleges" ToRole="tbl_Registration" />
   </EntityType>
   <EntityType Name="tbl_Contact">
     <Key>
@@ -54,6 +36,63 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="DegreeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="tbl_Employee">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Gender" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="MaritalStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="DateofBirth" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EmailId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Designation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MobileNo" Type="Int64" Nullable="false" />
+    <Property Name="AltMobileNo" Type="Int64" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Pincode" Type="Int64" Nullable="false" />
+    <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EmployeeId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="HighestEducation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Specialization" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="InstituteName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="YearOfPassing" Type="Int32" Nullable="false" />
+    <Property Name="University" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="InstituteLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Percentage" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="EmployeeType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AdharCardNo" Type="Int64" Nullable="false" />
+    <Property Name="PassportNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PANNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="BloodGroup" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="BankName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AccountNo" Type="Int64" />
+    <NavigationProperty Name="tbl_EmploymentDetails" Relationship="Self.FK_tbl_EmploymentDetails_tbl_Employee" FromRole="tbl_Employee" ToRole="tbl_EmploymentDetails" />
+  </EntityType>
+  <EntityType Name="tbl_EmploymentDetails">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DepartmentName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CompanyName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DateOfJoining" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="JoinedAs" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TotalRelevantExperienced" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PreviousCompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PreviousCompanyLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PreviousCompanyCTC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ReasonForLeaving" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PreviousCompanyLastDay" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EmplD" Type="Int32" />
+    <NavigationProperty Name="tbl_Employee" Relationship="Self.FK_tbl_EmploymentDetails_tbl_Employee" FromRole="tbl_EmploymentDetails" ToRole="tbl_Employee" />
   </EntityType>
   <EntityType Name="tbl_FileUpload">
     <Key>
@@ -80,24 +119,22 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Guid" Type="Guid" Nullable="false" />
-    <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="UserSalt" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="ContactNo" Type="Int64" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ContactNo" Type="Int64" />
     <Property Name="Designation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
     <Property Name="RoleId" Type="Int32" />
     <Property Name="CollegeID" Type="Int32" />
     <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
     <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="tbl_Colleges" Relationship="PRITModel.FK_tbl_Registration_tbl_Colleges" FromRole="tbl_Registration" ToRole="tbl_Colleges" />
-    <NavigationProperty Name="tbl_UserRole" Relationship="PRITModel.FK_tbl_Registration_tbl_UserRole" FromRole="tbl_Registration" ToRole="tbl_UserRole" />
+    <NavigationProperty Name="tbl_Colleges" Relationship="Self.FK_tbl_Registration_tbl_Colleges" FromRole="tbl_Registration" ToRole="tbl_Colleges" />
+    <NavigationProperty Name="tbl_UserRole" Relationship="Self.FK_tbl_Registration_tbl_UserRole" FromRole="tbl_Registration" ToRole="tbl_UserRole" />
   </EntityType>
   <EntityType Name="tbl_UserRole">
     <Key>
@@ -105,7 +142,7 @@
     </Key>
     <Property Name="RoleId" Type="Int32" Nullable="false" />
     <Property Name="RolName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="tbl_Registration" Relationship="PRITModel.FK_tbl_Registration_tbl_UserRole" FromRole="tbl_UserRole" ToRole="tbl_Registration" />
+    <NavigationProperty Name="tbl_Registration" Relationship="Self.FK_tbl_Registration_tbl_UserRole" FromRole="tbl_UserRole" ToRole="tbl_Registration" />
   </EntityType>
   <EntityType Name="tbl_Feedback">
     <Key>
@@ -118,8 +155,8 @@
     <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
   </EntityType>
   <Association Name="FK_tbl_Registration_tbl_Colleges">
-    <End Type="PRITModel.tbl_Colleges" Role="tbl_Colleges" Multiplicity="0..1" />
-    <End Type="PRITModel.tbl_Registration" Role="tbl_Registration" Multiplicity="*" />
+    <End Role="tbl_Colleges" Type="Self.tbl_Colleges" Multiplicity="0..1" />
+    <End Role="tbl_Registration" Type="Self.tbl_Registration" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tbl_Colleges">
         <PropertyRef Name="collegeId" />
@@ -129,9 +166,21 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_tbl_EmploymentDetails_tbl_Employee">
+    <End Role="tbl_Employee" Type="Self.tbl_Employee" Multiplicity="0..1" />
+    <End Role="tbl_EmploymentDetails" Type="Self.tbl_EmploymentDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Employee">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tbl_EmploymentDetails">
+        <PropertyRef Name="EmplD" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_tbl_Registration_tbl_UserRole">
-    <End Type="PRITModel.tbl_UserRole" Role="tbl_UserRole" Multiplicity="0..1" />
-    <End Type="PRITModel.tbl_Registration" Role="tbl_Registration" Multiplicity="*" />
+    <End Role="tbl_UserRole" Type="Self.tbl_UserRole" Multiplicity="0..1" />
+    <End Role="tbl_Registration" Type="Self.tbl_Registration" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="tbl_UserRole">
         <PropertyRef Name="RoleId" />
@@ -141,4 +190,28 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityContainer Name="PRITEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tbl_Colleges" EntityType="Self.tbl_Colleges" />
+    <EntitySet Name="tbl_Contact" EntityType="Self.tbl_Contact" />
+    <EntitySet Name="tbl_Degree" EntityType="Self.tbl_Degree" />
+    <EntitySet Name="tbl_Employee" EntityType="Self.tbl_Employee" />
+    <EntitySet Name="tbl_EmploymentDetails" EntityType="Self.tbl_EmploymentDetails" />
+    <EntitySet Name="tbl_FileUpload" EntityType="Self.tbl_FileUpload" />
+    <EntitySet Name="tbl_Notification" EntityType="Self.tbl_Notification" />
+    <EntitySet Name="tbl_Registration" EntityType="Self.tbl_Registration" />
+    <EntitySet Name="tbl_UserRole" EntityType="Self.tbl_UserRole" />
+    <EntitySet Name="tbl_Feedback" EntityType="Self.tbl_Feedback" />
+    <AssociationSet Name="FK_tbl_Registration_tbl_Colleges" Association="Self.FK_tbl_Registration_tbl_Colleges">
+      <End Role="tbl_Colleges" EntitySet="tbl_Colleges" />
+      <End Role="tbl_Registration" EntitySet="tbl_Registration" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_EmploymentDetails_tbl_Employee" Association="Self.FK_tbl_EmploymentDetails_tbl_Employee">
+      <End Role="tbl_Employee" EntitySet="tbl_Employee" />
+      <End Role="tbl_EmploymentDetails" EntitySet="tbl_EmploymentDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_Registration_tbl_UserRole" Association="Self.FK_tbl_Registration_tbl_UserRole">
+      <End Role="tbl_UserRole" EntitySet="tbl_UserRole" />
+      <End Role="tbl_Registration" EntitySet="tbl_Registration" />
+    </AssociationSet>
+  </EntityContainer>
 </Schema>

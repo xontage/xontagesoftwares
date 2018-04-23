@@ -24,7 +24,7 @@ namespace PRIT.Entity
         public string registrationId { get; set; }
         public string collegeName { get; set; }
         public string Address { get; set; }
-        public Nullable<long> contact1 { get; set; }
+        public long contact1 { get; set; }
         public Nullable<long> contact2 { get; set; }
         public string website { get; set; }
         public string email { get; set; }
