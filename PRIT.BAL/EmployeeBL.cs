@@ -14,6 +14,7 @@ namespace PRIT.BAL
         PRITEntities db = new PRITEntities();
         public void AddEmployees(tbl_Employee obj, string userName)
         {
+
             var myEmp = empDL.GetAllEmployee();
             var myEmpList = empDL.GetAllEmployeeList();
             tbl_Employee p = empDL.GetEmployeeById(obj.ID);
