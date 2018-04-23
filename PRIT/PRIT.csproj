@@ -159,6 +159,8 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\bootstrap-datepicker.css" />
+    <Content Include="Content\css\bootstrap-datepicker.min.css" />
     <Content Include="Content\ticker.css" />
     <Content Include="css\animate.min.css" />
     <Content Include="css\bootstrap-multiselect.css" />
@@ -361,6 +363,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="images\404.xcf" />
     <Content Include="Scripts\analytics.js" />
+    <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\count-to.js" />
@@ -437,6 +440,12 @@
     <Content Include="Views\Home\IEEEProjects.cshtml" />
     <Content Include="Views\Home\Domains.cshtml" />
     <Content Include="Views\Home\MobileDevelopment.cshtml" />
+    <Content Include="Views\Admin\_AddEditEmployee.cshtml" />
+    <Content Include="Views\Admin\_AddEditEmployment.cshtml" />
+    <Content Include="Views\Admin\_EmployeePartial.cshtml" />
+    <Content Include="Views\Admin\_EmploymentPartial.cshtml" />
+    <Content Include="Views\Admin\EmploymentDetailMgmt.cshtml" />
+    <Content Include="Views\Admin\EmployeeMgmt.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

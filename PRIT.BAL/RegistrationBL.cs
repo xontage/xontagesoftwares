@@ -78,10 +78,10 @@ namespace PRIT.BAL
                         var password = EncryptPassword(obj.Password, keyNew);
                         obj.Password = password;
 
-                        obj.UserSalt = keyNew;
+                        ////obj.UserSalt = keyNew;
                     }
 
-                    obj.Guid = guid;
+                    ////obj.Guid = guid;
                     if (obj.RoleId == null || obj.RoleId == 0)
                         obj.RoleId = 2;
                     obj.CreatedDate = DateTime.Now;

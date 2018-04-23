@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="CollegeBL.cs" />
     <Compile Include="ContactsBL.cs" />
+    <Compile Include="EmployeeBL.cs" />
+    <Compile Include="EmploymentBL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegistrationBL.cs" />
     <Compile Include="UploadedFileBL.cs" />

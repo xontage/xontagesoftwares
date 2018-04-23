@@ -28,6 +28,8 @@ namespace PRIT.Entity
         public virtual DbSet<tbl_Colleges> tbl_Colleges { get; set; }
         public virtual DbSet<tbl_Contact> tbl_Contact { get; set; }
         public virtual DbSet<tbl_Degree> tbl_Degree { get; set; }
+        public virtual DbSet<tbl_Employee> tbl_Employee { get; set; }
+        public virtual DbSet<tbl_EmploymentDetails> tbl_EmploymentDetails { get; set; }
         public virtual DbSet<tbl_FileUpload> tbl_FileUpload { get; set; }
         public virtual DbSet<tbl_Notification> tbl_Notification { get; set; }
         public virtual DbSet<tbl_Registration> tbl_Registration { get; set; }
