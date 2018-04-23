@@ -1,0 +1,175 @@
+﻿@model IEnumerable<PRIT.Entity.tbl_Employee>
+@{
+    Layout = null;
+}
+
+
+<div class="container">
+    <br />
+    <br />
+
+    <table style="width:100%" id="exampleEmployee" class="display" cellspacing="0">
+        <thead>
+            <tr>
+                <th>RegId</th>
+                <th>Full Name</th>
+                <th>Email Id</th>
+                <th>Contact No</th>
+                <th>Designation</th>
+                <th>Employee Type</th>
+                <th>Highest Qualification</th>
+                <th>Employee Id</th>
+
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+
+                <tr>
+                    <td>@item.ID </td>
+                    <td>@item.FirstName @item.LastName</td>
+                    <td><strong>@item.EmailId</strong></td>
+                    <td>@item.MobileNo</td>
+                    <td>@item.Designation</td>
+                    <td>@item.EmployeeType</td>
+                    <td>@item.HighestEducation</td>
+                    <td>@item.EmployeeId</td>
+
+                    <td>
+                        <input type="button" value="Delete" class="btn btn-danger btnEmployeeDelete" data-empid=@item.ID />
+                        <input type="button" value="Update" class="btnUpdateEmployee btn btn-success" data-empid=@item.ID />
+
+
+                        <input type="button" value="Add Employment" class="btnAddEmployment btn btn-success" data-empid=@item.ID />
+                        @* <input type="button" value="Update Employment" class="btnUpdateEmployment btn btn-success" data-empid=@item.ID />*@
+
+                    </td>
+                </tr>
+
+            }
+
+        </tbody>
+    </table>
+</div>
+
+@*bind  popup to this div*@
+<div id="employementPopUp"></div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $('#exampleEmployee').DataTable({
+            "pagingType": "full_numbers"
+        });
+    });
+
+    $('.btnEmployeeDelete').on('click', function () {
+        var id = $(this).data("empid");
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover record!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel please!",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }, function (isConfirm) {
+            if (isConfirm) {
+
+                $.ajax({
+                    type: "POST",
+                    url: "../Admin/DeleteEmployee/" + id,
+                    //contentType: "application/json; charset=utf-8",
+                    //contentType: "html",
+                    //dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "html",
+                    success: function (result) {
+                        $('#employeeData').html(result);
+                        swal('Deleted!', 'Your imaginary file has been deleted.', 'success')
+                    },
+                    error: function (xhr, status, error) {
+                        sweetAlert("Oops...", "Something went wrong!", "error");
+
+                    }
+                });
+
+            } else {
+                swal("Cancelled", "Your imaginary file is safe :)", "error");
+            }
+        });
+    });
+
+    $(".btnUpdateEmployee").click(function () {
+        debugger
+        var id = $(this).data("empid");
+        $.ajax({
+            type: "GET",
+            url: "../Admin/AddEditEmployee?EmpId=" + id,
+            //contentType: "application/json; charset=utf-8",
+            //dataType: "json",
+            success: function (result) {
+                debugger;
+
+                $('#employeePopUp').html(result);
+                $('#employeeModal').modal('show');
+
+            },
+            error: function (xhr, status, error) {
+                sweetAlert("Oops...", "Something went wrong!", "error");
+                //alert('Error in downloading File');
+            }
+        });
+    });
+
+    $(".btnAddEmployment").click(function () {
+        debugger
+        var id = $(this).data("empid");
+        $.ajax({
+            type: "GET",
+            url: "../Admin/AddEditEmployment?EmpId=" + id,
+            //contentType: "application/json; charset=utf-8",
+            //dataType: "json",
+            success: function (result) {
+                debugger;
+                
+                $('#employementPopUp').html(result);
+               
+                $('#employmentModal').modal('show');
+               
+            },
+            error: function (xhr, status, error) {
+                sweetAlert("Oops...", "Something went wrong!", "error");
+                //alert('Error in downloading File');
+            }
+        });
+    });
+
+    //$(".btnUpdateEmployment").click(function () {
+    //    debugger
+    //    var id = $(this).data("empid");
+    //    $.ajax({
+    //        type: "GET",
+    //        url: "../Admin/AddEditEmployment?EmpId=" + id,
+    //        //contentType: "application/json; charset=utf-8",
+    //        //dataType: "json",
+    //        success: function (result) {
+    //            debugger;
+    //            $('#employementPopUp').html(result);
+    //            $('#employmentModal').modal('show');
+    //        },
+    //        error: function (xhr, status, error) {
+    //            sweetAlert("Oops...", "Something went wrong!", "error");
+    //            //alert('Error in downloading File');
+    //        }
+    //    });
+    //})
+
+
+</script>

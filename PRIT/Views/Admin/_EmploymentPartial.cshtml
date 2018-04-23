@@ -1,0 +1,106 @@
+﻿
+@model IEnumerable<PRIT.Entity.tbl_EmploymentDetails>
+@{
+               
+
+                Layout = null;
+}
+
+<div class="container">
+    <br />
+    <br />
+
+    <table style="width:100%" id="exampleEmployment" class="display" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Employment Id</th>
+                <th>Full Name</th>
+                <th>Email Id</th>
+                <th>Department Name</th>               
+                <th>Date Of Joining</th>
+                <th>Previous Company Name</th>
+                <th>Previous Company Last Day</th>
+                <th>Reason For Leaving</th>
+
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+
+            <tr>
+                <td>@item.ID </td>
+                <td>@item.EmployeeFullName </td>
+                <td><strong>@item.EmployeeEmail</strong></td>
+                <td>@item.DepartmentName </td>               
+                <td>@item.DateOfJoining</td>                
+                <td>@item.PreviousCompanyName</td>               
+                <td>@item.PreviousCompanyLastDay</td>
+                <td>@item.ReasonForLeaving</td>
+                 
+                <td>
+                    <input type="button" value="Delete" class="btn btn-danger btnEmploymentDelete" data-employnentid=@item.ID />
+
+                </td>
+            </tr>
+
+            }
+
+        </tbody>
+    </table>
+</div>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $('#exampleEmployment').DataTable({
+            "pagingType": "full_numbers"
+        });
+    });
+    $('.btnEmploymentDelete').on('click', function () {
+        var id = $(this).data("employnentid");
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover record!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel please!",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }, function (isConfirm) {
+            if (isConfirm) {
+
+                $.ajax({
+                    type: "POST",
+                    url: "../Admin/DeleteEmployment/" + id,
+                    //contentType: "application/json; charset=utf-8",
+                    //contentType: "html",
+                    //dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "html",
+                    success: function (result) {
+                        $('#employeeData').html(result);
+                        swal('Deleted!', 'Your imaginary file has been deleted.', 'success')
+                    },
+                    error: function (xhr, status, error) {
+                        sweetAlert("Oops...", "Something went wrong!", "error");
+
+                    }
+                });
+
+            } else {
+                swal("Cancelled", "Your imaginary file is safe :)", "error");
+            }
+        });
+    });
+  
+
+
+
+</script>

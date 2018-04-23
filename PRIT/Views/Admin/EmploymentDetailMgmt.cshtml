@@ -1,0 +1,57 @@
+﻿@model IEnumerable<PRIT.Entity.tbl_EmploymentDetails>
+@{
+    ViewBag.Title = "EmploymentDetaileMgmt";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<head>
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+
+</head>
+<br />
+<br />
+
+
+
+
+<div id="employementData">
+    @{ Html.RenderPartial("_EmploymentPartial", Model); }
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        
+    });
+
+    function fnOnEmploymentSuccess(data) {
+
+
+        $('#employmentModal').find("[data-dismiss=modal]").trigger({ type: "click" });
+        if (data.success == true) {
+            swal('Saved!', data.message, 'success')
+        }
+        else if (data.success == false) {
+            sweetAlert("Oops...", data.message, "error");
+        }
+        if (data.result != "" || data.result != null) {
+            $('#employementData').html(data.result);
+        }
+
+
+    }
+
+
+   
+
+</script>
+
+
+
+
