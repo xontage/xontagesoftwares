@@ -36,7 +36,7 @@ namespace PRIT.MyRoleProvider
             throw new NotImplementedException();
         }
 
-        public override string[] GetRolesForUser(string username)
+        public override string[] GetRolesForUser(string email)
         {
             PRITEntities db = new PRITEntities();
             //string data = db.tbl_Login.Where(x => x.UserName == username).FirstOrDefault().RoleId;
@@ -46,7 +46,7 @@ namespace PRIT.MyRoleProvider
             var innerJoin = from s in db.tbl_Registration // outer sequence
                             join st in db.tbl_UserRole //inner sequence 
                             on s.RoleId equals st.RoleId // key selector 
-                            where(s.UserName == username)
+                            where(s.Email == email)
                             select new
                             { // result selector 
                                 //UserName = s.UserName,

@@ -21,8 +21,8 @@ namespace PRIT.Entity
 
         public string CollegeName { get; set; }
 
+        public string UserRoleName { get; set; }
 
-       
 
     }
 }
