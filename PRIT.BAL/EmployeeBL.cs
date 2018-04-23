@@ -12,30 +12,30 @@ namespace PRIT.BAL
     {
         EmployeeDL empDL = new EmployeeDL();
         PRITEntities db = new PRITEntities();
-        public void AddEmployees(tbl_Employee obj1, string userName)
+        public void AddEmployees(tbl_Employee obj, string userName)
         {
             var myEmp = empDL.GetAllEmployee();
             var myEmpList = empDL.GetAllEmployeeList();
-            tbl_Employee p = empDL.GetEmployeeById(obj1.ID);
+            tbl_Employee p = empDL.GetEmployeeById(obj.ID);
 
 
             try
             {
-                if (obj1.ID > 0)
+                if (obj.ID > 0)
                 {
                    
-                    obj1.EmployeeId = p.EmployeeId;
-                    obj1.IsDeleted = p.IsDeleted;
+                    obj.EmployeeId = p.EmployeeId;
+                    obj.IsDeleted = p.IsDeleted;
                 }
                 else
                 {
                     int count = myEmpList.Count;
                     count++;
-                    obj1.EmployeeId = "XSS-10" + count;
-                    obj1.IsDeleted = false;
+                    obj.EmployeeId = "XSS-10" + count;
+                    obj.IsDeleted = false;
                 }
 
-                empDL.SaveEmployees(obj1);
+                empDL.SaveEmployees(obj);
             }
             catch (Exception ex)
             {
