@@ -15,6 +15,7 @@ namespace PRIT.DAL
 
 
 
+
             try
             {
                 obj.Date = DateTime.Now.ToString();
