@@ -10,10 +10,10 @@ namespace PRIT.DAL
     public class ContactDL
     {
         PRITEntities db = new PRITEntities();
-        //added code by rahul
+        //added code by lenu
         public void SaveContact(tbl_Contact obj)
         {
-            //added code by rahul
+            //added code by lenu
             try
             {
                 obj.Date = DateTime.Now.ToString();
