@@ -79,6 +79,9 @@
   <ItemGroup>
     <Compile Include="CollegeModel.cs" />
     <Compile Include="FileUploadModel.cs" />
+    <Compile Include="MetaModel\tbl_CollegesMetaModel.cs" />
+    <Compile Include="MetaModel\tbl_EmployeeMetaModel.cs" />
+    <Compile Include="MetaModel\tbl_EmploymentDetailsMetaModel.cs" />
     <Compile Include="MetaModel\tbl_RegistrationMetaModel.cs" />
     <Compile Include="PRIT.Context.cs">
       <AutoGen>True</AutoGen>
@@ -96,6 +99,7 @@
       <DependentUpon>PRIT.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="tbl_CollegeModel.cs" />
     <Compile Include="tbl_Colleges.cs">
       <DependentUpon>PRIT.tt</DependentUpon>
     </Compile>
@@ -105,6 +109,14 @@
     <Compile Include="tbl_Degree.cs">
       <DependentUpon>PRIT.tt</DependentUpon>
     </Compile>
+    <Compile Include="tbl_Employee.cs">
+      <DependentUpon>PRIT.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_EmployeeModel.cs" />
+    <Compile Include="tbl_EmploymentDetails.cs">
+      <DependentUpon>PRIT.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_EmploymentDetailsModel.cs" />
     <Compile Include="tbl_Feedback.cs">
       <DependentUpon>PRIT.tt</DependentUpon>
     </Compile>

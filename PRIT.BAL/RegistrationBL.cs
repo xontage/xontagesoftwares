@@ -12,8 +12,8 @@ namespace PRIT.BAL
 
     public class RegistrationBL
     {
-        RegistrationDL registrationDL = new RegistrationDL();
-      //  PRITEntities db = new PRITEntities();
+        
+      
 
         /// <summary>
         /// 2017/05/18 - Rahul Patil - 
@@ -25,47 +25,12 @@ namespace PRIT.BAL
         {
             try
             {
-
+                RegistrationDL registrationDL = new RegistrationDL();
                 if (obj.Id > 0)
                 {
-                    obj.ModifiedDate = DateTime.Now;
-                   
+                    obj.ModifiedDate = DateTime.Now;                   
                     obj.ModifiedBy = userName;
-
-                    //tbl_Registration lst = (from p in db.tbl_Registration
-                    //           where p.Id == obj.Id
-                    //           select p).FirstOrDefault();
-
-
-                    //var lst = db.tbl_Registration.Where(Ind => Ind.Id == obj.Id).FirstOrDefault();
-                    //var lst1 = db.tbl_Registration.FirstOrDefault();
-                    //var lst2 = db.tbl_Registration.First();
-                    //var lst3 = db.tbl_Registration.Where(Ind => Ind.Id == obj.Id).First();
-
-                    ////modify individual information                                    
-                    //lst.FullName = obj.FullName;
-                    //lst.Email = obj.Email;
-                    //lst.ContactNo = obj.ContactNo;
-                    //lst.Designation = obj.Designation;
-                    //lst.CollegeID = obj.CollegeID;
-                    //lst.RoleId = obj.RoleId;
-                    //lst.UserName = obj.UserName;
-                    //lst.Password = obj.Password;
-
-
-
-                    //var a = new tbl_Registration
-                    //{
-                    //    FullName = lst[0].FullName,
-                    //    Email = lst[0].Email,
-                    //    ContactNo = lst[0].ContactNo,
-                    //    Designation = lst[0].Designation,
-                    //    CollegeID = lst[0].CollegeID,
-                    //    RoleId = lst[0].RoleId,
-                    //    UserName = lst[0].UserName,
-                    //    Password = lst[0].Password
-                    //};
-
+                   
                     return registrationDL.Registration(obj);
                 }
                 else
@@ -78,10 +43,10 @@ namespace PRIT.BAL
                         var password = EncryptPassword(obj.Password, keyNew);
                         obj.Password = password;
 
-                        obj.UserSalt = keyNew;
+                        ////obj.UserSalt = keyNew;
                     }
 
-                    obj.Guid = guid;
+                    ////obj.Guid = guid;
                     if (obj.RoleId == null || obj.RoleId == 0)
                         obj.RoleId = 2;
                     obj.CreatedDate = DateTime.Now;
@@ -101,7 +66,6 @@ namespace PRIT.BAL
                 // throw ex;
             }
         }
-
 
         #region AES Emcryption
         /// <summary>
@@ -187,13 +151,157 @@ namespace PRIT.BAL
             }
         }
         #endregion
-
-
         public void DeleteRegisteredUser(int Id)
         {
+            RegistrationDL registrationDL = new RegistrationDL();
             registrationDL.DeleteRegisteredUser(Id);
         }
 
+
+
+        #region Login button click functionality..
+
+        /// <summary>
+        /// -Login Verification.  
+        /// </summary>
+        /// <param name="Email">Username</param>
+        /// <param name="Password">Password</param>
+        /// <returns>Return User values</returns>
+        public tbl_Registration CheckUserNameExistsOrNot(string Email)
+        {
+            tbl_Registration user = new tbl_Registration();
+            try
+            {
+                RegistrationDL userDB = new RegistrationDL();
+                user = userDB.GetUserDetailByMail(Email);
+            }
+            catch (Exception ex)
+            {
+               // ExceptionManager.Publish(ex, MethodBase.GetCurrentMethod().DeclaringType.Namespace + "-" + MethodBase.GetCurrentMethod().DeclaringType.Name, "FrameWork");
+                throw ex;
+            }
+            return user;
+        }
+
+        /// <summary>
+        /// -Login Verification. 
+        /// </summary>
+        /// <param name="Email">Username</param>
+        /// <param name="Password">Password</param>
+        /// <returns>Return User values</returns>
+        public tbl_Registration LoginVerification(string Email, string Password)
+        {
+            tbl_Registration user = null;
+            try
+            {
+                //int saltkey=commonBL.GenrateSalt();
+                //call method to get userdetail by email
+                RegistrationDL userDB = new RegistrationDL();
+                user = userDB.GetUserDetailByMail(Email);
+                if (user != null)
+                    if (!ComparePassword(Password, user.Password, user.UserSalt))
+                    {
+                        user = null;
+                    }
+            }
+            catch (Exception ex)
+            {
+                //ExceptionManager.Publish(ex, MethodBase.GetCurrentMethod().DeclaringType.Namespace + "-" + MethodBase.GetCurrentMethod().DeclaringType.Name, "FrameWork");
+                throw ex;
+            }
+            return user;
+        }
+
+
+        /// <summary>
+        /// it will check whether user input password match with password stored in database for particular email id 
+        /// </summary>
+        /// <param name="Password"></param>
+        /// <param name="EncryptedPassword"></param>
+        /// <param name="Saltphrase"></param>
+        /// <returns></returns>
+        public static bool ComparePassword(string Password, string EncryptedPassword, string Saltphrase)
+        {
+            try
+            {
+                var DecryptedPassword = DecryptPassword(EncryptedPassword, Saltphrase);
+                if (DecryptedPassword == Password)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception Ex)
+            {
+                throw Ex;
+            }
+        }
+
+
+
+        /// <summary>
+        /// it will decrypt password  
+        /// </summary>
+        /// <param name="Password">Encrypted password</param>
+        /// <param name="Saltphrase">user salt</param>
+        /// <returns>decrypted passord string</returns>
+        public static string DecryptPassword(string Password, string Saltphrase)
+        {
+         
+
+            System.Text.UTF8Encoding UTF8 = new System.Text.UTF8Encoding();
+            //SHA512Managed HashProvider = new SHA512Managed();
+            MD5CryptoServiceProvider HashProvider = new MD5CryptoServiceProvider();
+            TripleDESCryptoServiceProvider TDESAlgorithm = new TripleDESCryptoServiceProvider();
+            string Passphrase = Saltphrase;//"nEo@^!n@23";
+            byte[] Results;
+
+
+            // Step 1. We hash the passphrase using MD5
+            // We use the MD5 hash generator as the result is a 128 bit byte array
+            // which is a valid length for the TripleDES encoder we use below
+
+            try
+            {
+
+                byte[] TDESKey = HashProvider.ComputeHash(UTF8.GetBytes(Passphrase));
+
+                // Step 2. Create a new TripleDESCryptoServiceProvider object
+
+
+                // Step 3. Setup the decoder
+                TDESAlgorithm.Key = TDESKey;
+                TDESAlgorithm.Mode = CipherMode.ECB;
+                TDESAlgorithm.Padding = PaddingMode.PKCS7;
+
+                // Step 4. Convert the input string to a byte[]
+                byte[] DataToDecrypt = Convert.FromBase64String(Password);
+
+                // Step 5. Attempt to decrypt the string
+
+                ICryptoTransform Decryptor = TDESAlgorithm.CreateDecryptor();
+                Results = Decryptor.TransformFinalBlock(DataToDecrypt, 0, DataToDecrypt.Length);
+            }
+            catch (Exception Ex)
+            {
+                return "Some exception occured" + Ex;
+            }
+            finally
+            {
+                // Clear the TripleDes and Hashprovider services of any sensitive information
+                TDESAlgorithm.Clear();
+                HashProvider.Clear();
+            }
+
+            // Step 6. Return the decrypted string in UTF8 format
+            return UTF8.GetString(Results);
+        }
+
+
+        #endregion...End of Login button click functionality..
 
 
 
