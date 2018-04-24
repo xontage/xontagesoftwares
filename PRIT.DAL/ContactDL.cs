@@ -12,12 +12,7 @@ namespace PRIT.DAL
         PRITEntities db = new PRITEntities();
         public void SaveContact(tbl_Contact obj)
         {
-
-
-
-
-
-
+            
             try
             {
                 obj.Date = DateTime.Now.ToString();
