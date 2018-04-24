@@ -10,12 +10,13 @@ namespace PRIT.DAL
    public class EmployeeDL
     {
         PRITEntities db = new PRITEntities();
-       
+        //added code by rahul
         public void SaveEmployees(tbl_Employee obj)
         {
             var entity = db.tbl_Employee.Where(p => p.ID == obj.ID).AsQueryable().FirstOrDefault();
             try
             {
+                //added code by rahul
                 if (obj.ID > 0)
                 {
 
