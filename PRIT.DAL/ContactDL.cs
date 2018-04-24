@@ -14,6 +14,7 @@ namespace PRIT.DAL
         public void SaveContact(tbl_Contact obj)
         {
             //added code by lenu
+
             try
             {
                 obj.Date = DateTime.Now.ToString();
