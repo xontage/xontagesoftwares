@@ -15,15 +15,17 @@ namespace PRIT.Entity
     public partial class tbl_Registration
     {
         public int Id { get; set; }
+        public System.Guid Guid { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public string UserSalt { get; set; }
         public string FullName { get; set; }
         public string UserName { get; set; }
-        public Nullable<long> ContactNo { get; set; }
+        public long ContactNo { get; set; }
         public string Designation { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public System.DateTime CreatedDate { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<bool> IsActive { get; set; }
+        public bool IsActive { get; set; }
         public Nullable<int> RoleId { get; set; }
         public Nullable<int> CollegeID { get; set; }
         public string Gender { get; set; }

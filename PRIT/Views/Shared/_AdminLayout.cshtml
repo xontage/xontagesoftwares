@@ -57,6 +57,9 @@
                 width: 100%;
                 height: auto;
             }
+
+
+
     </style>
 
 
@@ -69,7 +72,9 @@
 
     <header id="header">
 
-
+@if (User.IsInRole("Admin"))
+{
+    
         <nav class="navbar navbar-inverse" role="banner">
             <div class="container">
                 <div class="navbar-header">
@@ -82,45 +87,17 @@
                     <a class="navbar-brand" href="#"><img src="~/images/logo2.png" alt="logo" /></a>
                 </div>
 
-                <div class="collapse navbar-collapse navbar-right">
-                    <ul class="nav navbar-nav">
-                        @*<li ><a href="Default.aspx">Home</a></li>*@
-                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "AdminDashboard" ? "active" : "")"> <a href="@Url.Action("AdminDashboard", "Admin")">Home</a> </li>
+              
+                    @Html.Partial("_MenuPartial")
+                
+                
 
-                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "MultipleFileUpload" ? "active" : "")"><a href="@Url.Action("MultipleFileUpload", "Admin")">Upload Documents</a></li>
 
-                        @*<li><a href="services.aspx">Services</a></li>*@
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account <i class="fa fa-angle-down"></i></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Change Password</a></li>
-                                <li><a href="#">My Profile</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin Privileges <i class="fa fa-angle-down"></i></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="@Url.Action("Registration", "Admin")">Registration</a></li>
-                                <li><a href="@Url.Action("EmployeeMgmt", "Admin")">Employee Management</a></li>
-                                <li><a href="@Url.Action("ViewContacts", "Admin")">View Contacts</a></li>
-                                <li><a href="@Url.Action("CollegeMgmt", "Admin")">College Management</a></li>
-                                <li><a href="#">Fees Management</a></li>
-                                <li><a href="#">Course Management</a></li>
-                                <li><a href="#">Batch Management</a></li>
-                                <li><a href="#">Batch Time Management</a></li>
-                                <li><a href="#">Expense Management</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Logout" ? "active" : "")"> <a href="@Url.Action("Logout", "Admin")" id="contactId">Logout</a> </li>
-                    </ul>
-                </div>
             </div><!--/.container-->
         </nav><!--/nav-->
 
 
-
+}
 
     </header>
 

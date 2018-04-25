@@ -79,6 +79,7 @@
   <ItemGroup>
     <Compile Include="CollegeModel.cs" />
     <Compile Include="FileUploadModel.cs" />
+    <Compile Include="MenuModels.cs" />
     <Compile Include="MetaModel\tbl_CollegesMetaModel.cs" />
     <Compile Include="MetaModel\tbl_EmployeeMetaModel.cs" />
     <Compile Include="MetaModel\tbl_EmploymentDetailsMetaModel.cs" />
@@ -123,6 +124,9 @@
     <Compile Include="tbl_FileUpload.cs">
       <DependentUpon>PRIT.tt</DependentUpon>
     </Compile>
+    <Compile Include="tbl_MainMenu.cs">
+      <DependentUpon>PRIT.tt</DependentUpon>
+    </Compile>
     <Compile Include="tbl_Notification.cs">
       <DependentUpon>PRIT.tt</DependentUpon>
     </Compile>
@@ -130,6 +134,9 @@
       <DependentUpon>PRIT.tt</DependentUpon>
     </Compile>
     <Compile Include="tbl_RegistrationModel.cs" />
+    <Compile Include="tbl_SubMenu.cs">
+      <DependentUpon>PRIT.tt</DependentUpon>
+    </Compile>
     <Compile Include="tbl_UserRole.cs">
       <DependentUpon>PRIT.tt</DependentUpon>
     </Compile>

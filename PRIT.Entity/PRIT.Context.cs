@@ -31,8 +31,10 @@ namespace PRIT.Entity
         public virtual DbSet<tbl_Employee> tbl_Employee { get; set; }
         public virtual DbSet<tbl_EmploymentDetails> tbl_EmploymentDetails { get; set; }
         public virtual DbSet<tbl_FileUpload> tbl_FileUpload { get; set; }
+        public virtual DbSet<tbl_MainMenu> tbl_MainMenu { get; set; }
         public virtual DbSet<tbl_Notification> tbl_Notification { get; set; }
         public virtual DbSet<tbl_Registration> tbl_Registration { get; set; }
+        public virtual DbSet<tbl_SubMenu> tbl_SubMenu { get; set; }
         public virtual DbSet<tbl_UserRole> tbl_UserRole { get; set; }
         public virtual DbSet<tbl_Feedback> tbl_Feedback { get; set; }
     }

@@ -24,5 +24,6 @@ namespace PRIT.Entity
         public string UserRoleName { get; set; }
 
 
+        public bool RememberMe { get; set; }
     }
 }

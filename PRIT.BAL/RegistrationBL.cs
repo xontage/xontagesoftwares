@@ -198,6 +198,10 @@ namespace PRIT.BAL
                 //call method to get userdetail by email
                 RegistrationDL userDB = new RegistrationDL();
                 user = userDB.GetUserDetailByMail(Email);
+                
+                
+
+
                 if (user != null)
                     if (!ComparePassword(Password, user.Password, user.UserSalt))
                     {

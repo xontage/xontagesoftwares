@@ -6,13 +6,13 @@
     </Key>
     <Property Name="collegeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="registrationId" Type="varchar" MaxLength="50" />
-    <Property Name="collegeName" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="Address" Type="varchar(max)" Nullable="false" />
-    <Property Name="contact1" Type="bigint" Nullable="false" />
+    <Property Name="collegeName" Type="varchar" MaxLength="50" />
+    <Property Name="Address" Type="varchar(max)" />
+    <Property Name="contact1" Type="bigint" />
     <Property Name="contact2" Type="bigint" />
     <Property Name="website" Type="varchar" MaxLength="50" />
-    <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="TPOName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="email" Type="varchar" MaxLength="50" />
+    <Property Name="TPOName" Type="varchar" MaxLength="50" />
     <Property Name="PrincipalName" Type="varchar" MaxLength="50" />
     <Property Name="Description" Type="varchar(max)" />
     <Property Name="Degree" Type="varchar(max)" />
@@ -92,7 +92,7 @@
     <Property Name="EmplD" Type="int" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'xontagesoftwares_RP.dbo.tbl_Feedback' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'PRIT.dbo.tbl_Feedback' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="tbl_Feedback">
     <Key>
       <PropertyRef Name="Id" />
@@ -114,6 +114,13 @@ warning 6002: The table/view 'xontagesoftwares_RP.dbo.tbl_Feedback' does not hav
     <Property Name="Contents" Type="binary" MaxLength="50" />
     <Property Name="FileType" Type="varchar" MaxLength="50" />
   </EntityType>
+  <EntityType Name="tbl_MainMenu">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MainMenu" Type="nvarchar" MaxLength="50" />
+  </EntityType>
   <EntityType Name="tbl_Notification">
     <Key>
       <PropertyRef Name="Id" />
@@ -128,20 +135,33 @@ warning 6002: The table/view 'xontagesoftwares_RP.dbo.tbl_Feedback' does not hav
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Email" Type="varchar" MaxLength="50" />
-    <Property Name="Password" Type="varchar" MaxLength="50" />
+    <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="UserSalt" Type="nvarchar" MaxLength="500" Nullable="false" />
     <Property Name="FullName" Type="varchar" MaxLength="50" />
-    <Property Name="UserName" Type="varchar" MaxLength="50" />
-    <Property Name="ContactNo" Type="bigint" />
+    <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ContactNo" Type="bigint" Nullable="false" />
     <Property Name="Designation" Type="varchar" MaxLength="50" />
-    <Property Name="CreatedDate" Type="datetime" />
-    <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
-    <Property Name="IsActive" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
     <Property Name="RoleId" Type="int" />
     <Property Name="CollegeID" Type="int" />
     <Property Name="Gender" Type="char" MaxLength="1" />
     <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
     <Property Name="ModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="tbl_SubMenu">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SubMenu" Type="nvarchar" MaxLength="50" />
+    <Property Name="Controller" Type="nvarchar" MaxLength="100" />
+    <Property Name="Action" Type="nvarchar" MaxLength="100" />
+    <Property Name="MainMenuId" Type="int" />
+    <Property Name="RoleId" Type="int" />
   </EntityType>
   <EntityType Name="tbl_UserRole">
     <Key>
@@ -186,6 +206,30 @@ warning 6002: The table/view 'xontagesoftwares_RP.dbo.tbl_Feedback' does not hav
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_tbl_SubMenu_tbl_MainMenu">
+    <End Role="tbl_MainMenu" Type="Self.tbl_MainMenu" Multiplicity="0..1" />
+    <End Role="tbl_SubMenu" Type="Self.tbl_SubMenu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_MainMenu">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tbl_SubMenu">
+        <PropertyRef Name="MainMenuId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_SubMenu_tbl_UserRole">
+    <End Role="tbl_UserRole" Type="Self.tbl_UserRole" Multiplicity="0..1" />
+    <End Role="tbl_SubMenu" Type="Self.tbl_SubMenu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_UserRole">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="tbl_SubMenu">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="PRITModelStoreContainer">
     <EntitySet Name="tbl_Colleges" EntityType="Self.tbl_Colleges" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tbl_Contact" EntityType="Self.tbl_Contact" Schema="dbo" store:Type="Tables" />
@@ -193,8 +237,10 @@ warning 6002: The table/view 'xontagesoftwares_RP.dbo.tbl_Feedback' does not hav
     <EntitySet Name="tbl_Employee" EntityType="Self.tbl_Employee" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tbl_EmploymentDetails" EntityType="Self.tbl_EmploymentDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tbl_FileUpload" EntityType="Self.tbl_FileUpload" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_MainMenu" EntityType="Self.tbl_MainMenu" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tbl_Notification" EntityType="Self.tbl_Notification" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tbl_Registration" EntityType="Self.tbl_Registration" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_SubMenu" EntityType="Self.tbl_SubMenu" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tbl_UserRole" EntityType="Self.tbl_UserRole" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tbl_Feedback" EntityType="Self.tbl_Feedback" store:Type="Tables" store:Schema="dbo">
       <DefiningQuery>SELECT 
@@ -216,6 +262,14 @@ warning 6002: The table/view 'xontagesoftwares_RP.dbo.tbl_Feedback' does not hav
     <AssociationSet Name="FK_tbl_Registration_tbl_UserRole" Association="Self.FK_tbl_Registration_tbl_UserRole">
       <End Role="tbl_UserRole" EntitySet="tbl_UserRole" />
       <End Role="tbl_Registration" EntitySet="tbl_Registration" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_SubMenu_tbl_MainMenu" Association="Self.FK_tbl_SubMenu_tbl_MainMenu">
+      <End Role="tbl_MainMenu" EntitySet="tbl_MainMenu" />
+      <End Role="tbl_SubMenu" EntitySet="tbl_SubMenu" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_SubMenu_tbl_UserRole" Association="Self.FK_tbl_SubMenu_tbl_UserRole">
+      <End Role="tbl_UserRole" EntitySet="tbl_UserRole" />
+      <End Role="tbl_SubMenu" EntitySet="tbl_SubMenu" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

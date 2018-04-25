@@ -27,7 +27,6 @@ E:\PracticeProjects\PRIT\PRIT.Entity\bin\Debug\en-US\System.Web.Mvc.Extensions.r
 E:\PracticeProjects\PRIT\PRIT.Entity\obj\Debug\PRIT.Entity.csproj.CoreCompileInputs.cache
 E:\PracticeProjects\PRIT\PRIT.Entity\obj\Debug\PRIT.Entity.dll
 E:\PracticeProjects\PRIT\PRIT.Entity\obj\Debug\PRIT.Entity.pdb
-E:\PracticeProjects\PRIT\PRIT.Entity\obj\Debug\PRIT.Entity.csprojResolveAssemblyReference.cache
 D:\PRITGIT\xontagesoftwares\PRIT.Entity\bin\Debug\PRIT.Entity.dll.config
 D:\PRITGIT\xontagesoftwares\PRIT.Entity\bin\Debug\PRIT.Entity.dll
 D:\PRITGIT\xontagesoftwares\PRIT.Entity\bin\Debug\PRIT.Entity.pdb
@@ -57,3 +56,4 @@ D:\PRITGIT\xontagesoftwares\PRIT.Entity\bin\Debug\en-US\System.Web.Mvc.Extension
 D:\PRITGIT\xontagesoftwares\PRIT.Entity\obj\Debug\PRIT.Entity.csproj.CoreCompileInputs.cache
 D:\PRITGIT\xontagesoftwares\PRIT.Entity\obj\Debug\PRIT.Entity.dll
 D:\PRITGIT\xontagesoftwares\PRIT.Entity\obj\Debug\PRIT.Entity.pdb
+E:\PracticeProjects\PRIT\PRIT.Entity\obj\Debug\PRIT.Entity.csprojResolveAssemblyReference.cache

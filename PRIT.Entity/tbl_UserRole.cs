@@ -18,6 +18,7 @@ namespace PRIT.Entity
         public tbl_UserRole()
         {
             this.tbl_Registration = new HashSet<tbl_Registration>();
+            this.tbl_SubMenu = new HashSet<tbl_SubMenu>();
         }
     
         public int RoleId { get; set; }
@@ -25,5 +26,7 @@ namespace PRIT.Entity
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_Registration> tbl_Registration { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbl_SubMenu> tbl_SubMenu { get; set; }
     }
 }

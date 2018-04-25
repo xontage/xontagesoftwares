@@ -4,20 +4,20 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="PRITModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="PRITModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tbl_Colleges">
           <Key>
             <PropertyRef Name="collegeId" />
           </Key>
           <Property Name="collegeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="registrationId" Type="varchar" MaxLength="50" />
-          <Property Name="collegeName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Address" Type="varchar(max)" Nullable="false" />
-          <Property Name="contact1" Type="bigint" Nullable="false" />
+          <Property Name="collegeName" Type="varchar" MaxLength="50" />
+          <Property Name="Address" Type="varchar(max)" />
+          <Property Name="contact1" Type="bigint" />
           <Property Name="contact2" Type="bigint" />
           <Property Name="website" Type="varchar" MaxLength="50" />
-          <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="TPOName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="TPOName" Type="varchar" MaxLength="50" />
           <Property Name="PrincipalName" Type="varchar" MaxLength="50" />
           <Property Name="Description" Type="varchar(max)" />
           <Property Name="Degree" Type="varchar(max)" />
@@ -97,7 +97,7 @@
           <Property Name="EmplD" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'xontagesoftwares_RP.dbo.tbl_Feedback' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'PRIT.dbo.tbl_Feedback' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tbl_Feedback">
           <Key>
             <PropertyRef Name="Id" />
@@ -119,6 +119,13 @@ warning 6002: The table/view 'xontagesoftwares_RP.dbo.tbl_Feedback' does not hav
           <Property Name="Contents" Type="binary" MaxLength="50" />
           <Property Name="FileType" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="tbl_MainMenu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MainMenu" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="tbl_Notification">
           <Key>
             <PropertyRef Name="Id" />
@@ -133,20 +140,33 @@ warning 6002: The table/view 'xontagesoftwares_RP.dbo.tbl_Feedback' does not hav
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Email" Type="varchar" MaxLength="50" />
-          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UserSalt" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="FullName" Type="varchar" MaxLength="50" />
-          <Property Name="UserName" Type="varchar" MaxLength="50" />
-          <Property Name="ContactNo" Type="bigint" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ContactNo" Type="bigint" Nullable="false" />
           <Property Name="Designation" Type="varchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="RoleId" Type="int" />
           <Property Name="CollegeID" Type="int" />
           <Property Name="Gender" Type="char" MaxLength="1" />
           <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_SubMenu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubMenu" Type="nvarchar" MaxLength="50" />
+          <Property Name="Controller" Type="nvarchar" MaxLength="100" />
+          <Property Name="Action" Type="nvarchar" MaxLength="100" />
+          <Property Name="MainMenuId" Type="int" />
+          <Property Name="RoleId" Type="int" />
         </EntityType>
         <EntityType Name="tbl_UserRole">
           <Key>
@@ -191,6 +211,30 @@ warning 6002: The table/view 'xontagesoftwares_RP.dbo.tbl_Feedback' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tbl_SubMenu_tbl_MainMenu">
+          <End Role="tbl_MainMenu" Type="Self.tbl_MainMenu" Multiplicity="0..1" />
+          <End Role="tbl_SubMenu" Type="Self.tbl_SubMenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_MainMenu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_SubMenu">
+              <PropertyRef Name="MainMenuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_SubMenu_tbl_UserRole">
+          <End Role="tbl_UserRole" Type="Self.tbl_UserRole" Multiplicity="0..1" />
+          <End Role="tbl_SubMenu" Type="Self.tbl_SubMenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_UserRole">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="tbl_SubMenu">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="PRITModelStoreContainer">
           <EntitySet Name="tbl_Colleges" EntityType="Self.tbl_Colleges" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Contact" EntityType="Self.tbl_Contact" Schema="dbo" store:Type="Tables" />
@@ -198,8 +242,10 @@ warning 6002: The table/view 'xontagesoftwares_RP.dbo.tbl_Feedback' does not hav
           <EntitySet Name="tbl_Employee" EntityType="Self.tbl_Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_EmploymentDetails" EntityType="Self.tbl_EmploymentDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_FileUpload" EntityType="Self.tbl_FileUpload" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_MainMenu" EntityType="Self.tbl_MainMenu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Notification" EntityType="Self.tbl_Notification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Registration" EntityType="Self.tbl_Registration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_SubMenu" EntityType="Self.tbl_SubMenu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_UserRole" EntityType="Self.tbl_UserRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Feedback" EntityType="Self.tbl_Feedback" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -222,29 +268,70 @@ warning 6002: The table/view 'xontagesoftwares_RP.dbo.tbl_Feedback' does not hav
             <End Role="tbl_UserRole" EntitySet="tbl_UserRole" />
             <End Role="tbl_Registration" EntitySet="tbl_Registration" />
           </AssociationSet>
+          <AssociationSet Name="FK_tbl_SubMenu_tbl_MainMenu" Association="Self.FK_tbl_SubMenu_tbl_MainMenu">
+            <End Role="tbl_MainMenu" EntitySet="tbl_MainMenu" />
+            <End Role="tbl_SubMenu" EntitySet="tbl_SubMenu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_SubMenu_tbl_UserRole" Association="Self.FK_tbl_SubMenu_tbl_UserRole">
+            <End Role="tbl_UserRole" EntitySet="tbl_UserRole" />
+            <End Role="tbl_SubMenu" EntitySet="tbl_SubMenu" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PRITModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="PRITEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbl_Colleges" EntityType="PRITModel.tbl_Colleges" />
+          <EntitySet Name="tbl_Contact" EntityType="PRITModel.tbl_Contact" />
+          <EntitySet Name="tbl_Degree" EntityType="PRITModel.tbl_Degree" />
+          <EntitySet Name="tbl_Employee" EntityType="PRITModel.tbl_Employee" />
+          <EntitySet Name="tbl_EmploymentDetails" EntityType="PRITModel.tbl_EmploymentDetails" />
+          <EntitySet Name="tbl_FileUpload" EntityType="PRITModel.tbl_FileUpload" />
+          <EntitySet Name="tbl_MainMenu" EntityType="PRITModel.tbl_MainMenu" />
+          <EntitySet Name="tbl_Notification" EntityType="PRITModel.tbl_Notification" />
+          <EntitySet Name="tbl_Registration" EntityType="PRITModel.tbl_Registration" />
+          <EntitySet Name="tbl_SubMenu" EntityType="PRITModel.tbl_SubMenu" />
+          <EntitySet Name="tbl_UserRole" EntityType="PRITModel.tbl_UserRole" />
+          <EntitySet Name="tbl_Feedback" EntityType="PRITModel.tbl_Feedback" />
+          <AssociationSet Name="FK_tbl_Registration_tbl_Colleges" Association="PRITModel.FK_tbl_Registration_tbl_Colleges">
+            <End Role="tbl_Colleges" EntitySet="tbl_Colleges" />
+            <End Role="tbl_Registration" EntitySet="tbl_Registration" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_EmploymentDetails_tbl_Employee" Association="PRITModel.FK_tbl_EmploymentDetails_tbl_Employee">
+            <End Role="tbl_Employee" EntitySet="tbl_Employee" />
+            <End Role="tbl_EmploymentDetails" EntitySet="tbl_EmploymentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_SubMenu_tbl_MainMenu" Association="PRITModel.FK_tbl_SubMenu_tbl_MainMenu">
+            <End Role="tbl_MainMenu" EntitySet="tbl_MainMenu" />
+            <End Role="tbl_SubMenu" EntitySet="tbl_SubMenu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Registration_tbl_UserRole" Association="PRITModel.FK_tbl_Registration_tbl_UserRole">
+            <End Role="tbl_UserRole" EntitySet="tbl_UserRole" />
+            <End Role="tbl_Registration" EntitySet="tbl_Registration" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_SubMenu_tbl_UserRole" Association="PRITModel.FK_tbl_SubMenu_tbl_UserRole">
+            <End Role="tbl_UserRole" EntitySet="tbl_UserRole" />
+            <End Role="tbl_SubMenu" EntitySet="tbl_SubMenu" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="tbl_Colleges">
           <Key>
             <PropertyRef Name="collegeId" />
           </Key>
           <Property Name="collegeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="registrationId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="collegeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="contact1" Type="Int64" Nullable="false" />
+          <Property Name="collegeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="contact1" Type="Int64" />
           <Property Name="contact2" Type="Int64" />
           <Property Name="website" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="TPOName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TPOName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PrincipalName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Degree" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="tbl_Registration" Relationship="Self.FK_tbl_Registration_tbl_Colleges" FromRole="tbl_Colleges" ToRole="tbl_Registration" />
+          <NavigationProperty Name="tbl_Registration" Relationship="PRITModel.FK_tbl_Registration_tbl_Colleges" FromRole="tbl_Colleges" ToRole="tbl_Registration" />
         </EntityType>
         <EntityType Name="tbl_Contact">
           <Key>
@@ -270,57 +357,57 @@ warning 6002: The table/view 'xontagesoftwares_RP.dbo.tbl_Feedback' does not hav
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="MaritalStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="DateofBirth" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="EmailId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Designation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DateofBirth" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmailId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Designation" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="MobileNo" Type="Int64" Nullable="false" />
           <Property Name="AltMobileNo" Type="Int64" />
-          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Pincode" Type="Int64" Nullable="false" />
-          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="State" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="EmployeeId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsDeleted" Type="Boolean" />
-          <Property Name="HighestEducation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="HighestEducation" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Specialization" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="InstituteName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="YearOfPassing" Type="Int32" Nullable="false" />
           <Property Name="University" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="InstituteLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Percentage" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="EmployeeType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Percentage" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="EmployeeType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="AdharCardNo" Type="Int64" Nullable="false" />
           <Property Name="PassportNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PANNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PANNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="BloodGroup" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="BankName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AccountNo" Type="Int64" />
-          <NavigationProperty Name="tbl_EmploymentDetails" Relationship="Self.FK_tbl_EmploymentDetails_tbl_Employee" FromRole="tbl_Employee" ToRole="tbl_EmploymentDetails" />
+          <NavigationProperty Name="tbl_EmploymentDetails" Relationship="PRITModel.FK_tbl_EmploymentDetails_tbl_Employee" FromRole="tbl_Employee" ToRole="tbl_EmploymentDetails" />
         </EntityType>
         <EntityType Name="tbl_EmploymentDetails">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DepartmentName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CompanyName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DateOfJoining" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="JoinedAs" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="TotalRelevantExperienced" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PreviousCompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PreviousCompanyLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PreviousCompanyCTC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ReasonForLeaving" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PreviousCompanyLastDay" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DepartmentName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Role" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfJoining" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="JoinedAs" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TotalRelevantExperienced" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PreviousCompanyName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PreviousCompanyLocation" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PreviousCompanyCTC" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReasonForLeaving" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PreviousCompanyLastDay" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="EmplD" Type="Int32" />
-          <NavigationProperty Name="tbl_Employee" Relationship="Self.FK_tbl_EmploymentDetails_tbl_Employee" FromRole="tbl_EmploymentDetails" ToRole="tbl_Employee" />
+          <NavigationProperty Name="tbl_Employee" Relationship="PRITModel.FK_tbl_EmploymentDetails_tbl_Employee" FromRole="tbl_EmploymentDetails" ToRole="tbl_Employee" />
         </EntityType>
         <EntityType Name="tbl_FileUpload">
           <Key>
@@ -332,6 +419,14 @@ warning 6002: The table/view 'xontagesoftwares_RP.dbo.tbl_Feedback' does not hav
           <Property Name="ContentType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Contents" Type="Binary" MaxLength="50" FixedLength="true" />
           <Property Name="FileType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tbl_MainMenu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MainMenu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tbl_SubMenu" Relationship="PRITModel.FK_tbl_SubMenu_tbl_MainMenu" FromRole="tbl_MainMenu" ToRole="tbl_SubMenu" />
         </EntityType>
         <EntityType Name="tbl_Notification">
           <Key>
@@ -347,22 +442,37 @@ warning 6002: The table/view 'xontagesoftwares_RP.dbo.tbl_Feedback' does not hav
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Guid" Type="Guid" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UserSalt" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ContactNo" Type="Int64" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ContactNo" Type="Int64" Nullable="false" />
           <Property Name="Designation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="RoleId" Type="Int32" />
           <Property Name="CollegeID" Type="Int32" />
           <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="tbl_Colleges" Relationship="Self.FK_tbl_Registration_tbl_Colleges" FromRole="tbl_Registration" ToRole="tbl_Colleges" />
-          <NavigationProperty Name="tbl_UserRole" Relationship="Self.FK_tbl_Registration_tbl_UserRole" FromRole="tbl_Registration" ToRole="tbl_UserRole" />
+          <NavigationProperty Name="tbl_Colleges" Relationship="PRITModel.FK_tbl_Registration_tbl_Colleges" FromRole="tbl_Registration" ToRole="tbl_Colleges" />
+          <NavigationProperty Name="tbl_UserRole" Relationship="PRITModel.FK_tbl_Registration_tbl_UserRole" FromRole="tbl_Registration" ToRole="tbl_UserRole" />
+        </EntityType>
+        <EntityType Name="tbl_SubMenu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubMenu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Controller" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Action" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MainMenuId" Type="Int32" />
+          <Property Name="RoleId" Type="Int32" />
+          <NavigationProperty Name="tbl_MainMenu" Relationship="PRITModel.FK_tbl_SubMenu_tbl_MainMenu" FromRole="tbl_SubMenu" ToRole="tbl_MainMenu" />
+          <NavigationProperty Name="tbl_UserRole" Relationship="PRITModel.FK_tbl_SubMenu_tbl_UserRole" FromRole="tbl_SubMenu" ToRole="tbl_UserRole" />
         </EntityType>
         <EntityType Name="tbl_UserRole">
           <Key>
@@ -370,7 +480,8 @@ warning 6002: The table/view 'xontagesoftwares_RP.dbo.tbl_Feedback' does not hav
           </Key>
           <Property Name="RoleId" Type="Int32" Nullable="false" />
           <Property Name="RolName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="tbl_Registration" Relationship="Self.FK_tbl_Registration_tbl_UserRole" FromRole="tbl_UserRole" ToRole="tbl_Registration" />
+          <NavigationProperty Name="tbl_Registration" Relationship="PRITModel.FK_tbl_Registration_tbl_UserRole" FromRole="tbl_UserRole" ToRole="tbl_Registration" />
+          <NavigationProperty Name="tbl_SubMenu" Relationship="PRITModel.FK_tbl_SubMenu_tbl_UserRole" FromRole="tbl_UserRole" ToRole="tbl_SubMenu" />
         </EntityType>
         <EntityType Name="tbl_Feedback">
           <Key>
@@ -383,8 +494,8 @@ warning 6002: The table/view 'xontagesoftwares_RP.dbo.tbl_Feedback' does not hav
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_tbl_Registration_tbl_Colleges">
-          <End Role="tbl_Colleges" Type="Self.tbl_Colleges" Multiplicity="0..1" />
-          <End Role="tbl_Registration" Type="Self.tbl_Registration" Multiplicity="*" />
+          <End Type="PRITModel.tbl_Colleges" Role="tbl_Colleges" Multiplicity="0..1" />
+          <End Type="PRITModel.tbl_Registration" Role="tbl_Registration" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbl_Colleges">
               <PropertyRef Name="collegeId" />
@@ -395,8 +506,8 @@ warning 6002: The table/view 'xontagesoftwares_RP.dbo.tbl_Feedback' does not hav
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tbl_EmploymentDetails_tbl_Employee">
-          <End Role="tbl_Employee" Type="Self.tbl_Employee" Multiplicity="0..1" />
-          <End Role="tbl_EmploymentDetails" Type="Self.tbl_EmploymentDetails" Multiplicity="*" />
+          <End Type="PRITModel.tbl_Employee" Role="tbl_Employee" Multiplicity="0..1" />
+          <End Type="PRITModel.tbl_EmploymentDetails" Role="tbl_EmploymentDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbl_Employee">
               <PropertyRef Name="ID" />
@@ -406,9 +517,21 @@ warning 6002: The table/view 'xontagesoftwares_RP.dbo.tbl_Feedback' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tbl_SubMenu_tbl_MainMenu">
+          <End Type="PRITModel.tbl_MainMenu" Role="tbl_MainMenu" Multiplicity="0..1" />
+          <End Type="PRITModel.tbl_SubMenu" Role="tbl_SubMenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_MainMenu">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_SubMenu">
+              <PropertyRef Name="MainMenuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tbl_Registration_tbl_UserRole">
-          <End Role="tbl_UserRole" Type="Self.tbl_UserRole" Multiplicity="0..1" />
-          <End Role="tbl_Registration" Type="Self.tbl_Registration" Multiplicity="*" />
+          <End Type="PRITModel.tbl_UserRole" Role="tbl_UserRole" Multiplicity="0..1" />
+          <End Type="PRITModel.tbl_Registration" Role="tbl_Registration" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tbl_UserRole">
               <PropertyRef Name="RoleId" />
@@ -418,191 +541,201 @@ warning 6002: The table/view 'xontagesoftwares_RP.dbo.tbl_Feedback' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="PRITEntities1" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="tbl_Colleges" EntityType="Self.tbl_Colleges" />
-          <EntitySet Name="tbl_Contact" EntityType="Self.tbl_Contact" />
-          <EntitySet Name="tbl_Degree" EntityType="Self.tbl_Degree" />
-          <EntitySet Name="tbl_Employee" EntityType="Self.tbl_Employee" />
-          <EntitySet Name="tbl_EmploymentDetails" EntityType="Self.tbl_EmploymentDetails" />
-          <EntitySet Name="tbl_FileUpload" EntityType="Self.tbl_FileUpload" />
-          <EntitySet Name="tbl_Notification" EntityType="Self.tbl_Notification" />
-          <EntitySet Name="tbl_Registration" EntityType="Self.tbl_Registration" />
-          <EntitySet Name="tbl_UserRole" EntityType="Self.tbl_UserRole" />
-          <EntitySet Name="tbl_Feedback" EntityType="Self.tbl_Feedback" />
-          <AssociationSet Name="FK_tbl_Registration_tbl_Colleges" Association="Self.FK_tbl_Registration_tbl_Colleges">
-            <End Role="tbl_Colleges" EntitySet="tbl_Colleges" />
-            <End Role="tbl_Registration" EntitySet="tbl_Registration" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbl_EmploymentDetails_tbl_Employee" Association="Self.FK_tbl_EmploymentDetails_tbl_Employee">
-            <End Role="tbl_Employee" EntitySet="tbl_Employee" />
-            <End Role="tbl_EmploymentDetails" EntitySet="tbl_EmploymentDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbl_Registration_tbl_UserRole" Association="Self.FK_tbl_Registration_tbl_UserRole">
-            <End Role="tbl_UserRole" EntitySet="tbl_UserRole" />
-            <End Role="tbl_Registration" EntitySet="tbl_Registration" />
-          </AssociationSet>
-        </EntityContainer>
+        <Association Name="FK_tbl_SubMenu_tbl_UserRole">
+          <End Type="PRITModel.tbl_UserRole" Role="tbl_UserRole" Multiplicity="0..1" />
+          <End Type="PRITModel.tbl_SubMenu" Role="tbl_SubMenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_UserRole">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="tbl_SubMenu">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="PRITModelStoreContainer" CdmEntityContainer="PRITEntities1">
+        <EntityContainerMapping StorageEntityContainer="PRITModelStoreContainer" CdmEntityContainer="PRITEntities">
           <EntitySetMapping Name="tbl_Colleges">
             <EntityTypeMapping TypeName="PRITModel.tbl_Colleges">
               <MappingFragment StoreEntitySet="tbl_Colleges">
-                <ScalarProperty Name="collegeId" ColumnName="collegeId" />
-                <ScalarProperty Name="registrationId" ColumnName="registrationId" />
-                <ScalarProperty Name="collegeName" ColumnName="collegeName" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="contact1" ColumnName="contact1" />
-                <ScalarProperty Name="contact2" ColumnName="contact2" />
-                <ScalarProperty Name="website" ColumnName="website" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="TPOName" ColumnName="TPOName" />
-                <ScalarProperty Name="PrincipalName" ColumnName="PrincipalName" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Degree" ColumnName="Degree" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PrincipalName" ColumnName="PrincipalName" />
+                <ScalarProperty Name="TPOName" ColumnName="TPOName" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="website" ColumnName="website" />
+                <ScalarProperty Name="contact2" ColumnName="contact2" />
+                <ScalarProperty Name="contact1" ColumnName="contact1" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="collegeName" ColumnName="collegeName" />
+                <ScalarProperty Name="registrationId" ColumnName="registrationId" />
+                <ScalarProperty Name="collegeId" ColumnName="collegeId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_Contact">
             <EntityTypeMapping TypeName="PRITModel.tbl_Contact">
               <MappingFragment StoreEntitySet="tbl_Contact">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="InquirySpecification" ColumnName="InquirySpecification" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
                 <ScalarProperty Name="InquiryText" ColumnName="InquiryText" />
+                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="InquirySpecification" ColumnName="InquirySpecification" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_Degree">
             <EntityTypeMapping TypeName="PRITModel.tbl_Degree">
               <MappingFragment StoreEntitySet="tbl_Degree">
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="DegreeName" ColumnName="DegreeName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_Employee">
             <EntityTypeMapping TypeName="PRITModel.tbl_Employee">
               <MappingFragment StoreEntitySet="tbl_Employee">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
-                <ScalarProperty Name="DateofBirth" ColumnName="DateofBirth" />
-                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
-                <ScalarProperty Name="Designation" ColumnName="Designation" />
-                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-                <ScalarProperty Name="AltMobileNo" ColumnName="AltMobileNo" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="Country" ColumnName="Country" />
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="HighestEducation" ColumnName="HighestEducation" />
-                <ScalarProperty Name="Specialization" ColumnName="Specialization" />
-                <ScalarProperty Name="InstituteName" ColumnName="InstituteName" />
-                <ScalarProperty Name="YearOfPassing" ColumnName="YearOfPassing" />
-                <ScalarProperty Name="University" ColumnName="University" />
-                <ScalarProperty Name="InstituteLocation" ColumnName="InstituteLocation" />
-                <ScalarProperty Name="Percentage" ColumnName="Percentage" />
-                <ScalarProperty Name="EmployeeType" ColumnName="EmployeeType" />
-                <ScalarProperty Name="AdharCardNo" ColumnName="AdharCardNo" />
-                <ScalarProperty Name="PassportNo" ColumnName="PassportNo" />
-                <ScalarProperty Name="PANNo" ColumnName="PANNo" />
-                <ScalarProperty Name="BloodGroup" ColumnName="BloodGroup" />
-                <ScalarProperty Name="BankName" ColumnName="BankName" />
                 <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
+                <ScalarProperty Name="BloodGroup" ColumnName="BloodGroup" />
+                <ScalarProperty Name="PANNo" ColumnName="PANNo" />
+                <ScalarProperty Name="PassportNo" ColumnName="PassportNo" />
+                <ScalarProperty Name="AdharCardNo" ColumnName="AdharCardNo" />
+                <ScalarProperty Name="EmployeeType" ColumnName="EmployeeType" />
+                <ScalarProperty Name="Percentage" ColumnName="Percentage" />
+                <ScalarProperty Name="InstituteLocation" ColumnName="InstituteLocation" />
+                <ScalarProperty Name="University" ColumnName="University" />
+                <ScalarProperty Name="YearOfPassing" ColumnName="YearOfPassing" />
+                <ScalarProperty Name="InstituteName" ColumnName="InstituteName" />
+                <ScalarProperty Name="Specialization" ColumnName="Specialization" />
+                <ScalarProperty Name="HighestEducation" ColumnName="HighestEducation" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="AltMobileNo" ColumnName="AltMobileNo" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="DateofBirth" ColumnName="DateofBirth" />
+                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_EmploymentDetails">
             <EntityTypeMapping TypeName="PRITModel.tbl_EmploymentDetails">
               <MappingFragment StoreEntitySet="tbl_EmploymentDetails">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
-                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
-                <ScalarProperty Name="Role" ColumnName="Role" />
-                <ScalarProperty Name="DateOfJoining" ColumnName="DateOfJoining" />
-                <ScalarProperty Name="JoinedAs" ColumnName="JoinedAs" />
-                <ScalarProperty Name="TotalRelevantExperienced" ColumnName="TotalRelevantExperienced" />
-                <ScalarProperty Name="PreviousCompanyName" ColumnName="PreviousCompanyName" />
-                <ScalarProperty Name="PreviousCompanyLocation" ColumnName="PreviousCompanyLocation" />
-                <ScalarProperty Name="PreviousCompanyCTC" ColumnName="PreviousCompanyCTC" />
-                <ScalarProperty Name="ReasonForLeaving" ColumnName="ReasonForLeaving" />
-                <ScalarProperty Name="PreviousCompanyLastDay" ColumnName="PreviousCompanyLastDay" />
                 <ScalarProperty Name="EmplD" ColumnName="EmplD" />
+                <ScalarProperty Name="PreviousCompanyLastDay" ColumnName="PreviousCompanyLastDay" />
+                <ScalarProperty Name="ReasonForLeaving" ColumnName="ReasonForLeaving" />
+                <ScalarProperty Name="PreviousCompanyCTC" ColumnName="PreviousCompanyCTC" />
+                <ScalarProperty Name="PreviousCompanyLocation" ColumnName="PreviousCompanyLocation" />
+                <ScalarProperty Name="PreviousCompanyName" ColumnName="PreviousCompanyName" />
+                <ScalarProperty Name="TotalRelevantExperienced" ColumnName="TotalRelevantExperienced" />
+                <ScalarProperty Name="JoinedAs" ColumnName="JoinedAs" />
+                <ScalarProperty Name="DateOfJoining" ColumnName="DateOfJoining" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_FileUpload">
             <EntityTypeMapping TypeName="PRITModel.tbl_FileUpload">
               <MappingFragment StoreEntitySet="tbl_FileUpload">
-                <ScalarProperty Name="FileID" ColumnName="FileID" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="FileName" ColumnName="FileName" />
-                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
-                <ScalarProperty Name="Contents" ColumnName="Contents" />
                 <ScalarProperty Name="FileType" ColumnName="FileType" />
+                <ScalarProperty Name="Contents" ColumnName="Contents" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="FileID" ColumnName="FileID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_MainMenu">
+            <EntityTypeMapping TypeName="PRITModel.tbl_MainMenu">
+              <MappingFragment StoreEntitySet="tbl_MainMenu">
+                <ScalarProperty Name="MainMenu" ColumnName="MainMenu" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_Notification">
             <EntityTypeMapping TypeName="PRITModel.tbl_Notification">
               <MappingFragment StoreEntitySet="tbl_Notification">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_Registration">
             <EntityTypeMapping TypeName="PRITModel.tbl_Registration">
               <MappingFragment StoreEntitySet="tbl_Registration">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
-                <ScalarProperty Name="Designation" ColumnName="Designation" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="CollegeID" ColumnName="CollegeID" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="CollegeID" ColumnName="CollegeID" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="UserSalt" ColumnName="UserSalt" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_SubMenu">
+            <EntityTypeMapping TypeName="PRITModel.tbl_SubMenu">
+              <MappingFragment StoreEntitySet="tbl_SubMenu">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="MainMenuId" ColumnName="MainMenuId" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="Controller" ColumnName="Controller" />
+                <ScalarProperty Name="SubMenu" ColumnName="SubMenu" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_UserRole">
             <EntityTypeMapping TypeName="PRITModel.tbl_UserRole">
               <MappingFragment StoreEntitySet="tbl_UserRole">
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="RolName" ColumnName="RolName" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_Feedback">
             <EntityTypeMapping TypeName="PRITModel.tbl_Feedback">
               <MappingFragment StoreEntitySet="tbl_Feedback">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="FeedbackById" ColumnName="FeedbackById" />
-                <ScalarProperty Name="Reason" ColumnName="Reason" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="FeedbackById" ColumnName="FeedbackById" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

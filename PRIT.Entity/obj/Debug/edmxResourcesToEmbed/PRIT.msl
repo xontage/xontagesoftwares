@@ -1,161 +1,183 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="PRITModelStoreContainer" CdmEntityContainer="PRITEntities1">
+  <EntityContainerMapping StorageEntityContainer="PRITModelStoreContainer" CdmEntityContainer="PRITEntities">
     <EntitySetMapping Name="tbl_Colleges">
       <EntityTypeMapping TypeName="PRITModel.tbl_Colleges">
         <MappingFragment StoreEntitySet="tbl_Colleges">
-          <ScalarProperty Name="collegeId" ColumnName="collegeId" />
-          <ScalarProperty Name="registrationId" ColumnName="registrationId" />
-          <ScalarProperty Name="collegeName" ColumnName="collegeName" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="contact1" ColumnName="contact1" />
-          <ScalarProperty Name="contact2" ColumnName="contact2" />
-          <ScalarProperty Name="website" ColumnName="website" />
-          <ScalarProperty Name="email" ColumnName="email" />
-          <ScalarProperty Name="TPOName" ColumnName="TPOName" />
-          <ScalarProperty Name="PrincipalName" ColumnName="PrincipalName" />
-          <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="Degree" ColumnName="Degree" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="PrincipalName" ColumnName="PrincipalName" />
+          <ScalarProperty Name="TPOName" ColumnName="TPOName" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="website" ColumnName="website" />
+          <ScalarProperty Name="contact2" ColumnName="contact2" />
+          <ScalarProperty Name="contact1" ColumnName="contact1" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="collegeName" ColumnName="collegeName" />
+          <ScalarProperty Name="registrationId" ColumnName="registrationId" />
+          <ScalarProperty Name="collegeId" ColumnName="collegeId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="tbl_Contact">
       <EntityTypeMapping TypeName="PRITModel.tbl_Contact">
         <MappingFragment StoreEntitySet="tbl_Contact">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Date" ColumnName="Date" />
-          <ScalarProperty Name="InquirySpecification" ColumnName="InquirySpecification" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
           <ScalarProperty Name="InquiryText" ColumnName="InquiryText" />
+          <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="InquirySpecification" ColumnName="InquirySpecification" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="tbl_Degree">
       <EntityTypeMapping TypeName="PRITModel.tbl_Degree">
         <MappingFragment StoreEntitySet="tbl_Degree">
-          <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="DegreeName" ColumnName="DegreeName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="tbl_Employee">
       <EntityTypeMapping TypeName="PRITModel.tbl_Employee">
         <MappingFragment StoreEntitySet="tbl_Employee">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-          <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
-          <ScalarProperty Name="LastName" ColumnName="LastName" />
-          <ScalarProperty Name="Gender" ColumnName="Gender" />
-          <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
-          <ScalarProperty Name="DateofBirth" ColumnName="DateofBirth" />
-          <ScalarProperty Name="EmailId" ColumnName="EmailId" />
-          <ScalarProperty Name="Designation" ColumnName="Designation" />
-          <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-          <ScalarProperty Name="AltMobileNo" ColumnName="AltMobileNo" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="City" ColumnName="City" />
-          <ScalarProperty Name="Pincode" ColumnName="Pincode" />
-          <ScalarProperty Name="State" ColumnName="State" />
-          <ScalarProperty Name="Country" ColumnName="Country" />
-          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-          <ScalarProperty Name="HighestEducation" ColumnName="HighestEducation" />
-          <ScalarProperty Name="Specialization" ColumnName="Specialization" />
-          <ScalarProperty Name="InstituteName" ColumnName="InstituteName" />
-          <ScalarProperty Name="YearOfPassing" ColumnName="YearOfPassing" />
-          <ScalarProperty Name="University" ColumnName="University" />
-          <ScalarProperty Name="InstituteLocation" ColumnName="InstituteLocation" />
-          <ScalarProperty Name="Percentage" ColumnName="Percentage" />
-          <ScalarProperty Name="EmployeeType" ColumnName="EmployeeType" />
-          <ScalarProperty Name="AdharCardNo" ColumnName="AdharCardNo" />
-          <ScalarProperty Name="PassportNo" ColumnName="PassportNo" />
-          <ScalarProperty Name="PANNo" ColumnName="PANNo" />
-          <ScalarProperty Name="BloodGroup" ColumnName="BloodGroup" />
-          <ScalarProperty Name="BankName" ColumnName="BankName" />
           <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
+          <ScalarProperty Name="BankName" ColumnName="BankName" />
+          <ScalarProperty Name="BloodGroup" ColumnName="BloodGroup" />
+          <ScalarProperty Name="PANNo" ColumnName="PANNo" />
+          <ScalarProperty Name="PassportNo" ColumnName="PassportNo" />
+          <ScalarProperty Name="AdharCardNo" ColumnName="AdharCardNo" />
+          <ScalarProperty Name="EmployeeType" ColumnName="EmployeeType" />
+          <ScalarProperty Name="Percentage" ColumnName="Percentage" />
+          <ScalarProperty Name="InstituteLocation" ColumnName="InstituteLocation" />
+          <ScalarProperty Name="University" ColumnName="University" />
+          <ScalarProperty Name="YearOfPassing" ColumnName="YearOfPassing" />
+          <ScalarProperty Name="InstituteName" ColumnName="InstituteName" />
+          <ScalarProperty Name="Specialization" ColumnName="Specialization" />
+          <ScalarProperty Name="HighestEducation" ColumnName="HighestEducation" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="AltMobileNo" ColumnName="AltMobileNo" />
+          <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+          <ScalarProperty Name="Designation" ColumnName="Designation" />
+          <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+          <ScalarProperty Name="DateofBirth" ColumnName="DateofBirth" />
+          <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="tbl_EmploymentDetails">
       <EntityTypeMapping TypeName="PRITModel.tbl_EmploymentDetails">
         <MappingFragment StoreEntitySet="tbl_EmploymentDetails">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
-          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
-          <ScalarProperty Name="Role" ColumnName="Role" />
-          <ScalarProperty Name="DateOfJoining" ColumnName="DateOfJoining" />
-          <ScalarProperty Name="JoinedAs" ColumnName="JoinedAs" />
-          <ScalarProperty Name="TotalRelevantExperienced" ColumnName="TotalRelevantExperienced" />
-          <ScalarProperty Name="PreviousCompanyName" ColumnName="PreviousCompanyName" />
-          <ScalarProperty Name="PreviousCompanyLocation" ColumnName="PreviousCompanyLocation" />
-          <ScalarProperty Name="PreviousCompanyCTC" ColumnName="PreviousCompanyCTC" />
-          <ScalarProperty Name="ReasonForLeaving" ColumnName="ReasonForLeaving" />
-          <ScalarProperty Name="PreviousCompanyLastDay" ColumnName="PreviousCompanyLastDay" />
           <ScalarProperty Name="EmplD" ColumnName="EmplD" />
+          <ScalarProperty Name="PreviousCompanyLastDay" ColumnName="PreviousCompanyLastDay" />
+          <ScalarProperty Name="ReasonForLeaving" ColumnName="ReasonForLeaving" />
+          <ScalarProperty Name="PreviousCompanyCTC" ColumnName="PreviousCompanyCTC" />
+          <ScalarProperty Name="PreviousCompanyLocation" ColumnName="PreviousCompanyLocation" />
+          <ScalarProperty Name="PreviousCompanyName" ColumnName="PreviousCompanyName" />
+          <ScalarProperty Name="TotalRelevantExperienced" ColumnName="TotalRelevantExperienced" />
+          <ScalarProperty Name="JoinedAs" ColumnName="JoinedAs" />
+          <ScalarProperty Name="DateOfJoining" ColumnName="DateOfJoining" />
+          <ScalarProperty Name="Role" ColumnName="Role" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="tbl_FileUpload">
       <EntityTypeMapping TypeName="PRITModel.tbl_FileUpload">
         <MappingFragment StoreEntitySet="tbl_FileUpload">
-          <ScalarProperty Name="FileID" ColumnName="FileID" />
-          <ScalarProperty Name="Title" ColumnName="Title" />
-          <ScalarProperty Name="FileName" ColumnName="FileName" />
-          <ScalarProperty Name="ContentType" ColumnName="ContentType" />
-          <ScalarProperty Name="Contents" ColumnName="Contents" />
           <ScalarProperty Name="FileType" ColumnName="FileType" />
+          <ScalarProperty Name="Contents" ColumnName="Contents" />
+          <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="FileID" ColumnName="FileID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_MainMenu">
+      <EntityTypeMapping TypeName="PRITModel.tbl_MainMenu">
+        <MappingFragment StoreEntitySet="tbl_MainMenu">
+          <ScalarProperty Name="MainMenu" ColumnName="MainMenu" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="tbl_Notification">
       <EntityTypeMapping TypeName="PRITModel.tbl_Notification">
         <MappingFragment StoreEntitySet="tbl_Notification">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Date" ColumnName="Date" />
-          <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="tbl_Registration">
       <EntityTypeMapping TypeName="PRITModel.tbl_Registration">
         <MappingFragment StoreEntitySet="tbl_Registration">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="Password" ColumnName="Password" />
-          <ScalarProperty Name="FullName" ColumnName="FullName" />
-          <ScalarProperty Name="UserName" ColumnName="UserName" />
-          <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
-          <ScalarProperty Name="Designation" ColumnName="Designation" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-          <ScalarProperty Name="CollegeID" ColumnName="CollegeID" />
-          <ScalarProperty Name="Gender" ColumnName="Gender" />
-          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
           <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="CollegeID" ColumnName="CollegeID" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Designation" ColumnName="Designation" />
+          <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="UserSalt" ColumnName="UserSalt" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Guid" ColumnName="Guid" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_SubMenu">
+      <EntityTypeMapping TypeName="PRITModel.tbl_SubMenu">
+        <MappingFragment StoreEntitySet="tbl_SubMenu">
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="MainMenuId" ColumnName="MainMenuId" />
+          <ScalarProperty Name="Action" ColumnName="Action" />
+          <ScalarProperty Name="Controller" ColumnName="Controller" />
+          <ScalarProperty Name="SubMenu" ColumnName="SubMenu" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="tbl_UserRole">
       <EntityTypeMapping TypeName="PRITModel.tbl_UserRole">
         <MappingFragment StoreEntitySet="tbl_UserRole">
-          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
           <ScalarProperty Name="RolName" ColumnName="RolName" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="tbl_Feedback">
       <EntityTypeMapping TypeName="PRITModel.tbl_Feedback">
         <MappingFragment StoreEntitySet="tbl_Feedback">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Date" ColumnName="Date" />
-          <ScalarProperty Name="FeedbackById" ColumnName="FeedbackById" />
-          <ScalarProperty Name="Reason" ColumnName="Reason" />
           <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Reason" ColumnName="Reason" />
+          <ScalarProperty Name="FeedbackById" ColumnName="FeedbackById" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

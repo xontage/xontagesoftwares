@@ -12,28 +12,18 @@ namespace PRIT.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class tbl_Colleges
+    public partial class tbl_MainMenu
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tbl_Colleges()
+        public tbl_MainMenu()
         {
-            this.tbl_Registration = new HashSet<tbl_Registration>();
+            this.tbl_SubMenu = new HashSet<tbl_SubMenu>();
         }
     
-        public int collegeId { get; set; }
-        public string registrationId { get; set; }
-        public string collegeName { get; set; }
-        public string Address { get; set; }
-        public Nullable<long> contact1 { get; set; }
-        public Nullable<long> contact2 { get; set; }
-        public string website { get; set; }
-        public string email { get; set; }
-        public string TPOName { get; set; }
-        public string PrincipalName { get; set; }
-        public string Description { get; set; }
-        public string Degree { get; set; }
+        public int Id { get; set; }
+        public string MainMenu { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tbl_Registration> tbl_Registration { get; set; }
+        public virtual ICollection<tbl_SubMenu> tbl_SubMenu { get; set; }
     }
 }

@@ -758,13 +758,18 @@ namespace PRIT.Controllers
 
         }
         public ActionResult AdminDashboard()
-        {          
+        {            
             ViewBag.name = User.Identity.Name;
             return View();
         }
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
+
+            Session.Abandon();
+            Session.Clear();
+            Session.RemoveAll();
+
             return RedirectToAction("Index", "Home");
         }
 
