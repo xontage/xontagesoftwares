@@ -25,8 +25,7 @@ namespace PRIT.BAL
                 if (obj.ID > 0)
                 {
                     obj.EmplD = id;
-                    //obj.EmployeeId = p.EmployeeId;
-                    //obj.IsDeleted = p.IsDeleted;
+                    
                 }
                 else
                 {
