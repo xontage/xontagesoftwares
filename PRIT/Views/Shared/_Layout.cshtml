@@ -6,7 +6,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewBag.Title | Xontage Software Solutions</title>
+    @*<title>@ViewBag.Title | Xontage Software Solutions</title>*@
+    <title>@ViewBag.Title | Demo APplication</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -93,14 +94,18 @@
             <div class="container">
                 <div class="row">
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <div class="top-number"><p><i class="fa fa-thumbs-up"></i> Xontage </p></div>
+                        <div class="top-number"><p><i class="fa fa-thumbs-up"></i> MVC Application </p></div>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <div class="social">
                             <ul class="social-share">
-                                <li><a href="https://www.facebook.com/Xontage-Softwares-1084281465047223/?modal=admin_todo_tour" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                                @*<li><a href="https://www.facebook.com/Xontage-Softwares-1084281465047223/?modal=admin_todo_tour" target="_blank"><i class="fa fa-facebook"></i></a></li>
                                 <li><a href="https://plus.google.com/u/0/101174750585386976463" target="_blank"><i class="fa fa-google-plus"></i></a></li>
-                                <li><a href="https://www.linkedin.com/company/xontage-software-solutions/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                                <li><a href="https://www.linkedin.com/company/xontage-software-solutions/" target="_blank"><i class="fa fa-linkedin"></i></a></li>*@
+
+                                <li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#" target="_blank"><i class="fa fa-google-plus"></i></a></li>
+                                <li><a href="#" target="_blank"><i class="fa fa-linkedin"></i></a></li>
                                 
                             </ul>
 
@@ -126,7 +131,8 @@
                         @*<li ><a href="Default.aspx">Home</a></li>*@
                         <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")"> <a href="@Url.Action("Index", "Home")">Home</a> </li>                     
                        
-                        <li class="dropdown">
+                        @*following code commented for testing by Rahul*@
+                        @*<li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Services <i class="fa fa-angle-down"></i></a>
                             <ul class="dropdown-menu">
                                 <li><a href="@Url.Action("Services", "Home", new { innerText = "Software Development" })">Software Development</a></li>
@@ -153,7 +159,7 @@
                         <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "IEEEProjects" ? "active" : "")"> <a href="@Url.Action("IEEEProjects", "Home")">IEEE Projects</a> </li>       
                         <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "AboutUsNew" ? "active" : "")"> <a href="@Url.Action("AboutUsNew", "Home")" id="aboutUsId">About Us</a> </li>                                                                      
                         <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Careers" ? "active" : "")"> <a href="@Url.Action("Careers", "Home")">Careers</a> </li>
-                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Contact" ? "active" : "")"> <a href="@Url.Action("Contact", "Home")" id="contactId">Contact</a> </li>
+                        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Contact" ? "active" : "")"> <a href="@Url.Action("Contact", "Home")" id="contactId">Contact</a> </li>*@
 
                     </ul>
                 </div>
@@ -198,14 +204,17 @@
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-sm-6">
+                @*<div class="col-sm-6">
                     &copy; 2018 <a target="_blank" href="#" title="Xontage Software Solutions Pvt. Ltd.">Xontage Software Solutions</a>. All Rights Reserved.
+                </div>*@
+                 <div class="col-sm-6">
+                    &copy; 2018 <a target="_blank" href="#" title="Demo Application">Demo Application</a>. All Rights Reserved.
                 </div>
                 <div class="col-sm-6">
                     <ul class="pull-right">
                         <li><a href="@Url.Action("Login", "Home")">LOGIN</a></li>                                              
-                        
-                        <li><a href="@Url.Action("Portfolio", "Home")">PORTFOLIO</a></li>
+                        @*following code commented for testing by Rahul*@
+                        @*<li><a href="@Url.Action("Portfolio", "Home")">PORTFOLIO</a></li>*@
                         
                     </ul>
                 </div>
