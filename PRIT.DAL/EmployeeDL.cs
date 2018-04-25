@@ -10,24 +10,15 @@ namespace PRIT.DAL
    public class EmployeeDL
     {
         PRITEntities db = new PRITEntities();
-       
         public void SaveEmployees(tbl_Employee obj)
         {
             var entity = db.tbl_Employee.Where(p => p.ID == obj.ID).AsQueryable().FirstOrDefault();
             try
             {
+                
                 if (obj.ID > 0)
                 {
-
-                  //  var Id = db.tbl_Employee.Find(obj.ID);
-
-                    // p.FirstName = obj.FirstNamede
                     db.Entry(entity).CurrentValues.SetValues(obj);
-                     //db.Entry(obj).State = System.Data.Entity.EntityState.Modified;
-                    //    db.Entry(obj).State = System.Data.Entity.EntityState.Modified;
-
-                    //db.SaveChanges();
-
                 }
                 else
                 {

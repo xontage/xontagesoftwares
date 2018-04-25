@@ -12,8 +12,10 @@ namespace PRIT.DAL
         PRITEntities db = new PRITEntities();
         public void SaveContact(tbl_Contact obj)
         {
-            try
+          try
             {
+
+                //added code by rahul
                 obj.Date = DateTime.Now.ToString();
                 db.tbl_Contact.Add(obj);
                 db.SaveChanges();
@@ -23,6 +25,7 @@ namespace PRIT.DAL
 
                 throw ex;
             }
+            //added code by rahul
         }
 
         public void DeleteContact(int contactId)

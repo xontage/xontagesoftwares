@@ -13,6 +13,7 @@ namespace PRIT.DAL
 
         public void AddEditCollege(tbl_Colleges obj)
         {
+            
             try
             {
                 if (obj.collegeId > 0)

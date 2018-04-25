@@ -19,7 +19,6 @@ namespace PRIT.BAL
 
             try
            {                
-
                 collegeDL.AddEditCollege(obj);
             }
             catch (Exception ex)

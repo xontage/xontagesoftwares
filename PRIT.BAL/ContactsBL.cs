@@ -10,6 +10,7 @@ namespace PRIT.BAL
 {
     public class ContactsBL
     {
+        
         ContactDL contactDL = new ContactDL();
         public void SaveContact(tbl_Contact obj)
         {
