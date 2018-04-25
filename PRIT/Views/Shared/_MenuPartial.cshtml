@@ -1,0 +1,140 @@
+﻿<style>
+
+
+
+
+    .dropdown-submenu > .dropdown-menu {
+        position: relative;
+        top: 0;
+        left: 100%;
+        margin-top: -6px;
+        margin-left: -1px;
+        -webkit-border-radius: 0 6px 6px 6px;
+        -moz-border-radius: 0 6px 6px 6px;
+        border-radius: 0 6px 6px 6px;
+    }
+
+        .dropdown-submenu > a:after {
+            border-color: transparent transparent transparent #333;
+            border-style: solid;
+            border-width: 5px 0 5px 5px;
+            content: " ";
+            display: block;
+            float: right;
+            height: 0;
+            margin-right: -10px;
+            margin-top: 5px;
+            width: 0;
+        }
+
+     
+
+    
+
+</style>
+
+<div class="collapse navbar-collapse navbar-right">
+
+    <ul class="nav navbar-nav">
+
+        @if (Session["MenuMaster"] != null)
+        {
+            var MenuMaster = (List<PRIT.Entity.MenuModelsList>)Session["MenuMaster1"];
+            //var groupByMenu = MenuMaster.GroupBy(x => x.MainMenuName).ToList();
+
+
+
+            foreach (var MenuList in MenuMaster)
+            {
+                <li class="dropdown">
+                    @if (@MenuList.SubMenuList.Count() > 0)
+                    {
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">@MenuList.MainMenu.MainMenu <i class="fa fa-angle-down"></i></a>
+                    }
+                    else
+                    {
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">@MenuList.MainMenu.MainMenu </a>}
+
+                    <ul class="dropdown-menu">
+
+                        @foreach (var SubMenuList in MenuList.SubMenuList)
+                        {
+                            <li>
+                                <a href="@Url.Action(SubMenuList.Action, SubMenuList.Controller)">@SubMenuList.SubMenu</a>
+                            </li>
+                        }
+
+                    </ul>
+                </li>
+
+
+            }
+
+            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Logout" ? "active" : "")"> <a href="@Url.Action("Logout", "Admin")" id="contactId">Logout</a> </li>
+
+
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account <i class="fa fa-angle-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown dropdown-submenu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Change Password <i class="fa fa-angle-right">
+                                 </i></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="#" tabindex="-1" class="">ddddd </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="#">My Profile</a></li>
+                </ul>
+            </li>
+
+
+        }
+
+
+
+    </ul>
+
+
+
+    @*<ul class="nav navbar-nav">
+
+            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "AdminDashboard" ? "active" : "")"> <a href="@Url.Action("AdminDashboard", "Admin")">Home</a> </li>
+
+            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "MultipleFileUpload" ? "active" : "")"><a href="@Url.Action("MultipleFileUpload", "Admin")">Upload Documents</a></li>
+
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account <i class="fa fa-angle-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Change Password <i class="fa fa-angle-right"></i></a>
+                        <ul class="dropdown-submenu"><li class="dropdown"><a href="#" tabindex="-1">ddddd </a> </li> </ul>
+                    </li>
+                    <li><a href="#">My Profile</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin Privileges <i class="fa fa-angle-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="@Url.Action("Registration", "Admin")">Registration</a></li>
+                    <li><a href="@Url.Action("EmployeeMgmt", "Admin")">Employee Management</a></li>
+                    <li><a href="@Url.Action("ViewContacts", "Admin")">View Contacts</a></li>
+                    <li><a href="@Url.Action("CollegeMgmt", "Admin")">College Management</a></li>
+                    <li><a href="#">Fees Management</a></li>
+                    <li><a href="#">Course Management</a></li>
+                    <li><a href="#">Batch Management</a></li>
+                    <li><a href="#">Batch Time Management</a></li>
+                    <li><a href="#">Expense Management</a></li>
+                </ul>
+            </li>
+
+            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Logout" ? "active" : "")"> <a href="@Url.Action("Logout", "Admin")" id="contactId">Logout</a> </li>
+
+        </ul>*@
+
+
+
+
+</div>
