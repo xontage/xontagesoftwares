@@ -16,8 +16,6 @@ namespace PRIT.BAL
         public void AddEditCollege(tbl_Colleges obj)
         {
 
-
-
             try
            {                
 
