@@ -14,6 +14,8 @@ namespace PRIT.DAL
         {
           try
             {
+
+                //added code by rahul
                 obj.Date = DateTime.Now.ToString();
                 db.tbl_Contact.Add(obj);
                 db.SaveChanges();
