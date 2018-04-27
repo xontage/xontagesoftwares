@@ -125,6 +125,12 @@ warning 6002: The table/view 'PRIT.dbo.tbl_Feedback' does not have a primary key
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MainMenu" Type="nvarchar" MaxLength="50" />
+          <Property Name="Controller" Type="nvarchar" MaxLength="50" />
+          <Property Name="Action" Type="nvarchar" MaxLength="50" />
+          <Property Name="RoleId" Type="int" />
+          <Property Name="IconUrl" Type="nvarchar" MaxLength="250" />
+          <Property Name="UiPosition" Type="int" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="tbl_Notification">
           <Key>
@@ -167,6 +173,11 @@ warning 6002: The table/view 'PRIT.dbo.tbl_Feedback' does not have a primary key
           <Property Name="Action" Type="nvarchar" MaxLength="100" />
           <Property Name="MainMenuId" Type="int" />
           <Property Name="RoleId" Type="int" />
+          <Property Name="Level1SubMenuId" Type="int" />
+          <Property Name="IconUrl" Type="nvarchar" MaxLength="250" />
+          <Property Name="UiPosition" Type="smallint" Nullable="false" />
+          <Property Name="UiSubPosition" Type="smallint" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="tbl_UserRole">
           <Key>
@@ -426,6 +437,12 @@ warning 6002: The table/view 'PRIT.dbo.tbl_Feedback' does not have a primary key
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MainMenu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Controller" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Action" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RoleId" Type="Int32" />
+          <Property Name="IconUrl" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="UiPosition" Type="Int32" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="tbl_SubMenu" Relationship="PRITModel.FK_tbl_SubMenu_tbl_MainMenu" FromRole="tbl_MainMenu" ToRole="tbl_SubMenu" />
         </EntityType>
         <EntityType Name="tbl_Notification">
@@ -471,6 +488,11 @@ warning 6002: The table/view 'PRIT.dbo.tbl_Feedback' does not have a primary key
           <Property Name="Action" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="MainMenuId" Type="Int32" />
           <Property Name="RoleId" Type="Int32" />
+          <Property Name="Level1SubMenuId" Type="Int32" />
+          <Property Name="IconUrl" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="UiPosition" Type="Int16" Nullable="false" />
+          <Property Name="UiSubPosition" Type="Int16" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="tbl_MainMenu" Relationship="PRITModel.FK_tbl_SubMenu_tbl_MainMenu" FromRole="tbl_SubMenu" ToRole="tbl_MainMenu" />
           <NavigationProperty Name="tbl_UserRole" Relationship="PRITModel.FK_tbl_SubMenu_tbl_UserRole" FromRole="tbl_SubMenu" ToRole="tbl_UserRole" />
         </EntityType>
@@ -553,7 +575,7 @@ warning 6002: The table/view 'PRIT.dbo.tbl_Feedback' does not have a primary key
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -670,6 +692,12 @@ warning 6002: The table/view 'PRIT.dbo.tbl_Feedback' does not have a primary key
           <EntitySetMapping Name="tbl_MainMenu">
             <EntityTypeMapping TypeName="PRITModel.tbl_MainMenu">
               <MappingFragment StoreEntitySet="tbl_MainMenu">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="UiPosition" ColumnName="UiPosition" />
+                <ScalarProperty Name="IconUrl" ColumnName="IconUrl" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="Controller" ColumnName="Controller" />
                 <ScalarProperty Name="MainMenu" ColumnName="MainMenu" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -711,6 +739,11 @@ warning 6002: The table/view 'PRIT.dbo.tbl_Feedback' does not have a primary key
           <EntitySetMapping Name="tbl_SubMenu">
             <EntityTypeMapping TypeName="PRITModel.tbl_SubMenu">
               <MappingFragment StoreEntitySet="tbl_SubMenu">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="UiSubPosition" ColumnName="UiSubPosition" />
+                <ScalarProperty Name="UiPosition" ColumnName="UiPosition" />
+                <ScalarProperty Name="IconUrl" ColumnName="IconUrl" />
+                <ScalarProperty Name="Level1SubMenuId" ColumnName="Level1SubMenuId" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="MainMenuId" ColumnName="MainMenuId" />
                 <ScalarProperty Name="Action" ColumnName="Action" />

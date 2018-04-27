@@ -5,18 +5,18 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="bb79c32a2d21454d85fa56791fb1d193" Name="Diagram1">
-        <EntityTypeShape EntityType="PRITModel.tbl_Colleges" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="PRITModel.tbl_Contact" Width="1.5" PointX="5.75" PointY="2" />
-        <EntityTypeShape EntityType="PRITModel.tbl_Degree" Width="1.5" PointX="7.75" PointY="2" />
-        <EntityTypeShape EntityType="PRITModel.tbl_Employee" Width="1.5" PointX="5.75" PointY="9.5" />
-        <EntityTypeShape EntityType="PRITModel.tbl_EmploymentDetails" Width="1.5" PointX="8" PointY="11.375" />
-        <EntityTypeShape EntityType="PRITModel.tbl_FileUpload" Width="1.5" PointX="0.75" PointY="10" />
-        <EntityTypeShape EntityType="PRITModel.tbl_MainMenu" Width="1.5" PointX="3.75" PointY="1.75" />
-        <EntityTypeShape EntityType="PRITModel.tbl_Notification" Width="1.5" PointX="2.75" PointY="10" />
-        <EntityTypeShape EntityType="PRITModel.tbl_Registration" Width="1.5" PointX="3" PointY="4.125" />
-        <EntityTypeShape EntityType="PRITModel.tbl_SubMenu" Width="1.5" PointX="6" PointY="5.25" />
-        <EntityTypeShape EntityType="PRITModel.tbl_UserRole" Width="1.5" PointX="0.75" PointY="5.625" />
-        <EntityTypeShape EntityType="PRITModel.tbl_Feedback" Width="1.5" PointX="8.75" PointY="5" />
+        <EntityTypeShape EntityType="PRITModel.tbl_Colleges" Width="1.5" PointX="0.75" PointY="1.375" />
+        <EntityTypeShape EntityType="PRITModel.tbl_Contact" Width="1.5" PointX="5.75" PointY="2.125" />
+        <EntityTypeShape EntityType="PRITModel.tbl_Degree" Width="1.5" PointX="5.75" PointY="10.125" />
+        <EntityTypeShape EntityType="PRITModel.tbl_Employee" Width="1.5" PointX="8.75" PointY="2.625" />
+        <EntityTypeShape EntityType="PRITModel.tbl_EmploymentDetails" Width="1.5" PointX="11" PointY="4.375" />
+        <EntityTypeShape EntityType="PRITModel.tbl_FileUpload" Width="1.5" PointX="0.75" PointY="11.125" />
+        <EntityTypeShape EntityType="PRITModel.tbl_MainMenu" Width="1.5" PointX="3.75" PointY="0.75" />
+        <EntityTypeShape EntityType="PRITModel.tbl_Notification" Width="1.5" PointX="2.75" PointY="11.125" />
+        <EntityTypeShape EntityType="PRITModel.tbl_Registration" Width="1.5" PointX="3" PointY="4.75" />
+        <EntityTypeShape EntityType="PRITModel.tbl_SubMenu" Width="1.5" PointX="6" PointY="5.375" />
+        <EntityTypeShape EntityType="PRITModel.tbl_UserRole" Width="1.5" PointX="0.75" PointY="6.25" />
+        <EntityTypeShape EntityType="PRITModel.tbl_Feedback" Width="1.5" PointX="7.75" PointY="11.125" />
         <AssociationConnector Association="PRITModel.FK_tbl_Registration_tbl_Colleges" />
         <AssociationConnector Association="PRITModel.FK_tbl_EmploymentDetails_tbl_Employee" />
         <AssociationConnector Association="PRITModel.FK_tbl_SubMenu_tbl_MainMenu" />

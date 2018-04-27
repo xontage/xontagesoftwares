@@ -20,6 +20,11 @@ namespace PRIT.Entity
         public string Action { get; set; }
         public Nullable<int> MainMenuId { get; set; }
         public Nullable<int> RoleId { get; set; }
+        public Nullable<int> Level1SubMenuId { get; set; }
+        public string IconUrl { get; set; }
+        public short UiPosition { get; set; }
+        public short UiSubPosition { get; set; }
+        public bool Active { get; set; }
     
         public virtual tbl_MainMenu tbl_MainMenu { get; set; }
         public virtual tbl_UserRole tbl_UserRole { get; set; }

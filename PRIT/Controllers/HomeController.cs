@@ -188,21 +188,23 @@ namespace PRIT.Controllers
 
                         if (user != null)
                         {
+                            #region Different ways for Getting the Menu details from entity and bind it in MenuModels list.  
 
-                            List<MenuModels> _menus = db.tbl_SubMenu.Where(x => x.RoleId == user.RoleId).Select(x => new MenuModels
-                            {
-                                MainMenuId = x.tbl_MainMenu.Id,
-                                MainMenuName = x.tbl_MainMenu.MainMenu,
-                                SubMenuId = x.Id,
-                                SubMenuName = x.SubMenu,
-                                ControllerName = x.Controller,
-                                ActionName = x.Action,
-                                RoleId = x.RoleId,
-                                RoleName = x.tbl_UserRole.RolName,
+                            //one way
+                            //List<MenuModels> _menus = db.tbl_SubMenu.Where(x => x.RoleId == user.RoleId).Select(x => new MenuModels
+                            //{
+                            //    MainMenuId = x.tbl_MainMenu.Id,
+                            //    MainMenuName = x.tbl_MainMenu.MainMenu,
+                            //    SubMenuId = x.Id,
+                            //    SubMenuName = x.SubMenu,
+                            //    ControllerName = x.Controller,
+                            //    ActionName = x.Action,
+                            //    RoleId = x.RoleId,
+                            //    RoleName = x.tbl_UserRole.RolName,
+                            //}).ToList();
 
-                            }).ToList(); //Get the Menu details from entity and bind it in MenuModels list.  
-
-                            //                        var qry = db.tbl_MainMenu.GroupJoin(
+                            //Second way
+                            // var qry = db.tbl_MainMenu.GroupJoin(
                             //      db.tbl_SubMenu,
                             //      mainMenu => mainMenu.Id,
                             //      subMenu => subMenu.MainMenuId,
@@ -211,16 +213,17 @@ namespace PRIT.Controllers
                             //      x => x.mainMenus.DefaultIfEmpty(),
                             //      (x, y) => new { subMenu = x.subMenus, mainMenu = y });
 
+                            //Third way
                             //Defered Query Execution  
-                            var _menus1 = db.tbl_MainMenu.GroupJoin(db.tbl_SubMenu, x => x.Id, sub => sub.MainMenuId, (mainMenu, subMneu) => new
-                            {
-                                Key = mainMenu,
-                                subMneu = subMneu
-                            }).ToList();
+                            //var _menus1 = db.tbl_MainMenu.GroupJoin(db.tbl_SubMenu, x => x.Id, sub => sub.MainMenuId, (mainMenu, subMneu) => new
+                            //{
+                            //    Key = mainMenu,
+                            //    subMneu = subMneu
+                            //}).ToList();
+                            #endregion...End of Different ways for Getting the Menu details from entity and bind it in MenuModels list.  
 
-
-                            var query =
-                                    from m in db.tbl_MainMenu
+                            //Fourth Way
+                            var query = from m in db.tbl_MainMenu
                                     join s in db.tbl_SubMenu on m.Id equals s.MainMenuId into SubMenuGroup
                                      select new { m, SubMenuGroup = SubMenuGroup.ToList() };
 
@@ -233,31 +236,27 @@ namespace PRIT.Controllers
                                 menuList.Add(menu);
                             }
 
+                            //fifth way
+                            var obj = new PRIT.BAL.CollegeBL();
+                            var MenuItem = obj.GetModuleMenu();
 
+                            Session["MenuMasterFood"] = MenuItem;//Bind the _menus list to MenuMaster session      
 
-                              Session["MenuMaster1"] = menuList;
-                            // Session["MenuMaster2"] = lst;
-
-
-
+                            Session["MenuMaster"] = menuList;//Bind the _menus list to MenuMaster session                                                                
                             //Session["LoginCredentials"] = user; // Bind the _logincredentials details to "LoginCredentials" session  
-                            Session["MenuMaster"] = _menus; //Bind the _menus list to MenuMaster session  
-                            Session["UserName"] = user.UserName;
 
                             //for calling GetRolesForUser() method in SIteRole Class
                             FormsAuthentication.SetAuthCookie(user.Email, false);
 
-
+                            //For checking user roll on View so that we can bind menus dynamically according to ROll Name
                             FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, user.UserName, DateTime.Now, DateTime.Now.AddMinutes(2880), user.RememberMe, user.UserRoleName, FormsAuthentication.FormsCookiePath);
                             string hash = FormsAuthentication.Encrypt(ticket);
                             HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, hash);
-
                             if (ticket.IsPersistent)
                             {
                                 cookie.Expires = ticket.Expiration;
                             }
                             Response.Cookies.Add(cookie);
-
 
 
                             if (user.RoleId == 1)

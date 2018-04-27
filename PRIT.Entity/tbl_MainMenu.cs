@@ -22,6 +22,12 @@ namespace PRIT.Entity
     
         public int Id { get; set; }
         public string MainMenu { get; set; }
+        public string Controller { get; set; }
+        public string Action { get; set; }
+        public Nullable<int> RoleId { get; set; }
+        public string IconUrl { get; set; }
+        public int UiPosition { get; set; }
+        public bool Active { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_SubMenu> tbl_SubMenu { get; set; }

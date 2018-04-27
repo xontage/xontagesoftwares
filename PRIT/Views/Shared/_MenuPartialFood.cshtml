@@ -1,0 +1,73 @@
+﻿
+<div class="collapse navbar-collapse navbar-right">
+
+    <ul class="nav navbar-nav mcd-menu">
+
+        @if(Session["MenuMasterFood"] != null)
+        {
+            var MenuItem = (IList<PRIT.Entity.ModuleSubModuleMenu>)Session["MenuMasterFood"];
+
+            foreach (var module in MenuItem)
+            {
+
+            <li class="dropdown">
+                <a href="@Url.Action(module.Module.Action, module.Module.Controller)" >
+
+                    @*<img src="@module.Module.IconUrl" />*@
+                    <span>
+                        @module.Module.MainMenu
+                    </span>
+                    @if (module.ModuleMenus.Count > 0)
+                    {
+                        <i class="fa fa-angle-down"></i>
+                    }
+                </a>
+                @if (module.ModuleMenus.Count > 0)
+                {
+                    <ul class="dropdown-menu">
+                        @foreach (var moduleMenu in module.ModuleMenus)
+                        {                            
+                                <li class="dropdown dropdown-submenu">
+
+                                    @if (moduleMenu.ModuleMenu != null)
+                                    {
+                                        if (moduleMenu.ModuleMenu.Controller != null && moduleMenu.ModuleMenu.Action != null)
+                                        {
+
+                                            //if (User1.IsInRole("Administrator,Manager,DM Employee,DM Agent"))
+                                            //{
+                                            <a href="@Url.Action(moduleMenu.ModuleMenu.Action,moduleMenu.ModuleMenu.Controller)"  id="@moduleMenu.ModuleMenu.Id">@moduleMenu.ModuleMenu.SubMenu</a>
+                                            if (moduleMenu.ModuleSubMenus.Count > 0)
+                                            {
+                                                <ul class="dropdown-menu test" id="RegisterLink" style="display:none;">
+                                                    @foreach (var moduleSubMenu in moduleMenu.ModuleSubMenus)
+                                                    {
+
+                                                        <li><a href="@Url.Action(moduleSubMenu.Action,moduleSubMenu.Controller)">@moduleSubMenu.SubMenu</a></li>
+
+
+                                                    }
+                                                </ul>
+                                            }
+                                            //  }
+
+                                        }
+                                    }
+                                </li>                                                       
+
+                        }                        
+
+                    </ul>
+                }
+
+            </li>
+
+
+
+        }
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Logout" ? "active" : "")"> <a href="@Url.Action("Logout", "Admin")" id="contactId">Logout</a> </li>
+
+        }@*End main if session condition*@
+    </ul>
+
+</div>
