@@ -249,7 +249,7 @@ namespace PRIT.Controllers
                             FormsAuthentication.SetAuthCookie(user.Email, false);
 
                             //For checking user roll on View so that we can bind menus dynamically according to ROll Name
-                            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, user.UserName, DateTime.Now, DateTime.Now.AddMinutes(2880), user.RememberMe, user.UserRoleName, FormsAuthentication.FormsCookiePath);
+                            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, user.Email, DateTime.Now, DateTime.Now.AddMinutes(2880), user.RememberMe, user.UserRoleName, FormsAuthentication.FormsCookiePath);
                             string hash = FormsAuthentication.Encrypt(ticket);
                             HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, hash);
                             if (ticket.IsPersistent)

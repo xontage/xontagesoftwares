@@ -65,7 +65,32 @@
 
 
         }
-        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Logout" ? "active" : "")"> <a href="@Url.Action("Logout", "Admin")" id="contactId">Logout</a> </li>
+
+
+        @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Logout" ? "active" : "")"> <a href="@Url.Action("Logout", "Admin")" id="contactId">Logout</a> </li>*@
+
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">@HttpContext.Current.User.Identity.Name <span class="glyphicon glyphicon-user pull-right" style="margin-left: 7px;margin-top: 4px;"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="#">Account Settings <span class="glyphicon glyphicon-cog pull-right"></span></a></li>
+                
+                @*HTML code for level 1 submenu..
+                    <li class="dropdown dropdown-submenu">
+                    <a href="#">Account Settings <span class="glyphicon glyphicon-cog pull-right"></span> </a>
+                    <ul class="dropdown-menu test" style="display:none;">
+                        <li><a href="#">Change Password</a></li>
+                        <li><a href="#">My Profile</a></li>
+                    </ul>
+                </li>*@
+
+                <li><a href="#">User stats <span class="glyphicon glyphicon-stats pull-right"></span></a></li>                               
+               
+                <li><a href="#">Favourites Snippets <span class="glyphicon glyphicon-heart pull-right"></span></a></li>
+               
+                <li><a href="@Url.Action("Logout", "Admin")">Sign Out <span class="glyphicon glyphicon-log-out pull-right"></span></a></li>
+            </ul>
+        </li>
+
 
         }@*End main if session condition*@
     </ul>

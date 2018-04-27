@@ -59,9 +59,9 @@ namespace PRIT.BAL
             List<ModuleSubModuleMenu> ModelSubModelMenuList = new List<ModuleSubModuleMenu>();
             try
             {
-                var Modules = db.tbl_MainMenu.OrderBy(x => x.Id).ToList();
-                
-                
+                var Modules = db.tbl_MainMenu.Where(M => M.Active).OrderBy(M => M.UiPosition).ToList();
+
+
                 foreach (var module in Modules)
                 {
                     //module.IconUrl = path + "\\" + module.IconUrl;
