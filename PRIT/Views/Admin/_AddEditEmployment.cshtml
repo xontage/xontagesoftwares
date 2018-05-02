@@ -54,7 +54,7 @@
                 @using (Ajax.BeginForm("AddEditEmployment", "Admin", new AjaxOptions { OnSuccess = "fnOnEmploymentSuccess", HttpMethod = "POST" }, new { @class = "form-horizontal", @id = "frmResourceCategory" }))
                 {
                     @Html.ValidationSummary(true)
-                   @Html.HiddenFor(r => r.ID)
+                   @Html.HiddenFor(model => model.ID)
                     <input type="hidden" id="EmpIds" name="EmpIds" value="@a" />
                     <div class="container">
                         <div class="row main">
@@ -243,7 +243,20 @@
                 !/Invalid|NaN/.test(new Date(date).toString());
         },
     }).on('changeDate', function (e) {
-    });
+        });
+
+    function fnOnEmploymentSuccess(data) {
+        $('#employmentModal').find("[data-dismiss=modal]").trigger({ type: "click" });
+        if (data.success == true) {
+            swal('Saved!', data.message, 'success')
+        }
+        else if (data.success == false) {
+            sweetAlert("Oops...", data.message, "error");
+        }
+        if (data.result != "" || data.result != null) {
+            $('#employementData').html(data.result);
+        }
+    }
 </script>
 
 

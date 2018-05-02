@@ -27,17 +27,8 @@ namespace PRIT.Controllers
         EmploymentBL employmentBL = new EmploymentBL();
         // GET: Admin
 
-        public ActionResult Index()//tbl_EmployeeMetaModel model)
-        {
-            //if (model.Countries == null)
-            //{
-            //    model.Countries = new SelectList(new List<SelectListItem>()
-            //    {
-            //        new SelectListItem() { Text= "India", Value = "1" },
-            //        new SelectListItem() { Text= "Australia", Value = "2"}
-            //    }, "Value", "Text");
-            //}
-            //return View(model);
+        public ActionResult Index()
+        { 
             return View();
         }
 
@@ -50,7 +41,6 @@ namespace PRIT.Controllers
 
         public ActionResult FileUpload(HttpPostedFileBase file, tbl_FileUpload objFile)
         {
-
 
             try
             {
@@ -416,16 +406,17 @@ namespace PRIT.Controllers
         public ActionResult AddEditEmployment(tbl_EmploymentDetails model)
         {
             List<tbl_EmploymentDetails> lstN = new List<tbl_EmploymentDetails>();
-            int id = 0;
+            int Id = 0;
             if (!string.IsNullOrEmpty(Request.Form["EmpIds"]))
             {
-                 id = Convert.ToInt32(Request.Form["EmpIds"]);
+                Id = Convert.ToInt32(Request.Form["EmpIds"]);
+                
             }
             
                  
             if (ModelState.IsValid)
             {
-                employmentBL.AddEmployment(model, User.Identity.Name,id);
+                employmentBL.AddEmployment(model, User.Identity.Name,Id);
                 lstN = db.tbl_EmploymentDetails.OrderByDescending(emp => emp.ID).ToList();
                 var aa = RenderRazorViewToString("_EmploymentPartial", lstN);
 
@@ -559,7 +550,7 @@ namespace PRIT.Controllers
                 List<tbl_Colleges> lstColleges = new List<tbl_Colleges>();
                 lstColleges = db.tbl_Colleges.OrderByDescending(person => person.collegeId).ToList();
                 List<DropdownModelGeneric> ddlList = lstColleges.Select(x => new DropdownModelGeneric() { Value = x.collegeId.ToString(), Text = x.collegeName }).ToList();
-                ddlList.Add(new DropdownModelGeneric() { Value = "0", Text = "PLEASE SELECT COLLEGE" });
+               // ddlList.Add(new DropdownModelGeneric() { Value = "0", Text = "PLEASE SELECT COLLEGE" });
 
                 return ddlList.OrderBy(x => x.Value).ToList();
             }
@@ -576,7 +567,7 @@ namespace PRIT.Controllers
                 List<tbl_UserRole> lstRoles = new List<tbl_UserRole>();
                 lstRoles = db.tbl_UserRole.OrderByDescending(person => person.RoleId).ToList();
                 List<DropdownModelGeneric> ddlList = lstRoles.Select(x => new DropdownModelGeneric() { Value = x.RoleId.ToString(), Text = x.RolName }).ToList();
-                ddlList.Add(new DropdownModelGeneric() { Value = "0", Text = "PLEASE SELECT ROLE" });
+              //  ddlList.Add(new DropdownModelGeneric() { Value = "0", Text = "PLEASE SELECT ROLE" });
 
                 return ddlList.OrderBy(x => x.Value).ToList();
             }
@@ -592,7 +583,7 @@ namespace PRIT.Controllers
             {
                 List<DropdownModelGeneric> lstDropdownModelGeneric;
                 lstDropdownModelGeneric = new List<DropdownModelGeneric>  {
-                        new DropdownModelGeneric(){Text="SELECT DESIGNATION",Value="0"},
+                      //  new DropdownModelGeneric(){Text="SELECT DESIGNATION",Value="0"},
                         new DropdownModelGeneric(){Text="HOD",Value="HOD"},
                          new DropdownModelGeneric(){Text="TPO",Value="TPO"},
                         new DropdownModelGeneric(){Text="Principal",Value="Principal"},

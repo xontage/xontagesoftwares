@@ -30,12 +30,16 @@
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
                                             @*<input type="text" class="form-control" name="FullName" id="name" placeholder="Enter your Name" required />*@
-                                            @Html.TextBoxFor(model => model.FullName, new { @class = "form-control required", id = "name", placeholder = "Enter your Full Name" @*required = "required"*@ })                                         
-                                           @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger error-msg" })
+                                            @Html.TextBoxFor(model => model.FullName, new
+                {
+                    @class = "form-control required",
+                    id = "name",
+                    placeholder = "Enter your Full Name"@*required = "required"*@})
+                                            @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger error-msg" })
                                         </div>
                                     </div>
-                                   
-                                    </div>
+
+                                </div>
                                 <div class="form-group">
                                     <label for="email" class="cols-sm-2 control-label">Email *</label>
                                     <div class="cols-sm-10">
@@ -54,7 +58,7 @@
                                             <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
                                             @*<input type="text" class="form-control" name="ContactNo" id="contactNo" placeholder="Enter your Username" required />*@
                                             @Html.TextBoxFor(model => model.ContactNo, new { @class = "form-control", id = "contactNo", placeholder = "Enter Mobile Number", required = "required" })
-                                           @Html.ValidationMessageFor(model => model.ContactNo, "", new { @class = "text-danger error-msg" })
+                                            @Html.ValidationMessageFor(model => model.ContactNo, "", new { @class = "text-danger error-msg" })
                                         </div>
                                     </div>
                                 </div>
@@ -64,8 +68,11 @@
                                     <div class="cols-sm-10">
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                                            @Html.DropDownListFor(model => model.Designation, ViewBag.ddlDestination as SelectList, new { @class = "form-control" })
-                                           @Html.ValidationMessageFor(model => model.Designation, "", new { @class = "text-danger error-msg" })
+                                            @*@Html.DropDownListFor(model => model.Designation, ViewBag.ddlDestination as SelectList, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Designation, "", new { @class = "text-danger error-msg" })*@
+
+                                            @Html.DropDownListFor(model => model.Designation, new SelectList(ViewBag.ddlDestination as SelectList, "Value", "Text"), "--SELECT DESIGNATION--", new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.Designation, "", new { @class = "text-danger error-msg" })
 
                                         </div>
                                     </div>
@@ -76,8 +83,10 @@
 
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                                            @Html.DropDownListFor(model => model.CollegeID, ViewBag.ddlColleges as SelectList, new { @class = "form-control" })
-                                           @Html.ValidationMessageFor(model => model.CollegeID, "", new { @class = "text-danger error-msg" })
+                                            @*@Html.DropDownListFor(model => model.CollegeID, ViewBag.ddlColleges as SelectList, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CollegeID, "", new { @class = "text-danger error-msg" })*@
+                                            @Html.DropDownListFor(model => model.CollegeName, new SelectList(ViewBag.ddlColleges as SelectList, "Value", "Text"), "--SELECT COLLEGE--", new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.CollegeName, "", new { @class = "text-danger error-msg" })
                                         </div>
                                     </div>
                                 </div>
@@ -86,9 +95,10 @@
                                     <div class="cols-sm-10">
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-
-                                            @Html.DropDownListFor(model => model.RoleId, ViewBag.ddlRoles as SelectList, new { @class = "form-control" })
-                                           @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger error-msg" })
+                                            @Html.DropDownListFor(model => model.RoleId, new SelectList(ViewBag.ddlRoles as SelectList, "Value", "Text"), "--SELECT ROLE--", new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger error-msg" })
+                                            @*@Html.DropDownListFor(model => model.RoleId, ViewBag.ddlRoles as SelectList, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger error-msg" })*@
 
                                         </div>
                                     </div>
@@ -119,59 +129,59 @@
                                     </div>
                                 </div>
                                 @*<div class="form-group">
-                                        <label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>
-                                        <div class="cols-sm-10">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                                                <input type="password" class="form-control" name="confirm" id="confirm" placeholder="Confirm your Password" />
-                                            </div>
-                                        </div>
-                                    </div>*@
+            <label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>
+            <div class="cols-sm-10">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                    <input type="password" class="form-control" name="confirm" id="confirm" placeholder="Confirm your Password" />
+                </div>
+            </div>
+        </div>*@
                                 <div class="form-group">
                                     <label for="gender" class="cols-sm-2 control-label">Gender</label>
                                     <div class="cols-sm-10">
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
                                             @*<label class="radio-inline">
-                                                <input type="radio" name="Gender" value="M">Male</label>
-                                                <label class="radio-inline"><input type="radio" name="Gender" value="F">Female</label>*@
+                    <input type="radio" name="Gender" value="M">Male</label>
+                    <label class="radio-inline"><input type="radio" name="Gender" value="F">Female</label>*@
                                             @*<label class="radio-inline">
-                                                @Html.RadioButtonFor(m => m.Gender, "M")Male
-                                            </label>
-                                            <label class="radio-inline">
-                                                @Html.RadioButtonFor(m => m.Gender, "F")Female
-                                            </label>*@
+                        @Html.RadioButtonFor(m => m.Gender, "M")Male
+                    </label>
+                    <label class="radio-inline">
+                        @Html.RadioButtonFor(m => m.Gender, "F")Female
+                    </label>*@
 
 
-                                            @Html.RadioButtonFor(model => model.Gender, "M", true) Male 
+                                            @Html.RadioButtonFor(model => model.Gender, "M", true) Male
                                             @Html.RadioButtonFor(model => model.Gender, "F", false) Female
-                                    
-                                           @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger error-msg" })
+
+                                            @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger error-msg" })
                                             <br />
 
 
                                         </div>
                                     </div>
                                 </div>
-                                 
-                                @if(Model.Id != 0 )
-                                {
-                                <div class="form-group">
-                                    <label for="isActive" class="cols-sm-2 control-label">isActive</label>
-                                    <div class="cols-sm-10">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>                                           
 
-                                            @Html.TextBoxFor(model => model.IsActive, new { @class = "form-control", id = "isActive" })
-                                            @Html.ValidationMessageFor(model => model.IsActive)
+                                @if (Model.Id != 0)
+    {
+                            <div class="form-group">
+                                <label for="isActive" class="cols-sm-2 control-label">isActive</label>
+                                <div class="cols-sm-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
 
-                                        </div>
+                                        @Html.TextBoxFor(model => model.IsActive, new { @class = "form-control", id = "isActive" })
+                                        @Html.ValidationMessageFor(model => model.IsActive)
+
                                     </div>
                                 </div>
-                                }
-                                    
+                            </div>
+}
+                                <span id="pwdMeter" class="neutral" />
                                 <div class="form-group" style="margin-left: 216px !important; width:100%; margin-bottom:0 !important;">
-                                    <input type="submit" value="Register"  class="btn btn-primary btn-block" style="display: inline-block;">
+                                    <input type="submit" value="Register" class="btn btn-primary btn-block" style="display: inline-block;">
                                 </div>
                             </div>
                         </div>
@@ -179,8 +189,8 @@
                 }
             </div>
             @*<div class="modal-footer footer-bottom">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>*@
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>*@
         </div>
 
     </div>
@@ -189,7 +199,43 @@
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 
+
 @*<script type="text/javascript" language=javascript>
 
-    $.validator.unobtrusive.parse(document);
-</script>*@
+        $.validator.unobtrusive.parse(document);
+    </script>*@
+
+
+
+    <script src="~/Scripts/jquery.pwdMeter.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#password").pwdMeter();
+
+        });
+    </script>
+
+    <!--Style Sheets-->
+    <style>
+        .veryweak {
+            color: #FF0000;
+        }
+
+        .weak {
+            color: #FFAAAA;
+        }
+
+        .medium {
+            color: #FFFF00;
+        }
+
+        .strong {
+            color: #0000FF;
+        }
+
+        .verystrong {
+            color: #00FF00;
+        }
+    </style>

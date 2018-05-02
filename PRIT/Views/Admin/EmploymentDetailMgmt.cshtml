@@ -23,33 +23,19 @@
     @{ Html.RenderPartial("_EmploymentPartial", Model); }
 </div>
 
-
-
 <script>
-    $(document).ready(function () {
-        
-    });
-
-    function fnOnEmploymentSuccess(data) {
-
-
-        $('#employmentModal').find("[data-dismiss=modal]").trigger({ type: "click" });
-        if (data.success == true) {
-            swal('Saved!', data.message, 'success')
-        }
-        else if (data.success == false) {
-            sweetAlert("Oops...", data.message, "error");
-        }
-        if (data.result != "" || data.result != null) {
-            $('#employementData').html(data.result);
-        }
-
-
-    }
-
-
-   
-
+    //function fnOnEmploymentSuccess(data) {
+    //    $('#employmentModal').find("[data-dismiss=modal]").trigger({ type: "click" });
+    //    if (data.success == true) {
+    //        swal('Saved!', data.message, 'success')
+    //    }
+    //    else if (data.success == false) {
+    //        sweetAlert("Oops...", data.message, "error");
+    //    }
+    //    if (data.result != "" || data.result != null) {
+    //        $('#employementData').html(data.result);
+    //    }
+    //}
 </script>
 
 

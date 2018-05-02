@@ -45,15 +45,15 @@ namespace PRIT.Entity.MetaModel
         public Nullable<long> AltMobileNo { get; set; }
         [Required(ErrorMessage = "Please Enter Address")]
         public string Address { get; set; }
-        [Required(ErrorMessage = "Please Enter City")]
+       
         public string City { get; set; }
         [Required(ErrorMessage = "Please Enter Pincode")]
 
         [RegularExpression(@"^\d{6}(-\d{4})?$", ErrorMessage = "Please Enter Valid Postal Code.")]
         public long Pincode { get; set; }
-        [Required(ErrorMessage = "Please Enter State")]
+        
         public string State { get; set; }
-        [Required(ErrorMessage = "Please Enter Country")]
+       
         public string Country { get; set; }
         public string EmployeeId { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
