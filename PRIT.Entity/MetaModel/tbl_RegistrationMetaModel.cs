@@ -11,6 +11,7 @@ namespace PRIT.Entity.MetaModel
     {
 
         public int Id { get; set; }
+
         [Required(ErrorMessage = "Please Enter an Email")]
         [RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
                            @"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" +
@@ -18,24 +19,30 @@ namespace PRIT.Entity.MetaModel
                            ErrorMessage = "Email is not valid")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please Enter Password")]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [StringLength(15, MinimumLength = 3,ErrorMessage="Password should be between 3 to 15 characters")]
+        [Display(Name = "Password") ]
         public string Password { get; set; }
-
         [Required(ErrorMessage = "Please Enter Full Name")]
         public string FullName { get; set; }
-
-
         [Required(ErrorMessage = "Please Enter User Name")]
         public string UserName { get; set; }
+        [Required(ErrorMessage = "You must provide a Contact Number")]
+        [Display(Name = "Mobile No")]
+        [DataType(DataType.PhoneNumber)]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid phone number")]
         public Nullable<long> ContactNo { get; set; }
+        [Required(ErrorMessage = "Select Your Designation")]
         public string Designation { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<bool> IsActive { get; set; }
+        [Required(ErrorMessage = "Please Enter Role Name")]
         public Nullable<int> RoleId { get; set; }
         public Nullable<int> CollegeID { get; set; }
+
+        [Required(ErrorMessage = "Please Provide Gender")]
         public string Gender { get; set; }
 
     }
