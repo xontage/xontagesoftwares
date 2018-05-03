@@ -32,13 +32,13 @@ namespace PRIT.BAL
 
 
 
-        public List<Entity.ModuleSubModuleMenu> GetModuleMenu()
+        public List<Entity.ModuleSubModuleMenu> GetModuleMenu(int? rollId)
         {
             List<Entity.ModuleSubModuleMenu> objmodulesubMenu = new List<ModuleSubModuleMenu>();
             try
             {
                 
-                objmodulesubMenu = GetModuleSubModuleMenu();
+                objmodulesubMenu = GetModuleSubModuleMenu(rollId);
             }
             catch (Exception ex)
             {
@@ -54,12 +54,12 @@ namespace PRIT.BAL
         /// 31-07-2017 - Ghanshyam - Get List of Modules and ModuleMenus
         /// </summary>
         /// <returns>List of ModelSubModelMenu</returns>
-        public List<ModuleSubModuleMenu> GetModuleSubModuleMenu()
+        public List<ModuleSubModuleMenu> GetModuleSubModuleMenu(int? rollId)
         {
             List<ModuleSubModuleMenu> ModelSubModelMenuList = new List<ModuleSubModuleMenu>();
             try
             {
-                var Modules = db.tbl_MainMenu.Where(M => M.Active).OrderBy(M => M.UiPosition).ToList();
+                var Modules = db.tbl_MainMenu.Where(M => M.Active && M.RoleId==rollId).OrderBy(M => M.UiPosition).ToList();
 
 
                 foreach (var module in Modules)
@@ -67,13 +67,13 @@ namespace PRIT.BAL
                     //module.IconUrl = path + "\\" + module.IconUrl;
                     //module.IconUrl = commonMasterBL.GetImageFromByteArray(module.IconUrl);
 
-                    var moduleMenuList = db.tbl_SubMenu.Where(MM => MM.MainMenuId == module.Id && MM.Level1SubMenuId == null && MM.Active).OrderBy(mm => mm.UiPosition).ToList();
+                    var moduleMenuList = db.tbl_SubMenu.Where(MM => MM.MainMenuId == module.Id && MM.Level1SubMenuId == null && MM.Active && MM.RoleId==rollId).OrderBy(mm => mm.UiPosition).ToList();
 
                     List<ModuleMenuModel> moduleMenuModelList = new List<ModuleMenuModel>();
 
                     foreach (var moduleMenu in moduleMenuList)
                     {
-                        var moduleSubMenuList = db.tbl_SubMenu.Where(MM => MM.MainMenuId == module.Id && MM.Level1SubMenuId != 0 && MM.Level1SubMenuId == moduleMenu.Id && MM.Active).OrderBy(mm => mm.UiSubPosition).ToList();
+                        var moduleSubMenuList = db.tbl_SubMenu.Where(MM => MM.MainMenuId == module.Id && MM.Level1SubMenuId != 0 && MM.Level1SubMenuId == moduleMenu.Id && MM.Active && MM.RoleId == rollId).OrderBy(mm => mm.UiSubPosition).ToList();
                         moduleMenuModelList.Add(new ModuleMenuModel
                         {
                             ModuleMenu = moduleMenu,

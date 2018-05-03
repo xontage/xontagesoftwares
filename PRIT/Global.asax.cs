@@ -31,7 +31,7 @@ namespace PRIT
                         FormsIdentity id = (FormsIdentity)HttpContext.Current.User.Identity;
                         FormsAuthenticationTicket ticket = id.Ticket;
                         string userData = ticket.UserData;
-                        string[] roles = userData.Split(',');                        
+                        string[] roles = userData.Split(',');                                          
                         HttpContext.Current.User = new GenericPrincipal(id, roles);
                     }
                 }

@@ -1,32 +1,38 @@
-﻿
+﻿@{
+    PRIT.Entity.PRITEntities db = new PRIT.Entity.PRITEntities();
+    //var UserName = (from x in db.tbl_Registration
+    //              where x.Email == ""
+    //              select x.UserName).SingleOrDefault())
+}
+
 <div class="collapse navbar-collapse navbar-right">
 
     <ul class="nav navbar-nav mcd-menu">
 
-        @if(Session["MenuMasterFood"] != null)
+        @if (Session["MenuMasterFood"] != null)
         {
             var MenuItem = (IList<PRIT.Entity.ModuleSubModuleMenu>)Session["MenuMasterFood"];
 
             foreach (var module in MenuItem)
             {
 
-            <li class="dropdown">
-                <a href="@Url.Action(module.Module.Action, module.Module.Controller)" >
+                <li class="dropdown">
+                    <a href="@Url.Action(module.Module.Action, module.Module.Controller)">
 
-                    @*<img src="@module.Module.IconUrl" />*@
-                    <span>
-                        @module.Module.MainMenu
-                    </span>
+                        @*<img src="@module.Module.IconUrl" />*@
+                        <span>
+                            @module.Module.MainMenu
+                        </span>
+                        @if (module.ModuleMenus.Count > 0)
+                    {
+                            <i class="fa fa-angle-down"></i>
+                        }
+                    </a>
                     @if (module.ModuleMenus.Count > 0)
                     {
-                        <i class="fa fa-angle-down"></i>
-                    }
-                </a>
-                @if (module.ModuleMenus.Count > 0)
-                {
-                    <ul class="dropdown-menu">
-                        @foreach (var moduleMenu in module.ModuleMenus)
-                        {                            
+                        <ul class="dropdown-menu">
+                            @foreach (var moduleMenu in module.ModuleMenus)
+                        {
                                 <li class="dropdown dropdown-submenu">
 
                                     @if (moduleMenu.ModuleMenu != null)
@@ -36,7 +42,7 @@
 
                                             //if (User1.IsInRole("Administrator,Manager,DM Employee,DM Agent"))
                                             //{
-                                            <a href="@Url.Action(moduleMenu.ModuleMenu.Action,moduleMenu.ModuleMenu.Controller)"  id="@moduleMenu.ModuleMenu.Id">@moduleMenu.ModuleMenu.SubMenu</a>
+                                            <a href="@Url.Action(moduleMenu.ModuleMenu.Action,moduleMenu.ModuleMenu.Controller)" id="@moduleMenu.ModuleMenu.Id">@moduleMenu.ModuleMenu.SubMenu</a>
                                             if (moduleMenu.ModuleSubMenus.Count > 0)
                                             {
                                                 <ul class="dropdown-menu test" id="RegisterLink" style="display:none;">
@@ -53,46 +59,53 @@
 
                                         }
                                     }
-                                </li>                                                       
+                                </li>
 
-                        }                        
+                            }
 
-                    </ul>
-                }
+                        </ul>
+                    }
 
+                </li>
+
+            }
+
+
+            @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Logout" ? "active" : "")"> <a href="@Url.Action("Logout", "Admin")" id="contactId">Logout</a> </li>*@
+
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">@db.tbl_Registration.Where(x => x.Email == @User.Identity.Name).FirstOrDefault().UserName   <span class="glyphicon glyphicon-user pull-right" style="margin-left: 7px;margin-top: 4px;"></span></a>
+
+
+                <ul class="dropdown-menu">
+                    <li><a href="#">Account Settings <span class="glyphicon glyphicon-cog pull-right"></span></a></li>
+
+                    @*HTML code for level 1 submenu..
+                            <li class="dropdown dropdown-submenu">
+                            <a href="#">Account Settings <span class="glyphicon glyphicon-cog pull-right"></span> </a>
+                            <ul class="dropdown-menu test" style="display:none;">
+                                <li><a href="#">Change Password</a></li>
+                                <li><a href="#">My Profile</a></li>
+                            </ul>
+                        </li>*@
+
+                    <li><a href="#">User stats <span class="glyphicon glyphicon-stats pull-right"></span></a></li>
+
+                    <li><a href="#">Favourites Snippets <span class="glyphicon glyphicon-heart pull-right"></span></a></li>
+
+                    @if (User.IsInRole("Admin"))
+                {
+                        <li><a href="@Url.Action("Logout", "Admin")">Sign Out <span class="glyphicon glyphicon-log-out pull-right"></span></a></li>
+                    }
+                    else if (User.IsInRole("Staff"))
+                    {
+                        <li><a href="@Url.Action("Logout", "Staff")">Sign Out <span class="glyphicon glyphicon-log-out pull-right"></span></a></li> }
+
+                </ul>
             </li>
 
 
-
-        }
-
-
-        @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Logout" ? "active" : "")"> <a href="@Url.Action("Logout", "Admin")" id="contactId">Logout</a> </li>*@
-
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">@HttpContext.Current.User.Identity.Name <span class="glyphicon glyphicon-user pull-right" style="margin-left: 7px;margin-top: 4px;"></span></a>
-            <ul class="dropdown-menu">
-                <li><a href="#">Account Settings <span class="glyphicon glyphicon-cog pull-right"></span></a></li>
-                
-                @*HTML code for level 1 submenu..
-                    <li class="dropdown dropdown-submenu">
-                    <a href="#">Account Settings <span class="glyphicon glyphicon-cog pull-right"></span> </a>
-                    <ul class="dropdown-menu test" style="display:none;">
-                        <li><a href="#">Change Password</a></li>
-                        <li><a href="#">My Profile</a></li>
-                    </ul>
-                </li>*@
-
-                <li><a href="#">User stats <span class="glyphicon glyphicon-stats pull-right"></span></a></li>                               
-               
-                <li><a href="#">Favourites Snippets <span class="glyphicon glyphicon-heart pull-right"></span></a></li>
-               
-                <li><a href="@Url.Action("Logout", "Admin")">Sign Out <span class="glyphicon glyphicon-log-out pull-right"></span></a></li>
-            </ul>
-        </li>
-
-
-        }@*End main if session condition*@
+        } @*End main if session condition*@
     </ul>
 
 </div>

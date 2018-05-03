@@ -9,7 +9,8 @@ using System.Web.Security;
 
 namespace PRIT.Controllers
 {
-    [Authorize(Roles = "Staff")]
+
+    [Authorize(Roles = "Staff, Admin")]
     public class StaffController : Controller
     {
         PRITEntities db = new PRITEntities();
@@ -31,11 +32,18 @@ namespace PRIT.Controllers
             return View();
         }
 
-      
-      
+        public ActionResult CommonDashboard()
+        {
+            return View();
+        }
+
+
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
+            Session.Abandon();
+            Session.Clear();
+            Session.RemoveAll();
             return RedirectToAction("Index","Home");
         }
 

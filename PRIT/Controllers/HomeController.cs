@@ -185,7 +185,7 @@ namespace PRIT.Controllers
                     if (user != null)
                     {
                         user = userBL.LoginVerification(loginViewModel.Email, loginViewModel.Password);//objUserBL.GetUserByUserName(loginViewModel.Email);//get userdetail by email id               
-
+                        ViewBag.Username = user.UserName;
                         if (user != null)
                         {
                             #region Different ways for Getting the Menu details from entity and bind it in MenuModels list.  
@@ -236,11 +236,21 @@ namespace PRIT.Controllers
                                 menuList.Add(menu);
                             }
 
-                            //fifth way
                             var obj = new PRIT.BAL.CollegeBL();
-                            var MenuItem = obj.GetModuleMenu();
-
-                            Session["MenuMasterFood"] = MenuItem;//Bind the _menus list to MenuMaster session      
+                            List<ModuleSubModuleMenu> MenuItem = new List<ModuleSubModuleMenu>();
+                            //fifth way
+                            if (user.RoleId == 1)
+                            {
+                               
+                                 MenuItem = obj.GetModuleMenu(user.RoleId);
+                                Session["MenuMasterFood"] = MenuItem;//Bind the _menus list to MenuMaster session      
+                            }
+                            else if (user.RoleId == 2) {
+                              
+                                 MenuItem = obj.GetModuleMenu(user.RoleId);
+                                Session["MenuMasterFood"] = MenuItem;//Bind the _menus list to MenuMaster session  
+                            }
+                            
 
                             Session["MenuMaster"] = menuList;//Bind the _menus list to MenuMaster session                                                                
                             //Session["LoginCredentials"] = user; // Bind the _logincredentials details to "LoginCredentials" session  
@@ -259,21 +269,22 @@ namespace PRIT.Controllers
                             Response.Cookies.Add(cookie);
 
 
-                            if (user.RoleId == 1)
-                            {
+                            //if (user.RoleId == 1)
+                           // {
                                 if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/") && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
                                     return Redirect(returnUrl);
                                 else
-                                    return RedirectToAction("AdminDashboard", "Admin");
+                                //return RedirectToAction("AdminDashboard", "Admin");
+                                 return RedirectToAction("CommonDashboard", "Home");
 
-                            }
-                            else if (user.RoleId == 2)
-                            {
-                                if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/") && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
-                                    return Redirect(returnUrl);
-                                else
-                                    return RedirectToAction("StaffDashboard", "Staff");
-                            }
+                            // }
+                            // else if (user.RoleId == 2)
+                            //{
+                            //    if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/") && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
+                            //        return Redirect(returnUrl);
+                            //    else
+                            //        return RedirectToAction("StaffDashboard", "Staff");
+                            //}
 
                         }
                         else
@@ -296,7 +307,11 @@ namespace PRIT.Controllers
             return View(loginViewModel);
         }
 
-
+        [Authorize(Roles = "Staff, Admin")]
+        public ActionResult CommonDashboard()
+        {
+            return View();
+        }
 
 
         [HttpPost]
