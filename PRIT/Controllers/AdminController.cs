@@ -298,20 +298,22 @@ namespace PRIT.Controllers
 
 
         [HttpGet]
-        public ActionResult AddEditEmployment(int? EmpId)
+        public ActionResult AddEditEmployment(int? empId)
         {
 
             //tbl_EmployeeMetaModel md = new tbl_EmployeeMetaModel();
             tbl_EmploymentDetails model = new tbl_EmploymentDetails();
-            if (EmpId > 0)
-            {
-                model = db.tbl_EmploymentDetails.Where(x => x.EmplD == EmpId).FirstOrDefault();
-            }
-            if (model == null) { ViewBag.EmpID = EmpId; }
+            
+                model = db.tbl_EmploymentDetails.Where(x => x.EmplD == empId).FirstOrDefault();
+            if(model!=null)
+               ViewBag.EmploymentId= model.ID;
+            
+           //// if (model == null) { ViewBag.EmpID = model.ID; }
            
             ViewBag.ddlEmpDesignation = new SelectList(GetEmpDesignation(), "Value", "Text");
             ViewBag.ddlEmployeeType = new SelectList(GetEmployeeType(), "Value", "Text");
-           
+            ViewBag.EmpID = empId;
+
             return PartialView("~/Views/Admin/_AddEditEmployment.cshtml", model);
 
         }
@@ -403,20 +405,28 @@ namespace PRIT.Controllers
 
         }
         [HttpPost]
-        public ActionResult AddEditEmployment(tbl_EmploymentDetails model)
+        public ActionResult AddEditEmployment([Bind(Exclude = "ID")] tbl_EmploymentDetails model=null)
         {
             List<tbl_EmploymentDetails> lstN = new List<tbl_EmploymentDetails>();
-            int Id = 0;
+
+
+
+            int employeeId = 0;
+
+            if (!string.IsNullOrEmpty(Request.Form["EmploymentIds"]))
+            {
+                model.ID = Convert.ToInt32(Request.Form["EmploymentIds"]);
+
+            }
             if (!string.IsNullOrEmpty(Request.Form["EmpIds"]))
             {
-                Id = Convert.ToInt32(Request.Form["EmpIds"]);
-                
+                employeeId = Convert.ToInt32(Request.Form["EmpIds"]);
+
             }
-            
-                 
+
             if (ModelState.IsValid)
             {
-                employmentBL.AddEmployment(model, User.Identity.Name,Id);
+                employmentBL.AddEmployment(model, User.Identity.Name, employeeId);
                 lstN = db.tbl_EmploymentDetails.OrderByDescending(emp => emp.ID).ToList();
                 var aa = RenderRazorViewToString("_EmploymentPartial", lstN);
 
@@ -446,6 +456,19 @@ namespace PRIT.Controllers
             if(deletedEmpId>0)
             lstN = db.tbl_Employee.OrderByDescending(e => e.ID).Where(e => e.IsDeleted == false).ToList();
             return PartialView("_EmployeePartial", lstN);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteEmployment(int? Id)
+        {
+
+            tbl_EmploymentDetails employment = employmentBL.GetEmploymentById(Id);
+
+            List<tbl_EmploymentDetails> lstN = new List<tbl_EmploymentDetails>();
+            int deletedEmpId = employmentBL.DeleteEmployment(employment);
+            if (deletedEmpId > 0)
+                lstN = db.tbl_EmploymentDetails.OrderByDescending(e => e.ID).ToList();
+            return PartialView("_EmploymentPartial", lstN);
         }
         public ActionResult Registration()
         {

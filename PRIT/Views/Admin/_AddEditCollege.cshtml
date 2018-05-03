@@ -67,21 +67,17 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="form-group">
                                             <label for="website" class="cols-sm-2 control-label">Website</label>
                                             <div class="cols-sm-10">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="glyphicon glyphicon-book" aria-hidden="true"></i></span>
                                                   @*  <input type="text" class="form-control" name="Website" id="Website" placeholder="Enter College Website" />*@
-
                                                     @Html.TextBoxFor(model => model.website, new { @class = "form-control", id = "website", placeholder = "Enter College Website" })
                                                     @Html.ValidationMessageFor(model => model.website, "", new { @class = "text-danger" })
-
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="form-group">
                                             <label for="contact1" class="cols-sm-2 control-label">College Contact 1</label>
                                             <div class="cols-sm-10">

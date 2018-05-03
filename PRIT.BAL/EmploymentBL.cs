@@ -12,37 +12,43 @@ namespace PRIT.BAL
     {
         EmploymentDL employmentDL = new EmploymentDL();
         PRITEntities db = new PRITEntities();
-        public void AddEmployment(tbl_EmploymentDetails obj, string userName,int id)
+        public void AddEmployment(tbl_EmploymentDetails obj, string userName,int employeeId)
         {
-            //var myEmp = empDL.GetAllEmployee();
-            //var myEmpList = empDL.GetAllEmployeeList();
-           // tbl_Employee p = empDL.GetEmployeeById(obj.ID);
-           // tbl_Employee entity = db.tbl_Employee.Where(p => p.ID == obj.ID).AsQueryable().FirstOrDefault();
-
             try
             {
-
                 if (obj.ID > 0)
                 {
-                    obj.EmplD = id;
-                    
+                    //obj.EmplD = id;
+                    employmentDL.SaveEmployment(obj);
                 }
                 else
                 {
-                    obj.EmplD = id;
-                    //int count = myEmpList.Count;
-                    //count++;
-                    //obj.EmployeeId = "XSS-10" + count;
-                    //obj.IsDeleted = false;
+                    obj.EmplD = employeeId;
+                    employmentDL.SaveEmployment(obj);
                 }
-
-                employmentDL.SaveEmployment(obj);
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
+        }
+
+        public tbl_EmploymentDetails GetEmploymentById(int? id)
+        {
+            try
+            {
+                return employmentDL.GetEmploymentById(id);
+            }
+            catch (Exception ex)
+            {
+                //ExceptionManager.Publish(ex, MethodBase.GetCurrentMethod().DeclaringType.Namespace + "-" + MethodBase.GetCurrentMethod().DeclaringType.Name, "FrameWork");
+                throw ex;
+            }
+        }
+
+        public int DeleteEmployment(tbl_EmploymentDetails employment)
+        {
+            return employmentDL.DeleteEmployment(employment);
         }
     }
 }

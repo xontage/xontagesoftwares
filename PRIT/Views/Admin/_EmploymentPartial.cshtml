@@ -62,6 +62,7 @@
         });
     });
     $('.btnEmploymentDelete').on('click', function () {
+        debugger;
         var id = $(this).data("employnentid");
         swal({
             title: "Are you sure?",
@@ -85,7 +86,7 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "html",
                     success: function (result) {
-                        $('#employeeData').html(result);
+                        $('#employementData').html(result);
                         swal('Deleted!', 'Your imaginary file has been deleted.', 'success')
                     },
                     error: function (xhr, status, error) {

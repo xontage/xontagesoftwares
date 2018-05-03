@@ -130,10 +130,13 @@
 
     $(".btnAddEmployment").click(function () {
         debugger
-        var id = $(this).data("empid");
+        var empid = $(this).data("empid");
+        var employmentid = $(this).data("emplid");
+        
         $.ajax({
             type: "GET",
-            url: "../Admin/AddEditEmployment?EmpId=" + id,
+            url: "../Admin/AddEditEmployment",
+            data: { empId: empid},
             //contentType: "application/json; charset=utf-8",
             //dataType: "json",
             success: function (result) {
