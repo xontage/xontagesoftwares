@@ -18,12 +18,16 @@ namespace PRIT.BAL
             {
                 if (obj.ID > 0)
                 {
-                    //obj.EmplD = id;
+                    obj.ModifiedBy = db.tbl_Registration.Where(x => x.Email == userName).FirstOrDefault().UserName;
+                    obj.ModifiedDate = DateTime.Now;
                     employmentDL.SaveEmployment(obj);
                 }
                 else
                 {
+                    obj.CreatedDate = DateTime.Now;
+                    obj.CreatedBy = db.tbl_Registration.Where(x => x.Email == userName).FirstOrDefault().UserName;
                     obj.EmplD = employeeId;
+                    obj.IsActive = false;
                     employmentDL.SaveEmployment(obj);
                 }
             }

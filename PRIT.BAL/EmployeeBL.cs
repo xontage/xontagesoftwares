@@ -14,19 +14,15 @@ namespace PRIT.BAL
         PRITEntities db = new PRITEntities();
         public void AddEmployees(tbl_Employee obj, string userName)
         {
-
-            var myEmp = empDL.GetAllEmployee();
+           
             var myEmpList = empDL.GetAllEmployeeList();
-            tbl_Employee p = empDL.GetEmployeeById(obj.ID);
-
-
+            
             try
             {
                 if (obj.ID > 0)
-                {
-                   
-                    obj.EmployeeId = p.EmployeeId;
-                    obj.IsDeleted = p.IsDeleted;
+                {                                       
+                    obj.ModifiedBy = db.tbl_Registration.Where(x => x.Email == userName).FirstOrDefault().UserName;
+                    obj.ModifiedDate = DateTime.Now;
                 }
                 else
                 {
@@ -34,6 +30,9 @@ namespace PRIT.BAL
                     count++;
                     obj.EmployeeId = "XSS-10" + count;
                     obj.IsDeleted = false;
+                   
+                    obj.CreatedBy = db.tbl_Registration.Where(x => x.Email == userName).FirstOrDefault().UserName;
+                    obj.CreatedDate = DateTime.Now;
                 }
 
                 empDL.SaveEmployees(obj);

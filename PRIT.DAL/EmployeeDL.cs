@@ -48,6 +48,9 @@ namespace PRIT.DAL
                     lst.EmployeeType = obj.EmployeeType;
                     lst.Designation = obj.Designation;
                     lst.HighestEducation = obj.HighestEducation;
+                    lst.Skills = obj.Skills;
+                    lst.ModifiedBy = obj.ModifiedBy;
+                    lst.ModifiedDate = obj.ModifiedDate;
                     db.Configuration.ValidateOnSaveEnabled = false;
                     //   db.Entry(entity).CurrentValues.SetValues(obj);
                 }

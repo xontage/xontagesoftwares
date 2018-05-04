@@ -31,6 +31,9 @@ namespace PRIT.DAL
                     lst.DepartmentName = obj.DepartmentName;
                     lst.CompanyName = obj.CompanyName;
                     lst.TotalRelevantExperienced = obj.TotalRelevantExperienced;
+                    lst.ModifiedDate = obj.ModifiedDate;
+                    lst.ModifiedBy = obj.ModifiedBy;
+                    lst.IsActive = obj.IsActive;
                     db.Configuration.ValidateOnSaveEnabled = false;
 
                 }
@@ -73,7 +76,8 @@ namespace PRIT.DAL
             {
                 // var user = db.tbl_Employee.Where(x => x.ID == emp.ID).FirstOrDefault();
                 var db1 = db.tbl_EmploymentDetails.Where(u => u.ID.Equals(employment.ID)).FirstOrDefault();
-                db.tbl_EmploymentDetails.Remove(db1);
+                db1.IsActive = true;
+              //  db.tbl_EmploymentDetails.Remove(db1);
                 db.Configuration.ValidateOnSaveEnabled = false;
                 var result = db.SaveChanges();
                 db.Configuration.ValidateOnSaveEnabled = false;
