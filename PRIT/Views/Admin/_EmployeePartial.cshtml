@@ -2,7 +2,15 @@
 @{
     Layout = null;
 }
+<style>
+    table {
+        border-collapse: collapse;
+    }
 
+    table, td, th {
+        border: 1px solid black;
+    }
+</style>
 
 <div class="container">
     <br />
@@ -10,14 +18,14 @@
 
     <table style="width:100%" id="exampleEmployee" class="display" cellspacing="0">
         <thead>
-            <tr style="white-space:nowrap">
+            <tr style="background-color: #865FC5;color: #fff;">
                 <th>RegId</th>
                 <th>Full Name</th>
                 <th>Email Id</th>
                 <th>Contact No</th>
                 <th>Designation</th>
                 <th>Employee Type</th>
-                <th>Highest Qualification</th>
+               
                 <th>Employee Id</th>
                 <th>Status</th>
 
@@ -36,7 +44,7 @@
                 <td>@item.MobileNo</td>
                 <td>@item.Designation</td>
                 <td>@item.EmployeeType</td>
-                <td>@item.HighestEducation</td>
+               
                 <td>@item.EmployeeId</td>
                 <td>@item.Status</td>
 
@@ -72,15 +80,15 @@
         $('#exampleEmployee').DataTable({
             "iDisplayLength": 100,
             //"bFilter": false,
-            "aaSorting": [[8, "desc"]],
+            "aaSorting": [[7, "desc"]],
             "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                if (aData[8] == "Working") {
-                    $('td', nRow).css('background-color', 'green');
-                    $('td', nRow.text).css('color', 'white');
+                if (aData[7] == "Working") {
+                    $('td', nRow).css('background-color', '#BCED91');
+                   // $('td', nRow.text).css('color', 'white');
                 }
                 else {
-                    $('td', nRow).css('background-color', 'red');
-                    $('td', nRow.text).css('color', 'white');
+                    $('td', nRow).css('background-color', '#F08080');
+                    //$('td', nRow.text).css('color', 'white');
                 }
             }
         });

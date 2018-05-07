@@ -14,5 +14,7 @@ namespace PRIT.Entity
     public partial class tbl_Employee
     {
         public string Status { get; set; }
+        public MultiSelectList Skillset { get; set; }
+        public int[] SkillIds { get; set; }
     }
 }

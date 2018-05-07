@@ -30,7 +30,13 @@ namespace PRIT.BAL
                 {
                     obj.ModifiedDate = DateTime.Now;                   
                     obj.ModifiedBy = userName;
-                   
+                    if (!string.IsNullOrEmpty(obj.Password))
+                    {
+                        var keyNew = SaltPhrase();
+                        var password = EncryptPassword(obj.Password, keyNew);
+                        obj.Password = password;
+                        obj.UserSalt = keyNew;
+                    }
                     return registrationDL.Registration(obj);
                 }
                 else

@@ -37,6 +37,8 @@ namespace PRIT.Controllers
 
         public ActionResult Contact()
         {
+            ViewBag.ddlInquirySpecification = new SelectList(GetInquirySpecification(), "Value", "Text");
+
             ViewBag.Message = "Your contact page.";
             return View();
         }
@@ -47,15 +49,44 @@ namespace PRIT.Controllers
             ViewBag.Message = "Your contact page.";
             try
             {
-                contactsBL.SaveContact(obj);
+                if (ModelState.IsValid)
+                {
+                    contactsBL.SaveContact(obj);
 
-                return Json(new { Status = "success", Message = "File Upload Successfully!!" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Status = "Success", Message = "Inquiry Submitted Successfully!!" }, JsonRequestBehavior.AllowGet);
+
+                }
+                return Json(new { Status = "Failure", Message = "Something went wrong!!" }, JsonRequestBehavior.AllowGet);
+
+
             }
             catch (Exception ex)
             {
 
                 return Json("Error occurred. Error details: " + ex.Message);
             }
+        }
+
+
+        [NonAction]
+        public List<SelectListItem> GetInquirySpecification()
+        {
+              
+            try
+            {
+                List<SelectListItem> lstDropdownModelGeneric;
+                lstDropdownModelGeneric = new List<SelectListItem>  {
+                        //new SelectListItem(){Text="SELECT EMPLOYEE TYPE",Value="0"},
+                        new SelectListItem(){Text="Software Training",Value="Software Training"},
+                         new SelectListItem(){Text="IEEE Projects",Value="IEEE Projects"}
+                    };
+                return lstDropdownModelGeneric;
+            }
+            catch (Exception ex)
+            {
+                return new List<SelectListItem>();
+            }
+
         }
         public ActionResult Careers()
         {
@@ -220,41 +251,39 @@ namespace PRIT.Controllers
                             //    Key = mainMenu,
                             //    subMneu = subMneu
                             //}).ToList();
+
+                            //Fourth Way 
+                            //var query = from m in db.tbl_MainMenu
+                            //        join s in db.tbl_SubMenu on m.Id equals s.MainMenuId into SubMenuGroup
+                            //         select new { m, SubMenuGroup = SubMenuGroup.ToList() };
+                            //List<MenuModelsList> menuList = new List<MenuModelsList>();
+                            //foreach(var item in query)
+                            //{
+                            //    MenuModelsList menu = new MenuModelsList();
+                            //    menu.MainMenu = item.m;
+                            //    menu.SubMenuList = item.SubMenuGroup;
+                            //    menuList.Add(menu);
+                            //}
+                            // Session["MenuMaster"] = menuList;//Bind the _menus list to MenuMaster session    
+                            //Session["LoginCredentials"] = user; // Bind the _logincredentials details to "LoginCredentials" session  
+
                             #endregion...End of Different ways for Getting the Menu details from entity and bind it in MenuModels list.  
 
-                            //Fourth Way
-                            var query = from m in db.tbl_MainMenu
-                                    join s in db.tbl_SubMenu on m.Id equals s.MainMenuId into SubMenuGroup
-                                     select new { m, SubMenuGroup = SubMenuGroup.ToList() };
 
-                            List<MenuModelsList> menuList = new List<MenuModelsList>();
-                            foreach(var item in query)
-                            {
-                                MenuModelsList menu = new MenuModelsList();
-                                menu.MainMenu = item.m;
-                                menu.SubMenuList = item.SubMenuGroup;
-                                menuList.Add(menu);
-                            }
-
+                            //fifth way
                             var obj = new PRIT.BAL.CollegeBL();
                             List<ModuleSubModuleMenu> MenuItem = new List<ModuleSubModuleMenu>();
-                            //fifth way
+                           
                             if (user.RoleId == 1)
                             {
-                               
                                  MenuItem = obj.GetModuleMenu(user.RoleId);
                                 Session["MenuMasterFood"] = MenuItem;//Bind the _menus list to MenuMaster session      
                             }
                             else if (user.RoleId == 2) {
-                              
                                  MenuItem = obj.GetModuleMenu(user.RoleId);
                                 Session["MenuMasterFood"] = MenuItem;//Bind the _menus list to MenuMaster session  
                             }
                             
-
-                            Session["MenuMaster"] = menuList;//Bind the _menus list to MenuMaster session                                                                
-                            //Session["LoginCredentials"] = user; // Bind the _logincredentials details to "LoginCredentials" session  
-
                             //for calling GetRolesForUser() method in SIteRole Class
                             FormsAuthentication.SetAuthCookie(user.Email, false);
 

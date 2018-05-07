@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace PRIT.Entity.MetaModel
 {
@@ -40,6 +41,9 @@ namespace PRIT.Entity.MetaModel
         public Nullable<bool> IsActive { get; set; }
         [Required(ErrorMessage = "Please Enter Role Name")]
         public Nullable<int> RoleId { get; set; }
+
+        //[MustBeSelected(ErrorMessage = "Please Select College Name")]
+        [Required(ErrorMessage = "Please Select College Name")]
         public Nullable<int> CollegeID { get; set; }
 
         [Required(ErrorMessage = "Please Provide Gender")]
@@ -48,6 +52,21 @@ namespace PRIT.Entity.MetaModel
     }
 
 
+    public class MustBeSelected : ValidationAttribute, IClientValidatable // IClientValidatable for client side Validation
+    {
+        public override bool IsValid(object value)
+        {
+            if (value == null || (int)value == 0)
+                return false;
+            else
+                return true;
+        }
+        // Implement IClientValidatable for client side Validation
+        public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
+        {
+            return new ModelClientValidationRule[] { new ModelClientValidationRule { ValidationType = "dropdown", ErrorMessage = this.ErrorMessage } };
+        }
+    }
 
     /// <summary>
     /// loginview model is for storing login credential

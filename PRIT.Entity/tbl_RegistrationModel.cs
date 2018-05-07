@@ -18,8 +18,7 @@ namespace PRIT.Entity
         /// <summary>
         /// View model class for adding extra fields required...
         /// </summary>
-
-        [Required(ErrorMessage = "Please Enter College Name")]
+        
         public string CollegeName { get; set; }
        
         public string UserRoleName { get; set; }

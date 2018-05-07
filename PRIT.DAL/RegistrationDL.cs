@@ -36,6 +36,8 @@ namespace PRIT.DAL
                     lst.RoleId = obj.RoleId;
                     lst.UserName = obj.UserName;
                     lst.Gender = obj.Gender;
+                    lst.Password = obj.Password;
+                    lst.UserSalt = obj.UserSalt;
                     lst.ModifiedDate = obj.ModifiedDate;
                     lst.ModifiedBy = obj.ModifiedBy;
                     db.Configuration.ValidateOnSaveEnabled = false;

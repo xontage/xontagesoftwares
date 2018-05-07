@@ -24,19 +24,12 @@ namespace PRIT.Controllers
 
         ///write code for FileUpload method
 
-
-
         public ActionResult StaffDashboard()
         {
             ViewBag.name = User.Identity.Name;
             return View();
         }
-
-        public ActionResult CommonDashboard()
-        {
-            return View();
-        }
-
+      
 
         public ActionResult Logout()
         {

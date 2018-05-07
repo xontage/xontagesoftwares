@@ -121,7 +121,7 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
 
-                                    @Html.TextBoxFor(model => model.EmailId, new { @class = "form-control", id = "email", placeholder = "Enter Email", required = "required" })
+                                    @Html.TextBoxFor(model => model.EmailId, new { @class = "form-control", id = "email", placeholder = "Enter Email"})
                                     @Html.ValidationMessageFor(model => model.EmailId, "", new { @class = "text-danger error-msg" })
                                 </div>
                             </div>

@@ -12,6 +12,7 @@ using PRIT.BAL;
 using System.Web.Security;
 using Newtonsoft.Json;
 using PRIT.Entity.MetaModel;
+using System.Web.Configuration;
 
 namespace PRIT.Controllers
 {
@@ -554,7 +555,7 @@ namespace PRIT.Controllers
 
                 item.CollegeName = (from c in db.tbl_Colleges
                                     join R in db.tbl_Registration on c.collegeId equals R.CollegeID
-                                    // where u.Guid == userModel.Guid
+                                     where c.collegeId == item.CollegeID
                                     select c.collegeName).FirstOrDefault();
             }
 
@@ -569,6 +570,7 @@ namespace PRIT.Controllers
             if (UserId > 0)
             {
                 model = db.tbl_Registration.Where(x => x.Id == UserId).FirstOrDefault();
+               model.Password= RegistrationBL.DecryptPassword(model.Password, model.UserSalt);
             }
 
             ViewBag.ddlDestination = new SelectList(GetDestination(), "Value", "Text");
@@ -588,6 +590,15 @@ namespace PRIT.Controllers
             {
                 registrationBL.Registration(model, User.Identity.Name);
                 lstN = db.tbl_Registration.OrderByDescending(person => person.Id).ToList();
+                foreach (var item in lstN)
+                {
+
+
+                    item.CollegeName = (from c in db.tbl_Colleges
+                                        join R in db.tbl_Registration on c.collegeId equals R.CollegeID
+                                        where c.collegeId == item.CollegeID
+                                        select c.collegeName).FirstOrDefault();
+                }
                 var aa = RenderRazorViewToString("_RegistrationPartial", lstN);
 
                 return new JsonResult()
@@ -946,16 +957,31 @@ namespace PRIT.Controllers
         //    ViewBag.name = User.Identity.Name;
         //    return View();
         //}
+        //public ActionResult Logout()
+        //{
+        //    FormsAuthentication.SignOut();
+
+        //    Session.Abandon();
+        //    Session.Clear();
+        //    Session.RemoveAll();
+
+        //    return RedirectToAction("Index", "Home");
+        //}
+
         public ActionResult Logout()
         {
-            FormsAuthentication.SignOut();
-
+            // Delete the user details from cache.
             Session.Abandon();
-            Session.Clear();
-            Session.RemoveAll();
+            // Delete the authentication ticket and sign out.
+            FormsAuthentication.SignOut();
+            // Clear authentication cookie.
+            HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, "");
+            cookie.Expires = DateTime.Now.AddYears(-1);
+            Response.Cookies.Add(cookie);
 
             return RedirectToAction("Index", "Home");
         }
+
 
     }
 }

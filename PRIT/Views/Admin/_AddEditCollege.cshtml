@@ -5,7 +5,13 @@
 
 <link href="~/css/bootstrap-multiselect.css" rel="stylesheet" />
 <script src="~/js/bootstrap-multiselect.js"></script>
-
+<style>
+    .error-msg {
+        position: absolute;
+        top: 37px;
+        left: 0;
+    }
+</style>
 
 <div class="modal fade" id="myCollgeModal" role="dialog">
     <div class="modal-dialog">
@@ -35,7 +41,7 @@
                                                     @class = "form-control",
                                                     id = "collegeName",
                                                     placeholder = "Enter your College Name" })
-                                                    @Html.ValidationMessageFor(model => model.collegeName, "", new { @class = "text-danger" })
+                                                    @Html.ValidationMessageFor(model => model.collegeName, "", new { @class = "text-danger error-msg" })
                                                 </div>
                                             </div>
                                         </div>
@@ -48,7 +54,7 @@
                                                     @*<input type="text" class="form-control" name="Address" id="Address" placeholder="Enter College Address" />*@
 
                                                     @Html.TextBoxFor(model => model.Address, new { @class = "form-control", id = "Address", placeholder = "Enter Address" })
-                                                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                                                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger error-msg" })
 
                                                 </div>
                                             </div>
@@ -62,7 +68,7 @@
                                                     @*<input type="text" class="form-control" name="email" id="email" placeholder="Enter College Email" />*@
 
                                                     @Html.TextBoxFor(model => model.email, new { @class = "form-control", id = "email", placeholder = "Enter Email" })
-                                                    @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+                                                    @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger error-msg" })
 
                                                 </div>
                                             </div>
@@ -74,7 +80,7 @@
                                                     <span class="input-group-addon"><i class="glyphicon glyphicon-book" aria-hidden="true"></i></span>
                                                   @*  <input type="text" class="form-control" name="Website" id="Website" placeholder="Enter College Website" />*@
                                                     @Html.TextBoxFor(model => model.website, new { @class = "form-control", id = "website", placeholder = "Enter College Website" })
-                                                    @Html.ValidationMessageFor(model => model.website, "", new { @class = "text-danger" })
+                                                    @Html.ValidationMessageFor(model => model.website, "", new { @class = "text-danger error-msg" })
                                                 </div>
                                             </div>
                                         </div>
@@ -85,7 +91,7 @@
                                                     <span class="input-group-addon"><i class="glyphicon glyphicon-earphone" aria-hidden="true"></i></span>
                                                     @*<input type="text" class="form-control" name="Contact1" id="Contact1" placeholder="Enter College Contact 1" />*@
                                                     @Html.TextBoxFor(model => model.contact1, new { @class = "form-control", id = "contact1", placeholder = "Enter College contact1" })
-                                                    @Html.ValidationMessageFor(model => model.contact1, "", new { @class = "text-danger" })
+                                                    @Html.ValidationMessageFor(model => model.contact1, "", new { @class = "text-danger error-msg" })
                                                 </div>
                                             </div>
                                         </div>
@@ -98,7 +104,7 @@
                                                     @*<input type="text" class="form-control" name="Contact2" id="Contact2" placeholder="Enter College Contact 2" />*@
 
                                                     @Html.TextBoxFor(model => model.contact2, new { @class = "form-control", id = "contact2", placeholder = "Enter College contact2" })
-                                                    @Html.ValidationMessageFor(model => model.contact2, "", new { @class = "text-danger" })
+                                                    @Html.ValidationMessageFor(model => model.contact2, "", new { @class = "text-danger error-msg" })
                                                 </div>
                                             </div>
                                         </div>
@@ -109,7 +115,7 @@
                                                     <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
                                                     @*<input type="text" class="form-control" name="TPOName" id="TPOName" placeholder="Enter College TPO Name" />*@
                                                     @Html.TextBoxFor(model => model.TPOName, new { @class = "form-control", id = "TPOName", placeholder = "Enter College TPO Name" })
-                                                    @Html.ValidationMessageFor(model => model.TPOName, "", new { @class = "text-danger" })
+                                                    @Html.ValidationMessageFor(model => model.TPOName, "", new { @class = "text-danger error-msg" })
                                                 </div>
                                             </div>
                                         </div>
@@ -121,7 +127,7 @@
                                                    @* <input type="text" class="form-control" name="PrincipleName" id="PrincipleName" placeholder="Enter College Principle Name" />*@
 
                                                     @Html.TextBoxFor(model => model.PrincipalName, new { @class = "form-control", id = "PrincipalName", placeholder = "Enter College Principal Name" })
-                                                    @Html.ValidationMessageFor(model => model.PrincipalName, "", new { @class = "text-danger" })
+                                                    @Html.ValidationMessageFor(model => model.PrincipalName, "", new { @class = "text-danger error-msg" })
                                                 </div>
                                             </div>
                                         </div>
@@ -144,7 +150,7 @@
                                                     <span class="input-group-addon"><i class="glyphicon glyphicon-book" aria-hidden="true"></i></span>
                                                    @* <input type="text" class="form-control" name="CollegeDescription" id="CollegeDescription" placeholder="Enter College Description" />*@
                                                     @Html.TextBoxFor(model => model.Description, new { @class = "form-control", id = "Description", placeholder = "Enter College Description" })
-                                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger error-msg" })
                                                 </div>
                                             </div>
                                         </div>
