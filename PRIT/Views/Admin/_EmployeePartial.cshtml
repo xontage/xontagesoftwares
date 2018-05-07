@@ -10,7 +10,7 @@
 
     <table style="width:100%" id="exampleEmployee" class="display" cellspacing="0">
         <thead>
-            <tr>
+            <tr style="white-space:nowrap">
                 <th>RegId</th>
                 <th>Full Name</th>
                 <th>Email Id</th>
@@ -19,6 +19,7 @@
                 <th>Employee Type</th>
                 <th>Highest Qualification</th>
                 <th>Employee Id</th>
+                <th>Status</th>
 
                 <th>Action</th>
             </tr>
@@ -28,26 +29,27 @@
             @foreach (var item in Model)
             {
 
-                <tr>
-                    <td>@item.ID </td>
-                    <td>@item.FirstName @item.LastName</td>
-                    <td><strong>@item.EmailId</strong></td>
-                    <td>@item.MobileNo</td>
-                    <td>@item.Designation</td>
-                    <td>@item.EmployeeType</td>
-                    <td>@item.HighestEducation</td>
-                    <td>@item.EmployeeId</td>
+            <tr style="white-space: nowrap;">
+                <td>@item.ID </td>
+                <td>@item.FirstName @item.LastName</td>
+                <td><strong>@item.EmailId</strong></td>
+                <td>@item.MobileNo</td>
+                <td>@item.Designation</td>
+                <td>@item.EmployeeType</td>
+                <td>@item.HighestEducation</td>
+                <td>@item.EmployeeId</td>
+                <td>@item.Status</td>
 
-                    <td>
-                        <input type="button" value="Delete" class="btn btn-danger btnEmployeeDelete" data-empid=@item.ID />
-                        <input type="button" value="Update" class="btnUpdateEmployee btn btn-success" data-empid=@item.ID />
+                <td>
+                    <input type="button" value="Delete" class="btn btn-danger btnEmployeeDelete" data-empid=@item.ID />
+                    <input type="button" value="Update" class="btnUpdateEmployee btn btn-success" data-empid=@item.ID />
 
 
-                        <input type="button" value="Add Employment" class="btnAddEmployment btn btn-success" data-empid=@item.ID />
-                        @* <input type="button" value="Update Employment" class="btnUpdateEmployment btn btn-success" data-empid=@item.ID />*@
+                    <input type="button" value="Add Employment" class="btnAddEmployment btn btn-success" data-empid=@item.ID />
+                    @* <input type="button" value="Update Employment" class="btnUpdateEmployment btn btn-success" data-empid=@item.ID />*@
 
-                    </td>
-                </tr>
+                </td>
+            </tr>
 
             }
 
@@ -62,9 +64,29 @@
 
     $(document).ready(function () {
 
+        //$('#exampleEmployee').DataTable({
+        //    "pagingType": "full_numbers"
+        //});
+
+        debugger;
         $('#exampleEmployee').DataTable({
-            "pagingType": "full_numbers"
+            "iDisplayLength": 100,
+            //"bFilter": false,
+            "aaSorting": [[8, "desc"]],
+            "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                if (aData[8] == "Working") {
+                    $('td', nRow).css('background-color', 'green');
+                    $('td', nRow.text).css('color', 'white');
+                }
+                else {
+                    $('td', nRow).css('background-color', 'red');
+                    $('td', nRow.text).css('color', 'white');
+                }
+            }
         });
+
+
+
     });
 
     $('.btnEmployeeDelete').on('click', function () {

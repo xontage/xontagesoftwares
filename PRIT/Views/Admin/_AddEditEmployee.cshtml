@@ -6,7 +6,9 @@
 
 <link href="~/Content/css/bootstrap-datepicker.min.css" rel="stylesheet" />
 
- 
+<link href="~/css/bootstrap-multiselect.css" rel="stylesheet" />
+<script src="~/js/bootstrap-multiselect.js"></script>
+
 <style>
     .form-group {
         margin-bottom: 15px;
@@ -27,12 +29,11 @@
         top: 37px;
         left: 0;
     }
-     
 </style>
 
- 
 <link href="~/css/jquery-ui.min.css" rel="stylesheet" />
 <script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+
 <div class="modal fade" id="employeeModal" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -42,397 +43,409 @@
             </div>
             <div class="modal-body">
                 @using (Ajax.BeginForm("AddEditEmployee", "Admin", new { area = "" }, new AjaxOptions { OnSuccess = "fnOnEmployeeSuccess", HttpMethod = "POST" }, new { @class = "form-horizontal", @id = "frmResourceCategory" }))
-                {
-                    @Html.ValidationSummary(true)
-                    @Html.HiddenFor(r => r.ID)
+    {
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(r => r.ID)
+            <input type="hidden" id="selectedSkillValues" name="selectedSkillValues" />
+            <div class="container">
+                <div class="row main">
+                    <div class="main-login main-center">
+                        <div class="form-group">
+                            <label for="FirstName" class="cols-sm-2 control-label">First Name *</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
 
-                    <div class="container">
-                        <div class="row main">
-                            <div class="main-login main-center">
-                                <div class="form-group">
-                                    <label for="FirstName" class="cols-sm-2 control-label">First Name *</label>
-                                    <div class="cols-sm-10">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-
-                                            @Html.TextBoxFor(model => model.FirstName, new
-                                            {
-                                                @class = "form-control",
-                                                id = "FirstName",
-                                                placeholder = "Enter Your First Name"
-                                            })
-                                            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger error-msg" })
-                                        </div>
-
-                                    </div>
-
+                                    @Html.TextBoxFor(model => model.FirstName, new
+                        {
+                            @class = "form-control",
+                            id = "FirstName",
+                            placeholder = "Enter Your First Name"
+                        })
+                                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger error-msg" })
                                 </div>
-                                <div class="form-group">
-                                    <label for="MiddleName" class="cols-sm-2 control-label">Middle Name</label>
-                                    <div class="cols-sm-10">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
 
-                                            @Html.TextBoxFor(model => model.MiddleName, new
-                                            {
-                                                @class = "form-control",
-                                                id = "MiddleName",
-                                                placeholder = "Enter Your Middle Name"
-                                            })
-                                            @Html.ValidationMessageFor(model => model.MiddleName, "", new { @class = "text-danger error-msg" })
-                                        </div>
-                                    </div>
+                            </div>
 
+                        </div>
+                        <div class="form-group">
+                            <label for="MiddleName" class="cols-sm-2 control-label">Middle Name</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+
+                                    @Html.TextBoxFor(model => model.MiddleName, new
+                        {
+                            @class = "form-control",
+                            id = "MiddleName",
+                            placeholder = "Enter Your Middle Name"
+                        })
+                                    @Html.ValidationMessageFor(model => model.MiddleName, "", new { @class = "text-danger error-msg" })
                                 </div>
-                                <div class="form-group">
-                                    <label for="LastName" class="cols-sm-2 control-label">Last Name *</label>
-                                    <div class="cols-sm-10">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                            </div>
 
-                                            @Html.TextBoxFor(model => model.LastName, new
-                                            {
-                                                @class = "form-control",
-                                                id = "LastName",
-                                                placeholder = "Enter Your Last Name"
-                                            })
-                                            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger error-msg" })
-                                        </div>
-                                    </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="LastName" class="cols-sm-2 control-label">Last Name *</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
 
+                                    @Html.TextBoxFor(model => model.LastName, new
+                        {
+                            @class = "form-control",
+                            id = "LastName",
+                            placeholder = "Enter Your Last Name"
+                        })
+                                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger error-msg" })
                                 </div>
-                                <div class="form-group">
-                                    <label for="gender" class="cols-sm-2 control-label">Gender*</label>
-                                    <div class="cols-sm-10">
-                                        <div class="input-group">
-                                            @*<i class="glyphicon glyphicon-exclamation-sign"></i>*@
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></i></span>
-                                            @Html.RadioButtonFor(model => model.Gender, "M", true) Male
-                                            @Html.RadioButtonFor(model => model.Gender, "F", false) Female
-                                            @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger error-msg" })
-                                            <br />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email" class="cols-sm-2 control-label"> Email*</label>
-                                    <div class="cols-sm-10">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                            </div>
 
-                                            @Html.TextBoxFor(model => model.EmailId, new { @class = "form-control", id = "email", placeholder = "Enter Email", required = "required" })
-                                            @Html.ValidationMessageFor(model => model.EmailId, "", new { @class = "text-danger error-msg" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="mobileNo" class="cols-sm-2 control-label">Mobile Number *</label>
-                                    <div class="cols-sm-10">
-                                        <div class="input-group">
-                                            @* <i class="glyphicon glyphicon-earphone"></i>*@
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-earphone" aria-hidden="true"></i></span>
-
-                                            @Html.TextBoxFor(model => model.MobileNo , new { @class = "form-control", id = "MobileNo", placeholder = "Enter Mobile Number" })
-                                            @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger error-msg" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="altmobileNo" class="cols-sm-2 control-label">Alternative Mobile Number</label>
-                                    <div class="cols-sm-10">
-                                        <div class="input-group">
-
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt" aria-hidden="true"></i></span>
-
-                                            @Html.TextBoxFor(model => model.AltMobileNo, new { @class = "form-control", id = "AltMobileNo", placeholder = "Enter Alternative Mobile Number" })
-                                            @Html.ValidationMessageFor(model => model.AltMobileNo, "", new { @class = "text-danger error-msg" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="Designation" class="cols-sm-2 control-label">Designation</label>
-                                    <div class="cols-sm-10">
-
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i></span>
-                                            @*@Html.DropDownListFor(model => model.Designation, ViewBag.ddlEmpDesignation as SelectList, new { @class = "form-control" })*@
-                                            @Html.DropDownListFor(model => model.Designation, new SelectList(ViewBag.ddlEmpDesignation as SelectList, "Value", "Text"), "--SELECT EMPLOYEE DESIGNATION--", new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(model => model.Designation, "", new { @class = "text-danger error-msg" })
-
-
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="MaritalStatus" class="cols-sm-2 control-label">Marital Status</label>
-                                    <div class="cols-sm-10">
-
-                                        <div class="input-group">
-
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-heart" aria-hidden="true"></i></span>
-                                            @*@Html.DropDownListFor(model => model.MaritalStatus, ViewBag.ddlMaritalStatus as SelectList, new { @class = "form-control" })*@
-                                            @Html.DropDownListFor(model => model.MaritalStatus, new SelectList(ViewBag.ddlMaritalStatus as SelectList, "Value", "Text"), "--SELECT MARITAL STATUS--", new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(model => model.MaritalStatus, "", new { @class = "text-danger error-msg" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="DateofBirth" class="cols-sm-2 control-label">Date of Birth *</label>
-                                    <div class="cols-sm-10">
-                                        <div class="input-group">
-
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar" aria-hidden="true"></i></span>
-
-                                            @Html.TextBoxFor(model => model.DateofBirth, new { @class = "form-control", id = "DateofBirth", placeholder = "Enter Date of Birth" })
-                                            @Html.ValidationMessageFor(model => model.DateofBirth, "", new { @class = "text-danger error-msg" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="pincode" class="cols-sm-2 control-label">Pincode*</label>
-                                    <div class="cols-sm-10">
-                                        <div class="input-group">
-
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-road" aria-hidden="true"></i></span>
-
-                                            @Html.TextBoxFor(model => model.Pincode, new { @class = "form-control", id = "pincode", placeholder = "Enter Pincode" })
-                                            @Html.ValidationMessageFor(model => model.Pincode, "", new { @class = "text-danger error-msg" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="city" class="cols-sm-2 control-label">City</label>
-                                    <div class="cols-sm-10">
-                                        <div class="input-group">
-
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-tint" aria-hidden="true"></i></span>
-
-                                            @Html.TextBoxFor(model => model.City, new { @class = "form-control", @readonly = "readonly", id = "City", placeholder = "Enter City" })
-                                            @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger error-msg" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="city" class="cols-sm-2 control-label">State</label>
-                                    <div class="cols-sm-10">
-                                        <div class="input-group">
-
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-stats" aria-hidden="true"></i></span>
-
-                                            @Html.TextBoxFor(model => model.State, new { @class = "form-control", @readonly = "readonly", id = "State", placeholder = "Enter State" })
-                                            @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger error-msg" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-
-                                    <label for="country" class="cols-sm-2 control-label">Country</label>
-                                    <div class="cols-sm-10">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-plane" aria-hidden="true"></i></span>
-
-                                            @Html.TextBoxFor(model => model.Country, new { @class = "form-control", @readonly = "readonly", id = "Country", placeholder = "Enter Country"})
-                                            @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger error-msg" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="address" class="cols-sm-2 control-label">Address *</label>
-                                    <div class="cols-sm-10">
-                                        <div class="input-group">
-
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker" aria-hidden="true"></i></span>
-
-                                            @Html.TextBoxFor(model => model.Address, new { @class = "form-control", id = "Address", placeholder = "Enter Address" })
-                                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger error-msg" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="HighestEducation" class="cols-sm-2 control-label">Highest Education *</label>
-                                    <div class="cols-sm-10">
-                                        <div class="input-group">
-
-
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-book" aria-hidden="true"></i></span>
-
-                                            @Html.TextBoxFor(model => model.HighestEducation, new { @class = "form-control", id = "HighestEducation", placeholder = "Enter Highest Education" })
-                                            @Html.ValidationMessageFor(model => model.HighestEducation, "", new { @class = "text-danger error-msg" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="Specialization" class="cols-sm-2 control-label">Specialization</label>
-                                    <div class="cols-sm-10">
-                                        <div class="input-group">
-
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-certificate" aria-hidden="true"></i></span>
-
-                                            @Html.TextBoxFor(model => model.Specialization, new { @class = "form-control", id = "Specialization", placeholder = "Enter Specialization" })
-                                            @Html.ValidationMessageFor(model => model.Specialization, "", new { @class = "text-danger error-msg" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="InstituteName" class="cols-sm-2 control-label">Institute Name</label>
-                                    <div class="cols-sm-10">
-                                        <div class="input-group">
-
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-file" aria-hidden="true"></i></span>
-
-                                            @Html.TextBoxFor(model => model.InstituteName, new { @class = "form-control", id = "InstituteName", placeholder = "Enter Institute Name" })
-                                            @Html.ValidationMessageFor(model => model.InstituteName, "", new { @class = "text-danger error-msg" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="YearOfPassing" class="cols-sm-2 control-label">Year Of Passing*</label>
-                                    <div class="cols-sm-10">
-                                        <div class="input-group">
-
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar" aria-hidden="true"></i></span>
-
-                                            @Html.TextBoxFor(model => model.YearOfPassing, new { @class = "form-control", id = "YearOfPassing", placeholder = "Enter Year Of Passing" })
-                                            @Html.ValidationMessageFor(model => model.YearOfPassing, "", new { @class = "text-danger error-msg" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="University" class="cols-sm-2 control-label">University</label>
-                                    <div class="cols-sm-10">
-                                        <div class="input-group">
-
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-certificate" aria-hidden="true"></i></span>
-
-                                            @Html.TextBoxFor(model => model.University, new { @class = "form-control", id = "University", placeholder = "Enter University" })
-                                            @Html.ValidationMessageFor(model => model.University, "", new { @class = "text-danger error-msg" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="InstituteLocation" class="cols-sm-2 control-label">Institute Location</label>
-                                    <div class="cols-sm-10">
-                                        <div class="input-group">
-
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-home" aria-hidden="true"></i></span>
-
-                                            @Html.TextBoxFor(model => model.InstituteLocation, new { @class = "form-control", id = "InstituteLocation", placeholder = "Enter Institute Location" })
-                                            @Html.ValidationMessageFor(model => model.InstituteLocation, "", new { @class = "text-danger error-msg" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="Percentage" class="cols-sm-2 control-label">Percentage*</label>
-                                    <div class="cols-sm-10">
-                                        <div class="input-group">
-
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
-
-                                            @Html.TextBoxFor(model => model.Percentage, new { @class = "form-control", id = "Percentage", placeholder = "Enter Percentage" })
-                                            @Html.ValidationMessageFor(model => model.Percentage, "", new { @class = "text-danger error-msg" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="EmployeeType" class="cols-sm-2 control-label">Employee Type*</label>
-                                    <div class="cols-sm-10">
-
-                                        <div class="input-group">
-
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-repeat" aria-hidden="true"></i></span>
-                                            @*@Html.DropDownListFor(model => model.EmployeeType, ViewBag.ddlEmployeeType as SelectList, new { @class = "form-control" })*@
-                                            @Html.DropDownListFor(model => model.EmployeeType, new SelectList(ViewBag.ddlEmployeeType as SelectList, "Value", "Text"), "--SELECT EMPLOYEE TYPE--", new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(model => model.EmployeeType, "", new { @class = "text-danger error-msg" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="AdharCardNo" class="cols-sm-2 control-label">Adhar Card No*</label>
-                                    <div class="cols-sm-10">
-                                        <div class="input-group">
-
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
-
-                                            @Html.TextBoxFor(model => model.AdharCardNo, new { @class = "form-control", id = "AdharCardNo", placeholder = "Enter Adhar no" })
-                                            @Html.ValidationMessageFor(model => model.AdharCardNo, "", new { @class = "text-danger error-msg" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="PANNo" class="cols-sm-2 control-label">PAN Card No*</label>
-                                    <div class="cols-sm-10">
-                                        <div class="input-group">
-
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
-
-                                            @Html.TextBoxFor(model => model.PANNo, new { @class = "form-control", id = "PANNo", placeholder = "Enter PAN No" })
-                                            @Html.ValidationMessageFor(model => model.PANNo, "", new { @class = "text-danger error-msg" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="PassportNo" class="cols-sm-2 control-label">Passport No</label>
-                                    <div class="cols-sm-10">
-                                        <div class="input-group">
-
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
-
-                                            @Html.TextBoxFor(model => model.PassportNo, new { @class = "form-control", id = "PassportNo", placeholder = "Enter Passport No" })
-                                            @Html.ValidationMessageFor(model => model.PassportNo, "", new { @class = "text-danger error-msg" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="BloodGroup" class="cols-sm-2 control-label">Blood Group</label>
-                                    <div class="cols-sm-10">
-                                        <div class="input-group">
-
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
-
-                                            @Html.TextBoxFor(model => model.BloodGroup, new { @class = "form-control", id = "BloodGroup", placeholder = "Enter Blood Group" })
-                                            @Html.ValidationMessageFor(model => model.BloodGroup, "", new { @class = "text-danger error-msg" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="BankName" class="cols-sm-2 control-label">Bank Name</label>
-                                    <div class="cols-sm-10">
-                                        <div class="input-group">
-
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
-
-                                            @Html.TextBoxFor(model => model.BankName, new { @class = "form-control", id = "BankName", placeholder = "Enter Bank Name" })
-                                            @Html.ValidationMessageFor(model => model.BankName, "", new { @class = "text-danger error-msg" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="AccountNo" class="cols-sm-2 control-label">Account No</label>
-                                    <div class="cols-sm-10">
-                                        <div class="input-group">
-
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
-
-                                            @Html.TextBoxFor(model => model.AccountNo, new { @class = "form-control", id = "AccountNo", placeholder = "Enter Bank Account No" })
-                                            @Html.ValidationMessageFor(model => model.AccountNo, "", new { @class = "text-danger error-msg" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group" style="margin-left: 216px !important; width:100%; margin-bottom:0 !important;">
-                                    <input type="submit" value="Save Employee" class="btn btn-primary btn-block" style="display: inline-block;">
+                        </div>
+                        <div class="form-group">
+                            <label for="gender" class="cols-sm-2 control-label">Gender*</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    @*<i class="glyphicon glyphicon-exclamation-sign"></i>*@
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></i></span>
+                                    @Html.RadioButtonFor(model => model.Gender, "M", true) Male
+                                    @Html.RadioButtonFor(model => model.Gender, "F", false) Female
+                                    @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger error-msg" })
+                                    <br />
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="email" class="cols-sm-2 control-label"> Email*</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+
+                                    @Html.TextBoxFor(model => model.EmailId, new { @class = "form-control", id = "email", placeholder = "Enter Email", required = "required" })
+                                    @Html.ValidationMessageFor(model => model.EmailId, "", new { @class = "text-danger error-msg" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobileNo" class="cols-sm-2 control-label">Mobile Number *</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    @* <i class="glyphicon glyphicon-earphone"></i>*@
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-earphone" aria-hidden="true"></i></span>
+
+                                    @Html.TextBoxFor(model => model.MobileNo, new { @class = "form-control", id = "MobileNo", placeholder = "Enter Mobile Number" })
+                                    @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger error-msg" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="altmobileNo" class="cols-sm-2 control-label">Alternative Mobile Number</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt" aria-hidden="true"></i></span>
+
+                                    @Html.TextBoxFor(model => model.AltMobileNo, new { @class = "form-control", id = "AltMobileNo", placeholder = "Enter Alternative Mobile Number" })
+                                    @Html.ValidationMessageFor(model => model.AltMobileNo, "", new { @class = "text-danger error-msg" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Designation" class="cols-sm-2 control-label">Designation</label>
+                            <div class="cols-sm-10">
+
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i></span>
+                                    @*@Html.DropDownListFor(model => model.Designation, ViewBag.ddlEmpDesignation as SelectList, new { @class = "form-control" })*@
+                                    @Html.DropDownListFor(model => model.Designation, new SelectList(ViewBag.ddlEmpDesignation as SelectList, "Value", "Text"), "--SELECT EMPLOYEE DESIGNATION--", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Designation, "", new { @class = "text-danger error-msg" })
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="MaritalStatus" class="cols-sm-2 control-label">Marital Status</label>
+                            <div class="cols-sm-10">
+
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-heart" aria-hidden="true"></i></span>
+                                    @*@Html.DropDownListFor(model => model.MaritalStatus, ViewBag.ddlMaritalStatus as SelectList, new { @class = "form-control" })*@
+                                    @Html.DropDownListFor(model => model.MaritalStatus, new SelectList(ViewBag.ddlMaritalStatus as SelectList, "Value", "Text"), "--SELECT MARITAL STATUS--", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.MaritalStatus, "", new { @class = "text-danger error-msg" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="DateofBirth" class="cols-sm-2 control-label">Date of Birth *</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar" aria-hidden="true"></i></span>
+
+                                    @Html.TextBoxFor(model => model.DateofBirth, new { @class = "form-control", id = "DateofBirth", placeholder = "Enter Date of Birth" })
+                                    @Html.ValidationMessageFor(model => model.DateofBirth, "", new { @class = "text-danger error-msg" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pincode" class="cols-sm-2 control-label">Pincode*</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-road" aria-hidden="true"></i></span>
+
+                                    @Html.TextBoxFor(model => model.Pincode, new { @class = "form-control", id = "pincode", placeholder = "Enter Pincode" })
+                                    @Html.ValidationMessageFor(model => model.Pincode, "", new { @class = "text-danger error-msg" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="city" class="cols-sm-2 control-label">City</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-tint" aria-hidden="true"></i></span>
+
+                                    @Html.TextBoxFor(model => model.City, new { @class = "form-control", @readonly = "readonly", id = "City", placeholder = "Enter City" })
+                                    @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger error-msg" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="city" class="cols-sm-2 control-label">State</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-stats" aria-hidden="true"></i></span>
+
+                                    @Html.TextBoxFor(model => model.State, new { @class = "form-control", @readonly = "readonly", id = "State", placeholder = "Enter State" })
+                                    @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger error-msg" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <label for="country" class="cols-sm-2 control-label">Country</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-plane" aria-hidden="true"></i></span>
+
+                                    @Html.TextBoxFor(model => model.Country, new { @class = "form-control", @readonly = "readonly", id = "Country", placeholder = "Enter Country" })
+                                    @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger error-msg" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="address" class="cols-sm-2 control-label">Address *</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker" aria-hidden="true"></i></span>
+
+                                    @Html.TextBoxFor(model => model.Address, new { @class = "form-control", id = "Address", placeholder = "Enter Address" })
+                                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger error-msg" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="HighestEducation" class="cols-sm-2 control-label">Highest Education *</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+
+
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-book" aria-hidden="true"></i></span>
+
+                                    @Html.TextBoxFor(model => model.HighestEducation, new { @class = "form-control", id = "HighestEducation", placeholder = "Enter Highest Education" })
+                                    @Html.ValidationMessageFor(model => model.HighestEducation, "", new { @class = "text-danger error-msg" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Specialization" class="cols-sm-2 control-label">Specialization</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-certificate" aria-hidden="true"></i></span>
+
+                                    @Html.TextBoxFor(model => model.Specialization, new { @class = "form-control", id = "Specialization", placeholder = "Enter Specialization" })
+                                    @Html.ValidationMessageFor(model => model.Specialization, "", new { @class = "text-danger error-msg" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="InstituteName" class="cols-sm-2 control-label">Institute Name</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-file" aria-hidden="true"></i></span>
+
+                                    @Html.TextBoxFor(model => model.InstituteName, new { @class = "form-control", id = "InstituteName", placeholder = "Enter Institute Name" })
+                                    @Html.ValidationMessageFor(model => model.InstituteName, "", new { @class = "text-danger error-msg" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="YearOfPassing" class="cols-sm-2 control-label">Year Of Passing*</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar" aria-hidden="true"></i></span>
+
+                                    @Html.TextBoxFor(model => model.YearOfPassing, new { @class = "form-control", id = "YearOfPassing", placeholder = "Enter Year Of Passing" })
+                                    @Html.ValidationMessageFor(model => model.YearOfPassing, "", new { @class = "text-danger error-msg" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="University" class="cols-sm-2 control-label">University</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-certificate" aria-hidden="true"></i></span>
+
+                                    @Html.TextBoxFor(model => model.University, new { @class = "form-control", id = "University", placeholder = "Enter University" })
+                                    @Html.ValidationMessageFor(model => model.University, "", new { @class = "text-danger error-msg" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="InstituteLocation" class="cols-sm-2 control-label">Institute Location</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-home" aria-hidden="true"></i></span>
+
+                                    @Html.TextBoxFor(model => model.InstituteLocation, new { @class = "form-control", id = "InstituteLocation", placeholder = "Enter Institute Location" })
+                                    @Html.ValidationMessageFor(model => model.InstituteLocation, "", new { @class = "text-danger error-msg" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Percentage" class="cols-sm-2 control-label">Percentage*</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
+
+                                    @Html.TextBoxFor(model => model.Percentage, new { @class = "form-control", id = "Percentage", placeholder = "Enter Percentage" })
+                                    @Html.ValidationMessageFor(model => model.Percentage, "", new { @class = "text-danger error-msg" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="EmployeeType" class="cols-sm-2 control-label">Employee Type*</label>
+                            <div class="cols-sm-10">
+
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-repeat" aria-hidden="true"></i></span>
+                                    @*@Html.DropDownListFor(model => model.EmployeeType, ViewBag.ddlEmployeeType as SelectList, new { @class = "form-control" })*@
+                                    @Html.DropDownListFor(model => model.EmployeeType, new SelectList(ViewBag.ddlEmployeeType as SelectList, "Value", "Text"), "--SELECT EMPLOYEE TYPE--", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.EmployeeType, "", new { @class = "text-danger error-msg" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="AdharCardNo" class="cols-sm-2 control-label">Adhar Card No*</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
+
+                                    @Html.TextBoxFor(model => model.AdharCardNo, new { @class = "form-control", id = "AdharCardNo", placeholder = "Enter Adhar no" })
+                                    @Html.ValidationMessageFor(model => model.AdharCardNo, "", new { @class = "text-danger error-msg" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="PANNo" class="cols-sm-2 control-label">PAN Card No*</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
+
+                                    @Html.TextBoxFor(model => model.PANNo, new { @class = "form-control", id = "PANNo", placeholder = "Enter PAN No" })
+                                    @Html.ValidationMessageFor(model => model.PANNo, "", new { @class = "text-danger error-msg" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="PassportNo" class="cols-sm-2 control-label">Passport No</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
+
+                                    @Html.TextBoxFor(model => model.PassportNo, new { @class = "form-control", id = "PassportNo", placeholder = "Enter Passport No" })
+                                    @Html.ValidationMessageFor(model => model.PassportNo, "", new { @class = "text-danger error-msg" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="BloodGroup" class="cols-sm-2 control-label">Blood Group</label>
+                            <div class="cols-sm-10">
+
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-repeat" aria-hidden="true"></i></span>
+                                    @*@Html.DropDownListFor(model => model.EmployeeType, ViewBag.ddlEmployeeType as SelectList, new { @class = "form-control" })*@
+                                    @Html.DropDownListFor(model => model.BloodGroup, new SelectList(ViewBag.ddlBloodGroup as SelectList, "Value", "Text"), "--SELECT BLOOD GROUP--", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.BloodGroup, "", new { @class = "text-danger error-msg" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="BankName" class="cols-sm-2 control-label">Bank Name</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
+
+                                    @Html.TextBoxFor(model => model.BankName, new { @class = "form-control", id = "BankName", placeholder = "Enter Bank Name" })
+                                    @Html.ValidationMessageFor(model => model.BankName, "", new { @class = "text-danger error-msg" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="AccountNo" class="cols-sm-2 control-label">Account No</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
+
+                                    @Html.TextBoxFor(model => model.AccountNo, new { @class = "form-control", id = "AccountNo", placeholder = "Enter Bank Account No" })
+                                    @Html.ValidationMessageFor(model => model.AccountNo, "", new { @class = "text-danger error-msg" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Skills" class="cols-sm-2 control-label">Skill Set</label>
+                            <div>
+                                <ul id="check-list-box" class="list-group checked-list-box" style="color:#913f3f">
+                                    @Html.ListBoxFor(m => m.SkillIds, Model.Skillset, new { @class = "listbox" })
+                                    @*@Html.ValidationMessageFor(m => m.Sections, "", new { @class = "text-danger" })*@
+                                </ul>
+                            </div>
+
+                        </div>
+                        <div class="form-group" style="margin-left: 216px !important; width:100%; margin-bottom:0 !important;">
+                            <input type="submit" value="Save Employee" class="btn btn-primary btn-block" style="display: inline-block;">
+                        </div>
                     </div>
-                }
+                </div>
+            </div>
+}
             </div>
 
         </div>
 
     </div>
 </div>
- 
+
 
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
@@ -441,6 +454,27 @@
 @*<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCxvxzBwz0VISNal0XK36vz5u-F5TIqipI"></script>*@
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7J27Hw6G8JphnwGXEkv53mn0KTLyuYTI"></script>
 <script language="javascript">
+    $(document).ready(function () {
+
+        $("#DateofBirth").keypress(function (e) {
+            return false;
+        });
+        $("#YearOfPassing").keypress(function (e) {
+            return false;
+        });
+
+        $('.listbox').multiselect({
+            includeSelectAllOption: true
+        });
+
+        $('.listbox').change(function () {
+            var $hidden = $("#selectedSkillValues");
+            $hidden.val($(this).find('option:selected').map(function () {
+                return $(this).val();
+            }).get().join(", "));
+        });
+    });
+
     function response(obj) {
         console.log(obj);
     }
@@ -510,14 +544,17 @@
                 !/Invalid|NaN/.test(new Date(date).toString());
         },
     }).on('changeDate', function (e) {
-        });
+    });
 
 
     $('#YearOfPassing').datepicker({
         minViewMode: 2,
         format: 'yyyy'
-        });
+    });
 </script>
+
+
+
 <style type="text/css">
     .style1 {
         color: #990000;

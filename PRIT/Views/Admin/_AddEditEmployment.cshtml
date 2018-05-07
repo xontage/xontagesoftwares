@@ -222,7 +222,13 @@
     function response(obj) {
         console.log(obj);
     }
-
+    $("#DateOfJoining").keypress(function (e) {
+        return false;
+    });
+    $("#PreviousCompanyLastDay").keypress(function (e) {
+        return false;
+    });
+    
     var start = new Date();
     $('#DateOfJoining').datepicker({
         format: "dd/mm/yyyy",
@@ -259,6 +265,9 @@
         if (data.result != "" || data.result != null) {
             $('#employementData').html(data.result);
         }
+
+       
+    
     }
 </script>
 
