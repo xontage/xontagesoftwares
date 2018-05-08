@@ -1,35 +1,74 @@
 ﻿@model IEnumerable<PRIT.Entity.tbl_Employee>
 @{
     Layout = null;
-  
+
 }
 
 <style>
-    table {
+    /*table {
         border-collapse: collapse;
     }
 
     table, td, th {
         border: 1px solid black;
+    }*/
+    .empmgt-main {
+        max-width: 100%;
+    }
+
+    .btn-add-update {
+        background-color: #376592 !important;
+        border-color: #376592 !important;
+    }
+    .space-top {
+        margin-top: 50px;
+    }
+    .tooltiptext {
+        visibility: hidden;
+        width: 146px;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px;
+        position: absolute;
+        z-index: 1;
+    }
+    .tooltip-top::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: black transparent transparent transparent;
+    }
+    .tooltip-top {
+        margin-left: -81px;
+        margin-top: -43px;
+    }
+    .btn-add-update:hover .tooltiptext {
+        visibility: visible;
     }
 </style>
 
-<div class="container">
-    <br />
-    <br />
-
-    <table style="width:100%" id="exampleEmployee" class="display" cellspacing="0">
+<div class="container space-top">
+    
+    <table id="exampleEmployee" class="table" cellspacing="0">
         <thead>
-            <tr style="background-color: #865FC5;color: #fff;">
+            @*style="background-color: #865FC5;color: #fff;"*@
+            <tr>
                 <th>RegId</th>
                 <th>Full Name</th>
                 <th>Email Id</th>
                 <th>Contact No</th>
                 <th>Designation</th>
                 <th>Employee Type</th>
-               
+
                 <th>Employee Id</th>
                 <th>Status</th>
+                <th>sdsd</th>
 
                 <th>Action</th>
             </tr>
@@ -39,35 +78,50 @@
             @foreach (var item in Model)
             {
 
-            <tr style="white-space: nowrap;">
-                <td>@item.ID </td>
-                <td>@item.FirstName @item.LastName</td>
-                <td><strong>@item.EmailId</strong></td>
-                <td>@item.MobileNo</td>
-                <td>@item.Designation</td>
-                <td>@item.EmployeeType</td>
-               
-                <td>@item.EmployeeId</td>
-                <td>@item.Status</td>
+                <tr style="white-space: nowrap;">
+                    <td>@item.ID </td>
+                    <td>@item.FirstName @item.LastName</td>
+                    <td><strong>@item.EmailId</strong></td>
+                    <td>@item.MobileNo</td>
+                    <td>@item.Designation</td>
+                    <td>@item.EmployeeType</td>
 
-                <td>
-                    <input type="button" value="Delete" class="btn btn-danger btnEmployeeDelete" data-empid=@item.ID />
-                    <input type="button" value="Update" class="btnUpdateEmployee btn btn-success" data-empid=@item.ID />
+                    <td>@item.EmployeeId</td>
+                    <td>@item.Status</td>
+                    <td>dfd</td>
 
-                   
+                    <td>
+                        @*<input type="button" value="Delete" class="btn btn-danger btnEmployeeDelete" data-empid=@item.ID />*@
+                        <button type="button" title="Delete" value="Delete" class="btn btn-danger btnEmployeeDelete" data-empid=@item.ID>
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
+                        @*<input type="button" value="Update" class="btnUpdateEmployee btn btn-success" data-empid=@item.ID />*@
+                        <button title="Edit" type="button" value="Update" class="btnUpdateEmployee btn btn-success" data-empid=@item.ID>
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </button>
+
+
                         @if (item.EmploymentDetailsFlag != true)
                         {
-                            <input type="button" value="Add Employment" class="btnAddEmployment btn btn-success" data-empid=@item.ID />
+                            @*<input type="button" value="Add Employment" class="btnAddEmployment btn btn-success" data-empid=@item.ID />*@
+                        <button type="button" value="Add Employment" class="btnAddEmployment btn btn-success btn-add-update" data-empid=@item.ID>
+                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                            <span class="tooltiptext tooltip-top">Add Employment</span>
+                        </button>
                         }
                         else
                         {
-                            <input type="button" value="Update Employment" class="btnAddEmployment btn btn-success" data-empid=@item.ID />
-                        }                                                          
-                   
-                    @* <input type="button" value="Update Employment" class="btnUpdateEmployment btn btn-success" data-empid=@item.ID />*@
+                            <button type="button" value="Update Employment" class="btnAddEmployment btn btn-success btn-add-update" data-empid=@item.ID>
+                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                <span class="tooltiptext tooltip-top">Update Employment</span>
+                            </button>
+                            @*<input type="button" value="Update Employment" class="btnAddEmployment btn btn-success" data-empid=@item.ID />*@
+                        }
 
-                </td>
-            </tr>
+                        @* <input type="button" value="Update Employment" class="btnUpdateEmployment btn btn-success" data-empid=@item.ID />*@
+
+                    </td>
+                </tr>
 
             }
 
@@ -93,11 +147,11 @@
             "aaSorting": [[7, "desc"]],
             "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                 if (aData[7] == "Working") {
-                    $('td', nRow).css('background-color', '#BCED91');
-                   // $('td', nRow.text).css('color', 'white');
+                    //$('td', nRow).css('background-color', '#BCED91');
+                    // $('td', nRow.text).css('color', 'white');
                 }
                 else {
-                    $('td', nRow).css('background-color', '#F08080');
+                    //$('td', nRow).css('background-color', '#F08080');
                     //$('td', nRow.text).css('color', 'white');
                 }
             }
@@ -172,20 +226,20 @@
         debugger
         var empid = $(this).data("empid");
         var employmentid = $(this).data("emplid");
-        
+
         $.ajax({
             type: "GET",
             url: "../Admin/AddEditEmployment",
-            data: { empId: empid},
+            data: { empId: empid },
             //contentType: "application/json; charset=utf-8",
             //dataType: "json",
             success: function (result) {
                 debugger;
-                
+
                 $('#employementPopUp').html(result);
-               
+
                 $('#employmentModal').modal('show');
-               
+
             },
             error: function (xhr, status, error) {
                 sweetAlert("Oops...", "Something went wrong!", "error");

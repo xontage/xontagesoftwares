@@ -6,10 +6,14 @@
 
     ViewBag.Title = "Login";
 }
+
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 <link href="~/css/Login.css" rel="stylesheet" />
 
 @using (Html.BeginForm("Login", "Home", new { returnUrl = Request.QueryString["ReturnUrl"] }, FormMethod.Post))
 {
+    @Html.ValidationSummary(true)
     @Html.AntiForgeryToken()
     <div class="limiter">
         <div class="container-login100">
