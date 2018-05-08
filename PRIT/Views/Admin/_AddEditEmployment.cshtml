@@ -255,6 +255,7 @@
         });
 
     function fnOnEmploymentSuccess(data) {
+        debugger;
         $('#employmentModal').find("[data-dismiss=modal]").trigger({ type: "click" });
         if (data.success == true) {
             swal('Saved!', data.message, 'success')
@@ -263,7 +264,9 @@
             sweetAlert("Oops...", data.message, "error");
         }
         if (data.result != "" || data.result != null) {
-            $('#employementData').html(data.result);
+            $('#employeeData').html(data.result); 
+            $(".modal-backdrop").removeClass("modal-backdrop in");//remove opacity which was wrongly set after update employment
+           // $('#employementData').html(data.result);
         }
 
        

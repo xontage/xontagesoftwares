@@ -437,7 +437,12 @@ namespace PRIT.Controllers
             List<tbl_Employee> lstN = new List<tbl_Employee>();
             int deletedEmpId = employeeBL.DeleteEmployee(emp);
             if (deletedEmpId > 0)
-                lstN = db.tbl_Employee.OrderByDescending(e => e.ID).Where(e => e.IsDeleted == false).ToList();
+                lstN = db.tbl_Employee.OrderByDescending(e => e.ID).ToList();
+            //lstN = db.tbl_Employee.OrderByDescending(e => e.ID).Where(e => e.IsDeleted == false).ToList();
+            foreach (var item in lstN)
+            {
+                item.Status = item.IsDeleted == true ? "Non-Working" : "Working";
+            }
             return PartialView("_EmployeePartial", lstN);
         }
 
@@ -489,7 +494,7 @@ namespace PRIT.Controllers
         [HttpPost]
         public ActionResult AddEditEmployment([Bind(Exclude = "ID")] tbl_EmploymentDetails model = null)
         {
-            List<tbl_EmploymentDetails> lstN = new List<tbl_EmploymentDetails>();
+            List<tbl_Employee> lstN = new List<tbl_Employee>();
 
             int employeeId = 0;
 
@@ -507,8 +512,16 @@ namespace PRIT.Controllers
             if (ModelState.IsValid)
             {
                 employmentBL.AddEmployment(model, User.Identity.Name, employeeId);
-                lstN = db.tbl_EmploymentDetails.OrderByDescending(emp => emp.ID).ToList();
-                var aa = RenderRazorViewToString("_EmploymentPartial", lstN);
+
+                //lstN = db.tbl_EmploymentDetails.OrderByDescending(emp => emp.ID).ToList();
+                //var aa = RenderRazorViewToString("_EmploymentPartial", lstN);
+                
+                lstN = db.tbl_Employee.OrderByDescending(emp => emp.ID).ToList();
+                foreach (var item in lstN)
+                {
+                    item.Status = item.IsDeleted == true ? "Non-Working" : "Working";
+                }
+                var aa = RenderRazorViewToString("_EmployeePartial", lstN);
 
                 return new JsonResult()
                 {
