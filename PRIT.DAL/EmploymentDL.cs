@@ -41,6 +41,9 @@ namespace PRIT.DAL
                 {
                     db.Configuration.ValidateOnSaveEnabled = false;
                     db.tbl_EmploymentDetails.Add(obj);
+                    var user = db.tbl_Employee.Where(x => x.ID == obj.EmplD).FirstOrDefault();
+                     user.EmploymentDetailsFlag  = true;                  
+                    db.Entry(user).State = System.Data.Entity.EntityState.Modified;
                 }
 
                 var result = db.SaveChanges();
