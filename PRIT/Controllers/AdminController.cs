@@ -449,7 +449,7 @@ namespace PRIT.Controllers
 
         public ActionResult EmploymentDetailMgmt()
         {
-            List<tbl_EmploymentDetails> lst = db.tbl_EmploymentDetails.OrderByDescending(person => person.ID).ToList();
+            List<tbl_EmploymentDetails> lst = db.tbl_EmploymentDetails.OrderByDescending(person => person.ID).Where(e => e.IsActive == true).ToList();
             tbl_Employee lstS = new tbl_Employee();
             foreach (var item in lst)
             {
@@ -491,8 +491,6 @@ namespace PRIT.Controllers
         {
             List<tbl_EmploymentDetails> lstN = new List<tbl_EmploymentDetails>();
 
-
-
             int employeeId = 0;
 
             if (!string.IsNullOrEmpty(Request.Form["EmploymentIds"]))
@@ -533,11 +531,23 @@ namespace PRIT.Controllers
         {
 
             tbl_EmploymentDetails employment = employmentBL.GetEmploymentById(Id);
-
+            tbl_Employee lstS = new tbl_Employee();
             List<tbl_EmploymentDetails> lstN = new List<tbl_EmploymentDetails>();
             int deletedEmpId = employmentBL.DeleteEmployment(employment);
             if (deletedEmpId > 0)
-                lstN = db.tbl_EmploymentDetails.OrderByDescending(e => e.ID).Where(e => e.IsActive == false).ToList();
+                lstN = db.tbl_EmploymentDetails.OrderByDescending(e => e.ID).Where(e => e.IsActive == true).ToList();
+            foreach (var item in lstN)
+            {
+                lstS = (from u in db.tbl_Employee
+                        join ut in db.tbl_EmploymentDetails on u.ID equals ut.EmplD
+                        where u.ID == item.EmplD
+                        select u).FirstOrDefault();
+                item.EmployeeFullName = lstS.FirstName + " " + lstS.LastName;
+
+                item.EmployeeEmail = lstS.EmailId;
+
+            }
+
             return PartialView("_EmploymentPartial", lstN);
         }
 

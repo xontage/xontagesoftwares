@@ -75,14 +75,15 @@ namespace PRIT.DAL
             try
             {
                 // var user = db.tbl_Employee.Where(x => x.ID == emp.ID).FirstOrDefault();
-                var db1 = db.tbl_EmploymentDetails.Where(u => u.ID.Equals(employment.ID)).FirstOrDefault();
-                db1.IsActive = true;
-              //  db.tbl_EmploymentDetails.Remove(db1);
+                //  db.tbl_EmploymentDetails.Remove(db1);
+                var user =db.tbl_EmploymentDetails.Where(u => u.ID.Equals(employment.ID)).FirstOrDefault();
+                user.IsActive = false;
+                user.tbl_Employee.EmploymentDetailsFlag = false;                
                 db.Configuration.ValidateOnSaveEnabled = false;
                 var result = db.SaveChanges();
                 db.Configuration.ValidateOnSaveEnabled = false;
                 if (result >= 0)
-                    return db1.ID;
+                    return user.ID;
                 else
                     return 0;
 

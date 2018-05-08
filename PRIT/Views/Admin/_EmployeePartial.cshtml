@@ -1,7 +1,9 @@
 ﻿@model IEnumerable<PRIT.Entity.tbl_Employee>
 @{
     Layout = null;
+  
 }
+
 <style>
     table {
         border-collapse: collapse;
@@ -52,8 +54,16 @@
                     <input type="button" value="Delete" class="btn btn-danger btnEmployeeDelete" data-empid=@item.ID />
                     <input type="button" value="Update" class="btnUpdateEmployee btn btn-success" data-empid=@item.ID />
 
-
-                    <input type="button" value="Add Employment" class="btnAddEmployment btn btn-success" data-empid=@item.ID />
+                   
+                        @if (item.EmploymentDetailsFlag != true)
+                        {
+                            <input type="button" value="Add Employment" class="btnAddEmployment btn btn-success" data-empid=@item.ID />
+                        }
+                        else
+                        {
+                            <input type="button" value="Update Employment" class="btnAddEmployment btn btn-success" data-empid=@item.ID />
+                        }                                                          
+                   
                     @* <input type="button" value="Update Employment" class="btnUpdateEmployment btn btn-success" data-empid=@item.ID />*@
 
                 </td>

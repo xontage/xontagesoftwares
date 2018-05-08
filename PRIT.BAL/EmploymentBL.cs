@@ -27,7 +27,9 @@ namespace PRIT.BAL
                     obj.CreatedDate = DateTime.Now;
                     obj.CreatedBy = db.tbl_Registration.Where(x => x.Email == userName).FirstOrDefault().UserName;
                     obj.EmplD = employeeId;
-                    obj.IsActive = false;
+                    obj.IsActive = true;
+                    db.tbl_Employee.Where(x=>x.ID==employeeId).FirstOrDefault().EmploymentDetailsFlag  = true;
+
                     employmentDL.SaveEmployment(obj);
                 }
             }
