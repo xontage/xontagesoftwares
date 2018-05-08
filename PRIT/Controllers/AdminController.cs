@@ -454,7 +454,7 @@ namespace PRIT.Controllers
             foreach (var item in lst)
             {
                 lstS = (from u in db.tbl_Employee
-                        join ut in db.tbl_EmploymentDetails on u.ID equals ut.EmplD
+                        join ut in db.tbl_EmploymentDetails on u.ID equals ut.EmplD where u.ID==item.EmplD
                         select u).FirstOrDefault();
                 item.EmployeeFullName = lstS.FirstName + " " + lstS.LastName;
 
