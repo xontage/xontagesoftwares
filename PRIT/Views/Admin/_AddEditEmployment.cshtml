@@ -244,6 +244,10 @@
                 !/Invalid|NaN/.test(new Date(date).toString());
         },
     }).on('changeDate', function (e) {
+        $("#PreviousCompanyLastDay").prop("disabled", false);
+        var startDate1 = e.date;
+        var endDate1 = startDate1.setDate(e.date.getDate());
+        $('#PreviousCompanyLastDay').datepicker('setStartDate', new Date(endDate1));
         });
 
     $('#PreviousCompanyLastDay').datepicker({
@@ -256,6 +260,10 @@
                 !/Invalid|NaN/.test(new Date(date).toString());
         },
     }).on('changeDate', function (e) {
+        $("#DateOfJoining").prop("disabled", false);
+        var startDate1 = e.date;
+        var endDate1 = startDate1.setDate(e.date.getDate() - 1);
+        $('#DateOfJoining').datepicker('setEndDate', new Date(endDate1));
         });
 
     function fnOnEmploymentSuccess(data) {
