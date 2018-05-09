@@ -20,9 +20,11 @@
         background-color: #376592 !important;
         border-color: #376592 !important;
     }
+
     .space-top {
         margin-top: 50px;
     }
+
     .tooltiptext {
         visibility: hidden;
         width: 146px;
@@ -34,6 +36,7 @@
         position: absolute;
         z-index: 1;
     }
+
     .tooltip-top::after {
         content: "";
         position: absolute;
@@ -44,85 +47,101 @@
         border-style: solid;
         border-color: black transparent transparent transparent;
     }
+
     .tooltip-top {
         margin-left: -81px;
         margin-top: -43px;
     }
+
     .btn-add-update:hover .tooltiptext {
         visibility: visible;
     }
 </style>
 
-<div class="container space-top">
-    
-    <table id="exampleEmployee" class="table" cellspacing="0">
-        <thead>
-            @*style="background-color: #865FC5;color: #fff;"*@
-            <tr>
-                <th>RegId</th>
-                <th>Full Name</th>
-                <th>Email Id</th>
-                <th>Contact No</th>
-                <th>Designation</th>
-                <th>Employee Type</th>
-                <th>Employee Id</th>
-                <th>Status</th>               
-                <th>Action</th>
-            </tr>
-        </thead>
+<div class="container">
+    <div class="space-top">
 
-        <tbody>
-            @foreach (var item in Model)
+        <section>
+            <div class="well bs-component">
+
+                <div class="row">
+                    <table id="exampleEmployee" class="table table-striped table-bordered table-hover" cellspacing="0" align="center" width="100%">
+                        <thead>
+                            @*style="background-color: #865FC5;color: #fff;"*@
+                            <tr>
+                                <th>RegId</th>
+                                <th>Full Name</th>
+                                <th>Email Id</th>
+                                <th>Contact No</th>
+                                <th>Designation</th>
+                                <th>Employee Type</th>
+                                <th>Employee Id</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in Model)
             {
 
-                <tr style="white-space: nowrap;">
-                    <td>@item.ID </td>
-                    <td>@item.FirstName @item.LastName</td>
-                    <td><strong>@item.EmailId</strong></td>
-                    <td>@item.MobileNo</td>
-                    <td>@item.Designation</td>
-                    <td>@item.EmployeeType</td>
-                    <td>@item.EmployeeId</td>
-                    <td>@item.Status</td>                    
+                                <tr style="white-space: nowrap;">
+                                    <td>@item.ID </td>
+                                    <td>@item.FirstName @item.LastName</td>
+                                    <td><strong>@item.EmailId</strong></td>
+                                    <td>@item.MobileNo</td>
+                                    <td>@item.Designation</td>
+                                    <td>@item.EmployeeType</td>
+                                    <td>@item.EmployeeId</td>
+                                    <td>@item.Status</td>
 
-                    <td>
-                        @*<input type="button" value="Delete" class="btn btn-danger btnEmployeeDelete" data-empid=@item.ID />*@
-                        <button type="button" title="Delete" value="Delete" class="btn btn-danger btnEmployeeDelete" data-empid=@item.ID>
-                            <i class="fa fa-trash" aria-hidden="true"></i>
-                        </button>
-                        @*<input type="button" value="Update" class="btnUpdateEmployee btn btn-success" data-empid=@item.ID />*@
-                        <button title="Edit" type="button" value="Update" class="btnUpdateEmployee btn btn-success" data-empid=@item.ID>
-                            <i class="fa fa-pencil" aria-hidden="true"></i>
-                        </button>
+                                    <td>
+                                        @*<input type="button" value="Delete" class="btn btn-danger btnEmployeeDelete" data-empid=@item.ID />*@
+                                        <button type="button" title="Delete" value="Delete" class="btn btn-danger btnEmployeeDelete" data-empid=@item.ID>
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </button>
+                                        @*<input type="button" value="Update" class="btnUpdateEmployee btn btn-success" data-empid=@item.ID />*@
+                                        <button title="Edit" type="button" value="Update" class="btnUpdateEmployee btn btn-success" data-empid=@item.ID>
+                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                                        </button>
 
 
-                        @if (item.EmploymentDetailsFlag != true)
-                        {
-                            @*<input type="button" value="Add Employment" class="btnAddEmployment btn btn-success" data-empid=@item.ID />*@
-                        <button type="button" value="Add Employment" class="btnAddEmployment btn btn-success btn-add-update" data-empid=@item.ID>
-                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                            <span class="tooltiptext tooltip-top">Add Employment</span>
-                        </button>
-                        }
-                        else
-                        {
-                            <button type="button" value="Update Employment" class="btnAddEmployment btn btn-success btn-add-update" data-empid=@item.ID>
-                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                <span class="tooltiptext tooltip-top">Update Employment</span>
-                            </button>
-                            @*<input type="button" value="Update Employment" class="btnAddEmployment btn btn-success" data-empid=@item.ID />*@
-                        }
+                                        @if (item.EmploymentDetailsFlag != true)
+                                        {
+                                            @*<input type="button" value="Add Employment" class="btnAddEmployment btn btn-success" data-empid=@item.ID />*@
+                                            <button type="button" value="Add Employment" class="btnAddEmployment btn btn-success btn-add-update" data-empid=@item.ID>
+                                                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                                <span class="tooltiptext tooltip-top">Add Employment</span>
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button type="button" value="Update Employment" class="btnAddEmployment btn btn-success btn-add-update" data-empid=@item.ID>
+                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                <span class="tooltiptext tooltip-top">Update Employment</span>
+                                            </button>
+                                            @*<input type="button" value="Update Employment" class="btnAddEmployment btn btn-success" data-empid=@item.ID />*@
+                                        }
 
-                        @* <input type="button" value="Update Employment" class="btnUpdateEmployment btn btn-success" data-empid=@item.ID />*@
+                                        @* <input type="button" value="Update Employment" class="btnUpdateEmployment btn btn-success" data-empid=@item.ID />*@
 
-                    </td>
-                </tr>
+                                    </td>
+                                </tr>
 
-            }
+                            }
 
-        </tbody>
-    </table>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
 </div>
+
+
+
 
 @*bind  popup to this div*@
 <div id="employementPopUp"></div>
@@ -135,9 +154,9 @@
         //    "pagingType": "full_numbers"
         //});
 
-       //code for displaying datatable rows colour on condition if working or not and sorting table data on status desc
+        //code for displaying datatable rows colour on condition if working or not and sorting table data on status desc
         $('#exampleEmployee').DataTable({
-            "iDisplayLength": 100,
+            "iDisplayLength": 10,
             //"bFilter": false,
             "aaSorting": [[7, "desc"]],
             "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
