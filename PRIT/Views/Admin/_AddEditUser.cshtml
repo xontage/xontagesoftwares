@@ -7,7 +7,15 @@
 @*@{
         PRIT.Entity.PRITEntities db = new PRIT.Entity.PRITEntities();frmResourceCategory
     }*@
-
+<style>
+    .genderspace {
+        margin-left: 10px !important;
+        margin-top:7px !important;
+    }
+    .gender-width{
+        width:320px !important;
+    }
+</style>
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -141,7 +149,7 @@
                                 <div class="form-group">
                                     <label for="gender" class="cols-sm-2 control-label">Gender*</label>
                                     <div class="cols-sm-10">
-                                        <div class="input-group inputstl">
+                                        <div class="input-group inputstl gender-width">
                                             <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
                                             @*<label class="radio-inline">
                                                 <input type="radio" name="Gender" value="M">Male</label>
@@ -154,8 +162,8 @@
                                                 </label>*@
 
 
-                                            @Html.RadioButtonFor(model => model.Gender, "M", true) Male
-                                            @Html.RadioButtonFor(model => model.Gender, "F", false) Female
+                                            @Html.RadioButtonFor(model => model.Gender, "M", new { @class = "genderspace" }) Male
+                                            @Html.RadioButtonFor(model => model.Gender, "F", new { @class = "genderspace" }) Female
 
                                             @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger error-msg" })
                                             <br />

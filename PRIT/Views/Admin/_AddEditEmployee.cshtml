@@ -15,13 +15,13 @@
         margin-bottom: 15px;
         float: left;
         width: 26%;
-        margin-right: 51px !important;
+        margin-right: 63px !important;
         margin-top: 10px !important;
-        margin-left: 22px !important;
+        margin-left: 10px !important;
     }
 
     .input-group {
-        /*width: 465px;*/
+        width: 465px;
     }
 
     .error-msg {
@@ -30,7 +30,15 @@
         left: 0;
     }
     .genderspace {
-       margin-left:15px;
+       margin-left:15px !important;
+       margin-top:7px !important;
+    }
+    .custom-width-modal {
+        width: 1038px;
+        margin: 0 auto;
+    }
+    .custom-width-gender {
+        width: 318px !important;
     }
 </style>
 
@@ -39,7 +47,7 @@
 
 <div class="modal fade" id="employeeModal" role="dialog">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content custom-width-modal">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">@(Model.ID == 0 ? "Employee Management" : "Update Employee")</h4>
@@ -108,7 +116,7 @@
                         <div class="form-group">
                             <label for="gender" class="cols-sm-2 control-label">Gender*</label>
                             <div class="cols-sm-10">
-                                <div class="input-group inputstl">
+                                <div class="input-group inputstl custom-width-gender">
                                     @*<i class="glyphicon glyphicon-exclamation-sign"></i>*@
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></i></span>
                                     @Html.RadioButtonFor(model => model.Gender, "M", new { @class = "genderspace" }) Male
@@ -435,7 +443,7 @@
                             </div>
 
                         </div>
-                        <div class="form-group" style="margin-left: 216px !important; width:100%; margin-bottom:0 !important;">
+                        <div class="form-group" style="margin: 0 auto !important; text-align: center !important; width: 100% !important;">
                             <input type="submit" value="Save Employee" class="btn btn-primary btn-block" style="display: inline-block;">
                         </div>
                     </div>
