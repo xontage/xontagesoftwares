@@ -216,9 +216,10 @@ namespace PRIT.Controllers
                     if (user != null)
                     {
                         user = userBL.LoginVerification(loginViewModel.Email, loginViewModel.Password);//objUserBL.GetUserByUserName(loginViewModel.Email);//get userdetail by email id               
-                        ViewBag.Username = user.UserName;
+                        
                         if (user != null)
                         {
+                            ViewBag.Username = user.UserName;
                             #region Different ways for Getting the Menu details from entity and bind it in MenuModels list.  
 
                             //one way

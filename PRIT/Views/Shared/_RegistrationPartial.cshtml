@@ -31,20 +31,27 @@
                     <td>@item.Designation</td>
                     <td>@item.CollegeName</td>
                     <td>
-                        <input type="button" value="Delete" class="btn btn-danger btnUserDelete" data-regid=@item.Id />
-                        <input type="button" value="Update" class="btnUpdateuser btn btn-success" data-regid=@item.Id />
+                        @*<input type="button" value="Delete" class="btn btn-danger btnUserDelete" data-regid=@item.Id />
+        <input type="button" value="Update" class="btnUpdateuser btn btn-success" data-regid=@item.Id />*@
+                        <button type="button" title="Delete" value="Delete" class="btn btn-danger btnUserDelete" data-regid=@item.Id>
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
+                        @*<input type="button" value="Update" class="btnUpdateEmployee btn btn-success" data-empid=@item.ID />*@
+                        <button title="Edit" type="button" value="Update" class="btnUpdateuser btn btn-success" data-regid=@item.Id>
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </button>
                         @*@Ajax.ActionLink("Delete", "DeleteRegisteredUser", new { Id = item.Id }, new AjaxOptions
-                            { UpdateTargetId = "regData", HttpMethod = "POST",OnBegin="OnAjaxBegin", OnSuccess="swal('Deleted!', 'Your imaginary file has been deleted.', 'success')" },
-                            new { Class = "btn btn-danger btnDelete" })*@
+        { UpdateTargetId = "regData", HttpMethod = "POST",OnBegin="OnAjaxBegin", OnSuccess="swal('Deleted!', 'Your imaginary file has been deleted.', 'success')" },
+        new { Class = "btn btn-danger btnDelete" })*@
 
                         @*@Ajax.ActionLink("Delete", "DeleteRegisteredUser", new { Id = item.Id }, new AjaxOptions
-                            { UpdateTargetId = "regData", HttpMethod = "POST" },
-                            new { Class = "btn btn-danger btnDelete" })*@
+        { UpdateTargetId = "regData", HttpMethod = "POST" },
+        new { Class = "btn btn-danger btnDelete" })*@
 
                         @*<button type="button" class="deleteRegUser btn btn-danger" onclick="CallDeleteModal(@item.Id)" data-regid=@item.Id>Delete</button>*@
                         @*<button type="button" class="download btn-success" style="margin-left:10px">Download</button>*@
                         @*Html.ActionLink("Update", "UpdateRegUser", new { controller = "Admin", id = item.Id }, new { @class = " downloadC btn btn-success" })-->*@
-                        
+
 
                     </td>
                 </tr>

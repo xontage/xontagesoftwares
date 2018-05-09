@@ -25,14 +25,14 @@
                         <div class="row main">
                             <div class="main-login main-center">
                                 <div class="form-group">
-                                    <label for="name" class="cols-sm-2 control-label">Full Name*</label>
+                                    <label for="name" class="cols-sm-2 control-label">Full Name *</label>
                                     <div class="cols-sm-10">
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
                                             @*<input type="text" class="form-control" name="FullName" id="name" placeholder="Enter your Name" required />*@
                                             @Html.TextBoxFor(model => model.FullName, new
                                        {
-                                           @class = "form-control required",
+                                           @class = "form-control inputstl",
                                            id = "name",
                                            placeholder = "Enter your Full Name"@*required = "required"*@})
                                             @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger error-msg" })
@@ -46,7 +46,7 @@
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
                                             @*<input type="text" class="form-control" name="Email" id="email" placeholder="Enter your Email" required />*@
-                                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", id = "email", placeholder = "Enter Email", required = "required" })
+                                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control inputstl", id = "email", placeholder = "Enter Email"  })
                                             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger error-msg" })
                                         </div>
                                     </div>
@@ -57,7 +57,7 @@
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
                                             @*<input type="text" class="form-control" name="ContactNo" id="contactNo" placeholder="Enter your Username" required />*@
-                                            @Html.TextBoxFor(model => model.ContactNo, new { @class = "form-control", id = "contactNo", placeholder = "Enter Mobile Number", required = "required" })
+                                            @Html.TextBoxFor(model => model.ContactNo, new { @class = "form-control inputstl", id = "contactNo", placeholder = "Enter Mobile Number"  })
                                             @Html.ValidationMessageFor(model => model.ContactNo, "", new { @class = "text-danger error-msg" })
                                         </div>
                                     </div>
@@ -71,7 +71,7 @@
                                             @*@Html.DropDownListFor(model => model.Designation, ViewBag.ddlDestination as SelectList, new { @class = "form-control" })
                                                 @Html.ValidationMessageFor(model => model.Designation, "", new { @class = "text-danger error-msg" })*@
 
-                                            @Html.DropDownListFor(model => model.Designation, new SelectList(ViewBag.ddlDestination as SelectList, "Value", "Text"), "--SELECT DESIGNATION--", new { @class = "form-control" })
+                                            @Html.DropDownListFor(model => model.Designation, new SelectList(ViewBag.ddlDestination as SelectList, "Value", "Text"), "--SELECT DESIGNATION--", new { @class = "form-control inputstl" })
                                             @Html.ValidationMessageFor(model => model.Designation, "", new { @class = "text-danger error-msg" })
 
                                         </div>
@@ -85,7 +85,7 @@
                                             <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
                                             @*@Html.DropDownListFor(model => model.CollegeID, ViewBag.ddlColleges as SelectList, new { @class = "form-control" })
                                                 @Html.ValidationMessageFor(model => model.CollegeID, "", new { @class = "text-danger error-msg" })*@
-                                            @Html.DropDownListFor(model => model.CollegeID, new SelectList(ViewBag.ddlColleges as SelectList, "Value", "Text"), "--SELECT COLLEGE--", new { @class = "form-control" })
+                                            @Html.DropDownListFor(model => model.CollegeID, new SelectList(ViewBag.ddlColleges as SelectList, "Value", "Text"), "--SELECT COLLEGE--", new { @class = "form-control inputstl" })
                                             @Html.ValidationMessageFor(model => model.CollegeID, "", new { @class = "text-danger error-msg" })
                                         </div>
                                     </div>
@@ -95,7 +95,7 @@
                                     <div class="cols-sm-10">
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                                            @Html.DropDownListFor(model => model.RoleId, new SelectList(ViewBag.ddlRoles as SelectList, "Value", "Text"), "--SELECT ROLE--", new { @class = "form-control" })
+                                            @Html.DropDownListFor(model => model.RoleId, new SelectList(ViewBag.ddlRoles as SelectList, "Value", "Text"), "--SELECT ROLE--", new { @class = "form-control inputstl" })
                                             @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger error-msg" })
                                             @*@Html.DropDownListFor(model => model.RoleId, ViewBag.ddlRoles as SelectList, new { @class = "form-control" })
                                                 @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger error-msg" })*@
@@ -109,7 +109,7 @@
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
                                             @* <input type="text" class="form-control" name="UserName" id="uName" placeholder="Enter your Name" required />*@
-                                            @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", id = "uName", placeholder = "Enter User Name", required = "required" })
+                                            @Html.TextBoxFor(model => model.UserName, new { @class = "form-control inputstl", id = "uName", placeholder = "Enter User Name" })
                                             @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger error-msg" })
                                         </div>
                                     </div>
@@ -120,7 +120,7 @@
                                     <div class="cols-sm-10">
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                                            @Html.TextBoxFor(model => model.Password, new { @class = "form-control", id = "password", placeholder = "Enter Password", type = "password", required = "required" })
+                                            @Html.TextBoxFor(model => model.Password, new { @class = "form-control inputstl", id = "password", placeholder = "Enter Password", type = "password", required = "required" })
                                             <!-- An element to toggle between password visibility -->
                                             <span class="glyphicon glyphicon-eye-close" id="eye" onclick="myFunction()"></span>
                                             @*<input type="checkbox" onclick="myFunction()">Show Password*@
@@ -141,7 +141,7 @@
                                 <div class="form-group">
                                     <label for="gender" class="cols-sm-2 control-label">Gender*</label>
                                     <div class="cols-sm-10">
-                                        <div class="input-group">
+                                        <div class="input-group inputstl">
                                             <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
                                             @*<label class="radio-inline">
                                                 <input type="radio" name="Gender" value="M">Male</label>

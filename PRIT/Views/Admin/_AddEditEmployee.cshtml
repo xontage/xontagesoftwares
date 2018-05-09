@@ -21,7 +21,7 @@
     }
 
     .input-group {
-        width: 465px;
+        /*width: 465px;*/
     }
 
     .error-msg {
@@ -61,7 +61,7 @@
 
                                     @Html.TextBoxFor(model => model.FirstName, new
                         {
-                            @class = "form-control",
+                            @class = "form-control inputstl",
                             id = "FirstName",
                             placeholder = "Enter Your First Name"
                         })
@@ -79,7 +79,7 @@
 
                                     @Html.TextBoxFor(model => model.MiddleName, new
                         {
-                            @class = "form-control",
+                            @class = "form-control inputstl",
                             id = "MiddleName",
                             placeholder = "Enter Your Middle Name"
                         })
@@ -96,7 +96,7 @@
 
                                     @Html.TextBoxFor(model => model.LastName, new
                         {
-                            @class = "form-control",
+                            @class = "form-control inputstl",
                             id = "LastName",
                             placeholder = "Enter Your Last Name"
                         })
@@ -108,7 +108,7 @@
                         <div class="form-group">
                             <label for="gender" class="cols-sm-2 control-label">Gender*</label>
                             <div class="cols-sm-10">
-                                <div class="input-group">
+                                <div class="input-group inputstl">
                                     @*<i class="glyphicon glyphicon-exclamation-sign"></i>*@
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></i></span>
                                     @Html.RadioButtonFor(model => model.Gender, "M", new { @class = "genderspace" }) Male
@@ -124,7 +124,7 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
 
-                                    @Html.TextBoxFor(model => model.EmailId, new { @class = "form-control", id = "email", placeholder = "Enter Email"})
+                                    @Html.TextBoxFor(model => model.EmailId, new { @class = "form-control inputstl", id = "email", placeholder = "Enter Email"})
                                     @Html.ValidationMessageFor(model => model.EmailId, "", new { @class = "text-danger error-msg" })
                                 </div>
                             </div>
@@ -136,7 +136,7 @@
                                     @* <i class="glyphicon glyphicon-earphone"></i>*@
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-earphone" aria-hidden="true"></i></span>
 
-                                    @Html.TextBoxFor(model => model.MobileNo, new { @class = "form-control", id = "MobileNo", placeholder = "Enter Mobile Number" })
+                                    @Html.TextBoxFor(model => model.MobileNo, new { @class = "form-control inputstl", id = "MobileNo", placeholder = "Enter Mobile Number" })
                                     @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger error-msg" })
                                 </div>
                             </div>
@@ -148,7 +148,7 @@
 
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt" aria-hidden="true"></i></span>
 
-                                    @Html.TextBoxFor(model => model.AltMobileNo, new { @class = "form-control", id = "AltMobileNo", placeholder = "Enter Alternative Mobile Number" })
+                                    @Html.TextBoxFor(model => model.AltMobileNo, new { @class = "form-control inputstl", id = "AltMobileNo", placeholder = "Enter Alternative Mobile Number" })
                                     
                                 </div>
                             </div>
@@ -160,7 +160,7 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i></span>
                                     @*@Html.DropDownListFor(model => model.Designation, ViewBag.ddlEmpDesignation as SelectList, new { @class = "form-control" })*@
-                                    @Html.DropDownListFor(model => model.Designation, new SelectList(ViewBag.ddlEmpDesignation as SelectList, "Value", "Text"), "--SELECT EMPLOYEE DESIGNATION--", new { @class = "form-control" })
+                                    @Html.DropDownListFor(model => model.Designation, new SelectList(ViewBag.ddlEmpDesignation as SelectList, "Value", "Text"), "--SELECT EMPLOYEE DESIGNATION--", new { @class = "form-control inputstl" })
                                     @Html.ValidationMessageFor(model => model.Designation, "", new { @class = "text-danger error-msg" })
 
 
@@ -176,7 +176,7 @@
 
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-heart" aria-hidden="true"></i></span>
                                     @*@Html.DropDownListFor(model => model.MaritalStatus, ViewBag.ddlMaritalStatus as SelectList, new { @class = "form-control" })*@
-                                    @Html.DropDownListFor(model => model.MaritalStatus, new SelectList(ViewBag.ddlMaritalStatus as SelectList, "Value", "Text"), "--SELECT MARITAL STATUS--", new { @class = "form-control" })
+                                    @Html.DropDownListFor(model => model.MaritalStatus, new SelectList(ViewBag.ddlMaritalStatus as SelectList, "Value", "Text"), "--SELECT MARITAL STATUS--", new { @class = "form-control inputstl" })
                                     
                                 </div>
                             </div>
@@ -188,7 +188,7 @@
 
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar" aria-hidden="true"></i></span>
 
-                                    @Html.TextBoxFor(model => model.DateofBirth, new { @class = "form-control", id = "DateofBirth", placeholder = "Enter Date of Birth" })
+                                    @Html.TextBoxFor(model => model.DateofBirth, new { @class = "form-control inputstl", id = "DateofBirth", placeholder = "Enter Date of Birth" })
                                     @Html.ValidationMessageFor(model => model.DateofBirth, "", new { @class = "text-danger error-msg" })
                                 </div>
                             </div>
@@ -200,7 +200,7 @@
 
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-road" aria-hidden="true"></i></span>
 
-                                    @Html.TextBoxFor(model => model.Pincode, new { @class = "form-control", id = "pincode", placeholder = "Enter Pincode" })
+                                    @Html.TextBoxFor(model => model.Pincode, new { @class = "form-control inputstl", id = "pincode", placeholder = "Enter Pincode" })
                                     @Html.ValidationMessageFor(model => model.Pincode, "", new { @class = "text-danger error-msg" })
                                 </div>
                             </div>
@@ -212,7 +212,7 @@
 
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-tint" aria-hidden="true"></i></span>
 
-                                    @Html.TextBoxFor(model => model.City, new { @class = "form-control", @readonly = "readonly", id = "City", placeholder = "Enter City" })
+                                    @Html.TextBoxFor(model => model.City, new { @class = "form-control inputstl", @readonly = "readonly", id = "City", placeholder = "Enter City" })
                                     
                                 </div>
                             </div>
@@ -224,7 +224,7 @@
 
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-stats" aria-hidden="true"></i></span>
 
-                                    @Html.TextBoxFor(model => model.State, new { @class = "form-control", @readonly = "readonly", id = "State", placeholder = "Enter State" })
+                                    @Html.TextBoxFor(model => model.State, new { @class = "form-control inputstl", @readonly = "readonly", id = "State", placeholder = "Enter State" })
                                     
                                 </div>
                             </div>
@@ -236,7 +236,7 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-plane" aria-hidden="true"></i></span>
 
-                                    @Html.TextBoxFor(model => model.Country, new { @class = "form-control", @readonly = "readonly", id = "Country", placeholder = "Enter Country" })
+                                    @Html.TextBoxFor(model => model.Country, new { @class = "form-control inputstl", @readonly = "readonly", id = "Country", placeholder = "Enter Country" })
                                    
                                 </div>
                             </div>
@@ -248,7 +248,7 @@
 
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker" aria-hidden="true"></i></span>
 
-                                    @Html.TextBoxFor(model => model.Address, new { @class = "form-control", id = "Address", placeholder = "Enter Address" })
+                                    @Html.TextBoxFor(model => model.Address, new { @class = "form-control inputstl", id = "Address", placeholder = "Enter Address" })
                                     @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger error-msg" })
                                 </div>
                             </div>
@@ -261,7 +261,7 @@
 
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-book" aria-hidden="true"></i></span>
 
-                                    @Html.TextBoxFor(model => model.HighestEducation, new { @class = "form-control", id = "HighestEducation", placeholder = "Enter Highest Education" })
+                                    @Html.TextBoxFor(model => model.HighestEducation, new { @class = "form-control inputstl", id = "HighestEducation", placeholder = "Enter Highest Education" })
                                     @Html.ValidationMessageFor(model => model.HighestEducation, "", new { @class = "text-danger error-msg" })
                                 </div>
                             </div>
@@ -273,7 +273,7 @@
 
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-certificate" aria-hidden="true"></i></span>
 
-                                    @Html.TextBoxFor(model => model.Specialization, new { @class = "form-control", id = "Specialization", placeholder = "Enter Specialization" })
+                                    @Html.TextBoxFor(model => model.Specialization, new { @class = "form-control inputstl", id = "Specialization", placeholder = "Enter Specialization" })
                                     
                                 </div>
                             </div>
@@ -285,7 +285,7 @@
 
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-file" aria-hidden="true"></i></span>
 
-                                    @Html.TextBoxFor(model => model.InstituteName, new { @class = "form-control", id = "InstituteName", placeholder = "Enter Institute Name" })
+                                    @Html.TextBoxFor(model => model.InstituteName, new { @class = "form-control inputstl", id = "InstituteName", placeholder = "Enter Institute Name" })
                                      
                                 </div>
                             </div>
@@ -297,7 +297,7 @@
 
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar" aria-hidden="true"></i></span>
 
-                                    @Html.TextBoxFor(model => model.YearOfPassing, new { @class = "form-control", id = "YearOfPassing", placeholder = "Enter Year Of Passing" })
+                                    @Html.TextBoxFor(model => model.YearOfPassing, new { @class = "form-control inputstl", id = "YearOfPassing", placeholder = "Enter Year Of Passing" })
                                     @Html.ValidationMessageFor(model => model.YearOfPassing, "", new { @class = "text-danger error-msg" })
                                 </div>
                             </div>
@@ -309,7 +309,7 @@
 
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-certificate" aria-hidden="true"></i></span>
 
-                                    @Html.TextBoxFor(model => model.University, new { @class = "form-control", id = "University", placeholder = "Enter University" })
+                                    @Html.TextBoxFor(model => model.University, new { @class = "form-control inputstl", id = "University", placeholder = "Enter University" })
                                     
                                 </div>
                             </div>
@@ -321,7 +321,7 @@
 
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-home" aria-hidden="true"></i></span>
 
-                                    @Html.TextBoxFor(model => model.InstituteLocation, new { @class = "form-control", id = "InstituteLocation", placeholder = "Enter Institute Location" })
+                                    @Html.TextBoxFor(model => model.InstituteLocation, new { @class = "form-control inputstl", id = "InstituteLocation", placeholder = "Enter Institute Location" })
                                      
                                 </div>
                             </div>
@@ -333,7 +333,7 @@
 
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
 
-                                    @Html.TextBoxFor(model => model.Percentage, new { @class = "form-control", id = "Percentage", placeholder = "Enter Percentage" })
+                                    @Html.TextBoxFor(model => model.Percentage, new { @class = "form-control inputstl", id = "Percentage", placeholder = "Enter Percentage" })
                                     
                                 </div>
                             </div>
@@ -346,7 +346,7 @@
 
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-repeat" aria-hidden="true"></i></span>
                                     @*@Html.DropDownListFor(model => model.EmployeeType, ViewBag.ddlEmployeeType as SelectList, new { @class = "form-control" })*@
-                                    @Html.DropDownListFor(model => model.EmployeeType, new SelectList(ViewBag.ddlEmployeeType as SelectList, "Value", "Text"), "--SELECT EMPLOYEE TYPE--", new { @class = "form-control" })
+                                    @Html.DropDownListFor(model => model.EmployeeType, new SelectList(ViewBag.ddlEmployeeType as SelectList, "Value", "Text"), "--SELECT EMPLOYEE TYPE--", new { @class = "form-control inputstl" })
                                     @Html.ValidationMessageFor(model => model.EmployeeType, "", new { @class = "text-danger error-msg" })
                                 </div>
                             </div>
@@ -358,7 +358,7 @@
 
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
 
-                                    @Html.TextBoxFor(model => model.AdharCardNo, new { @class = "form-control", id = "AdharCardNo", placeholder = "Enter Adhar no" })
+                                    @Html.TextBoxFor(model => model.AdharCardNo, new { @class = "form-control inputstl", id = "AdharCardNo", placeholder = "Enter Adhar no" })
                                     @Html.ValidationMessageFor(model => model.AdharCardNo, "", new { @class = "text-danger error-msg" })
                                 </div>
                             </div>
@@ -370,7 +370,7 @@
 
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
 
-                                    @Html.TextBoxFor(model => model.PANNo, new { @class = "form-control", id = "PANNo", placeholder = "Enter PAN No" })
+                                    @Html.TextBoxFor(model => model.PANNo, new { @class = "form-control inputstl", id = "PANNo", placeholder = "Enter PAN No" })
                                     @Html.ValidationMessageFor(model => model.PANNo, "", new { @class = "text-danger error-msg" })
                                 </div>
                             </div>
@@ -382,7 +382,7 @@
 
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
 
-                                    @Html.TextBoxFor(model => model.PassportNo, new { @class = "form-control", id = "PassportNo", placeholder = "Enter Passport No" })
+                                    @Html.TextBoxFor(model => model.PassportNo, new { @class = "form-control inputstl", id = "PassportNo", placeholder = "Enter Passport No" })
                                     
                                 </div>
                             </div>
@@ -394,8 +394,8 @@
                                 <div class="input-group">
 
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-repeat" aria-hidden="true"></i></span>
-                                    @*@Html.DropDownListFor(model => model.EmployeeType, ViewBag.ddlEmployeeType as SelectList, new { @class = "form-control" })*@
-                                    @Html.DropDownListFor(model => model.BloodGroup, new SelectList(ViewBag.ddlBloodGroup as SelectList, "Value", "Text"), "--SELECT BLOOD GROUP--", new { @class = "form-control" })
+                                    @*@Html.DropDownListFor(model => model.EmployeeType, ViewBag.ddlEmployeeType as SelectList, new { @class = "form-control" })*@ 
+                                    @Html.DropDownListFor(model => model.BloodGroup, new SelectList(ViewBag.ddlBloodGroup as SelectList, "Value", "Text"), "--SELECT BLOOD GROUP--", new { @class = "form-control inputstl" })
                                     
                                 </div>
                             </div>
@@ -407,7 +407,7 @@
 
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
 
-                                    @Html.TextBoxFor(model => model.BankName, new { @class = "form-control", id = "BankName", placeholder = "Enter Bank Name" })
+                                    @Html.TextBoxFor(model => model.BankName, new { @class = "form-control inputstl", id = "BankName", placeholder = "Enter Bank Name" })
                                     
                                 </div>
                             </div>
@@ -419,7 +419,7 @@
 
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
 
-                                    @Html.TextBoxFor(model => model.AccountNo, new { @class = "form-control", id = "AccountNo", placeholder = "Enter Bank Account No" })
+                                    @Html.TextBoxFor(model => model.AccountNo, new { @class = "form-control inputstl", id = "AccountNo", placeholder = "Enter Bank Account No" })
                                     
                                 </div>
                             </div>
@@ -428,8 +428,8 @@
                         <div class="form-group">
                             <label for="Skills" class="cols-sm-2 control-label">Skill Set</label>
                             <div>
-                                <ul id="check-list-box" class="list-group checked-list-box" style="color:#913f3f">
-                                    @Html.ListBoxFor(m => m.SkillIds, Model.Skillset, new { @class = "listbox" })
+                                <ul id="check-list-box" class="list-group checked-list-box inputstl" style="color:#913f3f">
+                                    @Html.ListBoxFor(m => m.SkillIds, Model.Skillset, new { @class = "listbox " })
                                     @*@Html.ValidationMessageFor(m => m.Sections, "", new { @class = "text-danger" })*@
                                 </ul>
                             </div>

@@ -38,9 +38,17 @@
                     <td>@item.PrincipalName</td>
                     <td>@item.Degree</td>
                     <td style="width:15%;">
-                        <input type="button" value="Delete" class="btn btn-danger btnCollegeDelete" data-collegeid=@item.collegeId />
-                      
-                        <input type="button" value="Update" class="btnUpdateCollege btn btn-success" data-collegeid=@item.collegeId />
+                        @*<input type="button" value="Delete" class="btn btn-danger btnCollegeDelete" data-collegeid=@item.collegeId />
+
+        <input type="button" value="Update" class="btnUpdateCollege btn btn-success" data-collegeid=@item.collegeId />*@
+
+                        <button type="button" title="Delete" value="Delete" class="btn btn-danger btnCollegeDelete" data-collegeid=@item.collegeId>
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
+                        @*<input type="button" value="Update" class="btnUpdateEmployee btn btn-success" data-empid=@item.ID />*@
+                        <button title="Edit" type="button" value="Update" class="btnUpdateCollege btn btn-success" data-collegeid=@item.collegeId>
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </button>
 
                     </td>
                 </tr>
