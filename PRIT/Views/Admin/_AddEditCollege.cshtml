@@ -31,7 +31,7 @@
                         <div class="row main">
                             <div class="main-login main-center">                             
                                         <div class="form-group">
-                                            <label for="name" class="cols-sm-2 control-label">College Name</label>
+                                            <label for="name" class="cols-sm-2 control-label">College Name*</label>
                                             <div class="cols-sm-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
@@ -47,7 +47,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="username" class="cols-sm-2 control-label">College Address</label>
+                                            <label for="username" class="cols-sm-2 control-label">College Address*</label>
                                             <div class="cols-sm-10">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
@@ -61,7 +61,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="email" class="cols-sm-2 control-label">College Email</label>
+                                            <label for="email" class="cols-sm-2 control-label">College Email*</label>
                                             <div class="cols-sm-10">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
@@ -80,12 +80,12 @@
                                                     <span class="input-group-addon"><i class="glyphicon glyphicon-book" aria-hidden="true"></i></span>
                                                   @*  <input type="text" class="form-control" name="Website" id="Website" placeholder="Enter College Website" />*@
                                                     @Html.TextBoxFor(model => model.website, new { @class = "form-control", id = "website", placeholder = "Enter College Website" })
-                                                    @Html.ValidationMessageFor(model => model.website, "", new { @class = "text-danger error-msg" })
+                                                   
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="contact1" class="cols-sm-2 control-label">College Contact 1</label>
+                                            <label for="contact1" class="cols-sm-2 control-label">College Contact 1*</label>
                                             <div class="cols-sm-10">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="glyphicon glyphicon-earphone" aria-hidden="true"></i></span>
@@ -104,12 +104,12 @@
                                                     @*<input type="text" class="form-control" name="Contact2" id="Contact2" placeholder="Enter College Contact 2" />*@
 
                                                     @Html.TextBoxFor(model => model.contact2, new { @class = "form-control", id = "contact2", placeholder = "Enter College contact2" })
-                                                    @Html.ValidationMessageFor(model => model.contact2, "", new { @class = "text-danger error-msg" })
+                                                     
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="TPOName" class="cols-sm-2 control-label">College TPO Name</label>
+                                            <label for="TPOName" class="cols-sm-2 control-label">College TPO Name*</label>
                                             <div class="cols-sm-10">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
@@ -127,7 +127,7 @@
                                                    @* <input type="text" class="form-control" name="PrincipleName" id="PrincipleName" placeholder="Enter College Principle Name" />*@
 
                                                     @Html.TextBoxFor(model => model.PrincipalName, new { @class = "form-control", id = "PrincipalName", placeholder = "Enter College Principal Name" })
-                                                    @Html.ValidationMessageFor(model => model.PrincipalName, "", new { @class = "text-danger error-msg" })
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -150,7 +150,7 @@
                                                     <span class="input-group-addon"><i class="glyphicon glyphicon-book" aria-hidden="true"></i></span>
                                                    @* <input type="text" class="form-control" name="CollegeDescription" id="CollegeDescription" placeholder="Enter College Description" />*@
                                                     @Html.TextBoxFor(model => model.Description, new { @class = "form-control", id = "Description", placeholder = "Enter College Description" })
-                                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger error-msg" })
+                                                     
                                                 </div>
                                             </div>
                                         </div>
