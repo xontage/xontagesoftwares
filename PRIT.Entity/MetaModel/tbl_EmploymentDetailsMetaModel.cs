@@ -33,6 +33,7 @@ namespace PRIT.Entity.MetaModel
         [Required(ErrorMessage = "Please Enter Previous Company Location")]
         public string PreviousCompanyLocation { get; set; }
         [Required(ErrorMessage = "Please Enter Previous Company CTC")]
+        [Range(36000, 10000000, ErrorMessage = "Salary must be between 36000 and 10000000")]
         public string PreviousCompanyCTC { get; set; }
         [Required(ErrorMessage = "Please Enter Reason For Leaving")]
         public string ReasonForLeaving { get; set; }

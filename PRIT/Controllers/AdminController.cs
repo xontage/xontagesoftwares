@@ -406,7 +406,7 @@ namespace PRIT.Controllers
                 lstN = db.tbl_Employee.OrderByDescending(emp => emp.ID).ToList();
                 foreach (var item in lstN)
                 {
-                   item.Status= item.IsDeleted == true ? "Non-Working" : "Working";
+                    item.Status = item.IsDeleted == true ? "Non-Working" : "Working";
                 }
                 var aa = RenderRazorViewToString("_EmployeePartial", lstN);
 
@@ -459,7 +459,8 @@ namespace PRIT.Controllers
             foreach (var item in lst)
             {
                 lstS = (from u in db.tbl_Employee
-                        join ut in db.tbl_EmploymentDetails on u.ID equals ut.EmplD where u.ID==item.EmplD
+                        join ut in db.tbl_EmploymentDetails on u.ID equals ut.EmplD
+                        where u.ID == item.EmplD
                         select u).FirstOrDefault();
                 item.EmployeeFullName = lstS.FirstName + " " + lstS.LastName;
 
@@ -485,6 +486,7 @@ namespace PRIT.Controllers
 
             ViewBag.ddlEmpDesignation = new SelectList(GetEmpDesignation(), "Value", "Text");
             ViewBag.ddlEmployeeType = new SelectList(GetEmployeeType(), "Value", "Text");
+            ViewBag.ddlExperience = new SelectList(GetExperience(), "Value", "Text");
             ViewBag.EmpID = empId;
 
             return PartialView("~/Views/Admin/_AddEditEmployment.cshtml", model);
@@ -515,7 +517,7 @@ namespace PRIT.Controllers
 
                 //lstN = db.tbl_EmploymentDetails.OrderByDescending(emp => emp.ID).ToList();
                 //var aa = RenderRazorViewToString("_EmploymentPartial", lstN);
-                
+
                 lstN = db.tbl_Employee.OrderByDescending(emp => emp.ID).ToList();
                 foreach (var item in lstN)
                 {
@@ -578,7 +580,7 @@ namespace PRIT.Controllers
 
                 item.CollegeName = (from c in db.tbl_Colleges
                                     join R in db.tbl_Registration on c.collegeId equals R.CollegeID
-                                     where c.collegeId == item.CollegeID
+                                    where c.collegeId == item.CollegeID
                                     select c.collegeName).FirstOrDefault();
             }
 
@@ -593,7 +595,7 @@ namespace PRIT.Controllers
             if (UserId > 0)
             {
                 model = db.tbl_Registration.Where(x => x.Id == UserId).FirstOrDefault();
-               model.Password= RegistrationBL.DecryptPassword(model.Password, model.UserSalt);
+                model.Password = RegistrationBL.DecryptPassword(model.Password, model.UserSalt);
             }
 
             ViewBag.ddlDestination = new SelectList(GetDestination(), "Value", "Text");
@@ -673,6 +675,35 @@ namespace PRIT.Controllers
 
         }
 
+        [NonAction]
+        public List<SelectListItem> GetExperience()
+        {
+            try
+            {
+                List<SelectListItem> lstDropdownModelGeneric;
+                lstDropdownModelGeneric = new List<SelectListItem>  {
+                        //new SelectListItem(){Text="SELECT EMPLOYEE TYPE",Value="0"},
+                        new SelectListItem(){Text="0 - 1 YEARS",Value="0 - 1 YEARS"},
+                         new SelectListItem(){Text="1 - 2 YEARS",Value="1 - 2 YEARS"},
+                         new SelectListItem(){Text="2 - 3 YEARS",Value="2 - 3 YEARS"},
+                         new SelectListItem(){Text="3 - 4 YEARS",Value="3 - 4 YEARS"},
+                         new SelectListItem(){Text="4 - 5 YEARS",Value="4 - 5 YEARS"},
+                         new SelectListItem(){Text="5 - 6 YEARS",Value="5 - 6 YEARS"},
+                         new SelectListItem(){Text="6 - 7 YEARS",Value="6 - 7 YEARS"},
+                         new SelectListItem(){Text="7 - 8 YEARS",Value="7 - 8 YEARS"},
+                         new SelectListItem(){Text="8 - 9 YEARS",Value="8 - 9 YEARS"},
+                         new SelectListItem(){Text="9 - 10 YEARS",Value="9 - 10 YEARS"},
+                         new SelectListItem(){Text="10 - 11 YEARS",Value="10 - 11 YEARS"}
+                         
+                    };
+                return lstDropdownModelGeneric;
+            }
+            catch (Exception ex)
+            {
+                return new List<SelectListItem>();
+            }
+
+        }
         [NonAction]
         public List<SelectListItem> GetBloodGroup()
         {
@@ -956,9 +987,9 @@ namespace PRIT.Controllers
             return PartialView("_CollegePartial", lstN);
         }
 
-        
+
         #endregion..End of ..College Management Functionality
-        
+
         //Generic Method for Converting any Razor View into String
         public string RenderRazorViewToString(string viewName, object model)
         {

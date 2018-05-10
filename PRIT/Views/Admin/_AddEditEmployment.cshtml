@@ -116,14 +116,13 @@
                                 </div>
                             </div>
                         </div>
+     
                         <div class="form-group">
                             <label for="TotalRelevantExperienced" class="cols-sm-2 control-label">Total Relevant Experienced*</label>
                             <div class="cols-sm-10">
                                 <div class="input-group">
-
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-road" aria-hidden="true"></i></span>
-
-                                    @Html.TextBoxFor(model => model.TotalRelevantExperienced, new { @class = "form-control inputstl", id = "pincode", placeholder = "Enter Total Relevant Experienced" })
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i></span>
+                                    @Html.DropDownListFor(model => model.TotalRelevantExperienced, new SelectList(ViewBag.ddlExperience as SelectList, "Value", "Text"), "--SELECT EXPERIENCE--", new { @class = "form-control inputstl" })
                                     @Html.ValidationMessageFor(model => model.TotalRelevantExperienced, "", new { @class = "text-danger error-msg" })
                                 </div>
                             </div>
@@ -155,7 +154,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="PreviousCompanyCTC" class="cols-sm-2 control-label">Previous Company CTC*</label>
+                            <label for="PreviousCompanyCTC" class="cols-sm-2 control-label">Previous Company CTC(P.A)*</label>
                             <div class="cols-sm-10">
                                 <div class="input-group">
 
