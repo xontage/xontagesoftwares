@@ -11,5 +11,6 @@ namespace PRIT.Entity
     [MetadataType(typeof(tbl_ContactMetaModel))]
     public partial class tbl_Contact
     {
+        public string Actions { get; set; }
     }
 }

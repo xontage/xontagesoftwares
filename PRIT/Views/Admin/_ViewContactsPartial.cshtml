@@ -1,0 +1,100 @@
+﻿
+<script src="~/js/Custom/DataTable.Custom.js"></script>
+
+<div class="MarginTop">
+    <table class="table table-hover table-bordered" id="tblCementApps">
+        <thead>
+            <tr>            
+                <th>Date</th>
+                <th>Inquiry Specification</th>
+                <th>Name</th>
+                <th>Email </th>
+                <th>Contact No</th>
+                <th>Inquiry Text</th>
+                <th class="nosort">Actions</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot>
+            <tr>
+                <th>Date</th>
+                <th>Inquiry Specification</th>
+                <th>Name</th>
+                <th>Email </th>
+                <th>Contact No</th>
+                <th>Inquiry Text</th>
+                <th data-removesearch="true"></th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var _columnsData = [];
+        var _columns = [];
+        _columnsData.push(
+            { "data": "Date", "name": "Date" },
+            { "data": "InquirySpecification", "name": "Inquiry Specification" },
+            { "data": "Name", "name": "Name" },
+            { "data": "Email", "name": "Email" },
+            { "data": "ContactNo", "name": "Contact No" },
+            { "data": "InquiryText", "name": "InquiryText" },
+            { "data": "Actions", "name": "Actions" }
+
+        )
+
+        var cementsAppsSetting = { tableId: 'tblCementApps', columns: _columnsData, url: "/Admin/GetAppsListData", data: { id: 1 } }
+        Grid.InitDynamicGrid(cementsAppsSetting);
+
+    });
+
+    //var inputID = $(this).find("label").attr("for");
+    //$('#' + inputID).click();
+    function abc(contactId) {
+        //var id = $(this).data("contactid");
+        //var id = $(this).val();
+        var objData = { contactId: contactId };
+
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover record!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel please!",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }, function (isConfirm) {
+            if (isConfirm) {
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/DeleteContact",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(objData),
+                    dataType: "json",
+                    success: function (result) {
+                        debugger;
+                        //$('#contactsData').html(result);
+                        swal('Deleted!', 'Your imaginary file has been deleted.', 'success')
+                    },
+                    error: function (xhr, status, error) {
+                        sweetAlert("Oops...", "Something went wrong!", "error");
+                    }
+                });
+
+            } else {
+                swal("Cancelled", "Your imaginary file is safe :)", "error");
+            }
+        });
+
+    }
+
+
+
+</script>

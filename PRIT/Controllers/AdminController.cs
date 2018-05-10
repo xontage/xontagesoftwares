@@ -13,6 +13,7 @@ using System.Web.Security;
 using Newtonsoft.Json;
 using PRIT.Entity.MetaModel;
 using System.Web.Configuration;
+using static PRIT.Models.JqueryDataTable;
 
 namespace PRIT.Controllers
 {
@@ -266,11 +267,106 @@ namespace PRIT.Controllers
         {
             return View();
         }
+        public ActionResult ViewContactsNew()
+        {
+            return View();
+        }
+
+        public ActionResult GetAppsListData(DTParameters dtModel, int id)
+        {
+            var draw = dtModel.Draw;
+            var searchValue = dtModel.Search.Value;
+            string Date, InquirySpecification, Name, Email, ContactNo, InquiryText, sorting = null;
+
+            Date = dtModel.Columns[0].Search.Value;
+            InquirySpecification = dtModel.Columns[1].Search.Value;
+            Name = dtModel.Columns[2].Search.Value;
+            Email = dtModel.Columns[3].Search.Value;
+            ContactNo = dtModel.Columns[4].Search.Value;
+            InquiryText = dtModel.Columns[5].Search.Value;
+
+            sorting = dtModel.SortOrder;
+            var start = dtModel.Start;
+            var length = dtModel.Length;
+
+            int pageSize = length != null ? Convert.ToInt32(length) : 0;
+            int skip = start != null ? Convert.ToInt32(start) : 0;
+            int recordsTotal = 0;
+            List<tbl_Contact> list = new List<tbl_Contact>();
+            // list = db.tbl_Contacts.Where(a => a.Plant.IndustryID == id).OrderByDescending(app => app.CreatedAt).ToList();
+            list = db.tbl_Contact.OrderByDescending(a => a.Id).ToList();
+            List<tbl_Contact> appsCementList = new List<tbl_Contact>();
+
+            foreach (var item in list)
+            {
+                tbl_Contact appsCement = new tbl_Contact();
+                appsCement.Date = item.Date;
+                appsCement.InquirySpecification = item.InquirySpecification;
+                appsCement.Name = item.Name;
+                appsCement.Email = item.Email;
+                appsCement.ContactNo = item.ContactNo;
+                //appsCement.ClosingDate = item.ClosingDate.ToString("dd MMM yyyy");
+                appsCement.InquiryText = item.InquiryText;
+                appsCement.Actions = "<div class='btn-group'><button data-toggle='dropdown' class='btn btn-success btn-xs dropdown-toggle' type='button'>" +
+                    "Select Action <span class='caret'></span> </button> <ul role='menu' class='dropdown-menu pull-right' style='min-width: 121px !important;'><li>" +
+                     //"<a href='/Admin/DeleteContact/" + item.Id + "'>Delete Record</a></li>"+
+                     "<button type='button' class='btn btn-danger' onclick='abc(" + item.Id + ");' data-contactid=" + item.Id + ">Delete Record</button></li>";
+
+                //if (item.Plant.IndustryID == 1 || item.Plant.IndustryID == 2)
+                //    appsCement.Actions += "<li><a href='/Admin/Apps/SupplierData/" + item.ID + "'>Supplier Data</a></li>";
+                //if (item.Plant.IndustryID == 1)
+                //    appsCement.Actions += "<li><a href='/Admin/Apps/ReviewCement/" + item.ID + "'>Review</a></li>";
+                //else if (item.Plant.IndustryID == 2)
+                //    appsCement.Actions += "<li><a href='/Admin/Apps/ReviewSteel/" + item.ID + "'>Review</a></li>";
+                //appsCement.Actions += "</ul> </div>";
+                //string archived = item.Archived ? "checked" : "";
+                //appsCement.Archive = "<input type='checkbox' name='cbxArchive' value='" + item.ID + "' data-on-color='success' data-size='mini'" +
+                //   "data-off-text ='No' data-on-text='Yes' " + archived + " /> ";
+                //string active = item.Active ? "checked" : "";
+                //appsCement.Activate = "<input type='checkbox' name='cbxActivate' value='" + item.ID + "' data-on-color='success' data-size='mini'" +
+                //   "data-off-text= 'No' data-on-text='Yes' active) /> ";
+
+                appsCementList.Add(appsCement);
+            }
+
+            if (!string.IsNullOrEmpty(searchValue))
+                appsCementList = appsCementList.Where(m => m.Date.Contains(searchValue) || m.InquirySpecification.ToString().Contains(searchValue) ||
+                   m.Name.Contains(searchValue) || m.Email.ToString().Contains(searchValue) || m.ContactNo.ToString().Contains(searchValue)
+                    || m.InquiryText.Contains(searchValue)).ToList();
+
+            appsCementList = appsCementList.Where(m => (Date == null || m.Date.Contains(Date)) && (Name == null || m.Name.Contains(Name))
+                && (InquirySpecification == null || m.InquirySpecification.ToString().Contains(InquirySpecification)) && (Email == null || m.Email.ToString().Contains(Email))
+                 && (ContactNo == null || m.ContactNo.ToString().Contains(ContactNo)) && (InquiryText == null || m.InquiryText.ToString().Contains(InquiryText))
+                 ).ToList();
+
+
+            recordsTotal = appsCementList.Count;
+            appsCementList = appsCementList.Skip(skip).Take(pageSize).OrderBy(M => M.Date).ToList();
+
+            if (sorting.Contains("DESC"))
+            {
+                sorting = (!string.IsNullOrEmpty(sorting)) ? sorting.Replace("DESC", "").Trim() : "";
+                appsCementList = appsCementList.OrderBy(m => ((sorting == "Name") ? m.Name : (sorting == "Date") ?
+                    m.Date.ToString() : (sorting == "InquirySpecification") ? m.InquirySpecification : (sorting == "Email") ? m.Email : (sorting == "ContactNo") ?
+                    m.ContactNo.ToString() : m.InquiryText)).ToList();
+            }
+            else
+                appsCementList = appsCementList.OrderByDescending(m => ((sorting == "Name") ? m.Name : (sorting == "Date") ?
+                        m.Date.ToString() : (sorting == "InquirySpecification") ? m.InquirySpecification : (sorting == "Email") ? m.Email : (sorting == "ContactNo") ?
+                        m.ContactNo.ToString() : m.InquiryText)).ToList();
+
+            return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = appsCementList }, JsonRequestBehavior.AllowGet);
+
+        }
+
+
         [HttpPost]
         public ActionResult DeleteContact(int contactId)
         {
+            List<tbl_Contact> lstN = new List<tbl_Contact>();
             contactsBL.DeleteContact(contactId);
-
+            lstN = db.tbl_Contact.OrderByDescending(person => person.Id).ToList();
+            //return PartialView("_ViewContactsPartial");
             return Json(new { Status = "success", Message = "Deleted Successfully!!" }, JsonRequestBehavior.AllowGet);
 
         }
