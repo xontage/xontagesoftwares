@@ -18,6 +18,16 @@ button {
     width: 100%;
 }
 
+.remember-text{
+    display:inline-block;
+    margin-left:18px;
+}
+
+.forgot-text {
+    display: inline-block;
+    margin-left: 40px;
+}
+
     button:hover {
         opacity: 0.8;
     }

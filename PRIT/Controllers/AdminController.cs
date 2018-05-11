@@ -1134,6 +1134,29 @@ namespace PRIT.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        #region ..Profile
+        public ActionResult MyProfile()
+        {
+            var UserEmail = User.Identity.Name;
+            ViewBag.Message = "Welcome to my demo!";
+            PRIT.Entity.ViewModels.MyProfileViewModel mymodel = new Entity.ViewModels.MyProfileViewModel();
+            mymodel.Registration = db.tbl_Registration.Where(m => m.Email == UserEmail).ToList();
+            mymodel.Employee = db.tbl_Employee.Where(m => m.EmailId == UserEmail).ToList();
+            foreach (var item in mymodel.Employee)
+            {
+                mymodel.EmploymentDetails = db.tbl_EmploymentDetails.Where(p => p.EmplD == item.ID).ToList();
 
+            }
+
+            //Successful Lamda expression Join on two tables on emailId
+            //var UserInRole = db.tbl_EmploymentDetails.
+            // Join(db.tbl_Employee, u => u.EmplD, uir => uir.ID,
+            //(u, uir) => new { u, uir })
+            //.Where(m => m.uir.EmailId == UserEmail).ToList();            
+
+            return View(mymodel);
+
+        }
+        #endregion
     }
 }

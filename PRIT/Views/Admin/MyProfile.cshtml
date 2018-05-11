@@ -1,0 +1,416 @@
+﻿@model PRIT.Entity.ViewModels.MyProfileViewModel
+@{
+    ViewBag.Title = "EmployeeMgmt";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+}
+
+<link href="~/css/Tabs/demo.css" rel="stylesheet" />
+<link href="~/css/Tabs/normalize.css" rel="stylesheet" />
+<link href="~/css/Tabs/tabs.css" rel="stylesheet" />
+<link href="~/css/Tabs/tabstyles.css" rel="stylesheet" />
+
+<style>
+    body {
+        font-size: 14px !important;
+    }
+
+    .user-row {
+        margin-bottom: 14px;
+    }
+
+        .user-row:last-child {
+            margin-bottom: 0;
+        }
+
+    .dropdown-user {
+        margin: 13px 0;
+        padding: 5px;
+        height: 100%;
+    }
+
+        .dropdown-user:hover {
+            cursor: pointer;
+        }
+
+    .table-user-information > tbody > tr {
+        border-top: 1px solid rgb(221, 221, 221);
+    }
+
+        .table-user-information > tbody > tr:first-child {
+            border-top: 0;
+        }
+
+
+        .table-user-information > tbody > tr > td {
+            border-top: 0;
+        }
+
+    .toppad {
+        margin-top: 20px;
+    }
+
+    .panel-title {
+        display: inline-block;
+        margin-left: -752px !important
+    }
+
+    .text-info-my {
+        display: inline-block;
+        padding: 0 !important;
+        float: right;
+        font-weight: normal !important;
+        color: #787878 !important;
+        font-size: 16px !important;
+        padding-top: 5px !important;
+    }
+
+    .panel-font {
+        font-size: 17px !important;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        var panels = $('.user-infos');
+        var panelsButton = $('.dropdown-user');
+        panels.hide();
+
+        //Click dropdown
+        panelsButton.click(function () {
+            //get data-for attribute
+            var dataFor = $(this).attr('data-for');
+            var idFor = $(dataFor);
+
+            //current button
+            var currentButton = $(this);
+            idFor.slideToggle(400, function () {
+                //Completed slidetoggle
+                if (idFor.is(':visible')) {
+                    currentButton.html('<i class="glyphicon glyphicon-chevron-up text-muted"></i>');
+                }
+                else {
+                    currentButton.html('<i class="glyphicon glyphicon-chevron-down text-muted"></i>');
+                }
+            })
+        });
+
+
+        $('[data-toggle="tooltip"]').tooltip();
+
+        $('button').click(function (e) {
+            e.preventDefault();
+            alert("This is a demo.\n :-)");
+        });
+    });
+
+</script>
+<script src="~/js/Tabs/modernizr.custom.js"></script>
+<div class="container">
+    <!-- Top Navigation -->
+    <section>
+        <div class="tabs tabs-style-tzoid">
+            <nav>
+                <ul>
+                    <li><a href="#section-tzoid-personal" class="icon icon-home"><span>Personal Details</span></a></li>
+                    <li><a href="#section-tzoid-contact" class="icon icon-box"><span>Contact Details</span></a></li>
+                    <li><a href="#section-tzoid-education" class="icon icon-upload"><span>Educational Details</span></a></li>
+                    <li><a href="#section-tzoid-employment" class="icon icon-display"><span>Employment Details</span></a></li>
+                    <li><a href="#section-tzoid-other" class="icon icon-tools"><span>Other</span></a></li>
+                </ul>
+            </nav>
+            <div class="content-wrap">
+                <section id="section-tzoid-personal">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12 toppad">
+                                <div class="panel panel-info">
+                                    @*<div class="panel-heading">
+                                        <h3 class="panel-title">@User.Identity.Name</h3>
+                                        <p class=" text-info text-info-my">@DateTime.Now.ToString("MM-dd-yyyy hh:mm:ss")</p>
+                                    </div>*@
+                                    <div class="panel-body panel-font">
+                                        <div class="row">
+                                            <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="https://images.pexels.com/photos/257360/pexels-photo-257360.jpeg?auto=compress&cs=tinysrgb&h=350" class="img-circle img-responsive"> </div>
+
+
+                                            <div class=" col-md-9 col-lg-9 ">
+                                                <table class="table table-user-information">
+                                                    <tbody>
+                                                        @foreach (var user in Model.Employee)
+    {
+                                                    <tr>
+                                                        <td> First Name</td>
+                                                        <td> @user.FirstName</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td> Middle Name</td>
+                                                        <td> @user.MiddleName</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td> Last Name</td>
+                                                        <td> @user.LastName</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td> Gender</td>
+                                                        <td> @user.Gender</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td> Marital Status</td>
+                                                        <td> @user.MaritalStatus</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td> Blood Group</td>
+                                                        <td> @user.BloodGroup</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td> PAN No</td>
+                                                        <td> @user.PANNo</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Adhar Card No</td>
+                                                        <td> @user.AdharCardNo</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Passport No</td>
+                                                        <td> @user.PassportNo</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Employee ID</td>
+                                                        <td> @user.EmployeeId</td>
+                                                    </tr>
+                                                    @*<tr>
+                                                        <td>Skill Set</td>
+                                                        <td> @user.SkillIds</td>
+                                                    </tr>*@
+}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="section-tzoid-contact">
+                    <div class="container">
+                        <div class="row">
+
+                            <div class="col-md-12 toppad">
+
+
+                                <div class="panel panel-info">
+                                    <div class="panel-body panel-font">
+                                        <div class="row">
+
+
+                                            <div class=" col-md-12 col-lg-12 ">
+                                                <table class="table table-user-information">
+                                                    <tbody>
+                                                        @foreach (var user in Model.Employee)
+        {
+                                                <tr>
+                                                    <td>Contact No</td>
+                                                    <td> @user.MobileNo / @user.AltMobileNo  </td>
+                                                </tr>
+                                                <tr>
+                                                    <td> Address</td>
+                                                    <td> @user.Address</td>
+                                                </tr>
+                                                <tr>
+                                                    <td> Email Id</td>
+                                                    <td> @user.EmailId</td>
+                                                </tr>
+                                                <tr>
+                                                    <td> Pincode</td>
+                                                    <td> @user.Pincode</td>
+                                                </tr>
+                                                <tr>
+                                                    <td> City</td>
+                                                    <td> @user.City</td>
+                                                </tr>
+                                                <tr>
+                                                    <td> State</td>
+                                                    <td> @user.State</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Country</td>
+                                                    <td> @user.Country</td>
+                                                </tr>
+                                                
+}
+                                                    </tbody>
+                                                </table>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="section-tzoid-education">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12 toppad">
+                                <div class="panel panel-info">
+                                    <div class="panel-body panel-font">
+                                        <div class="row">
+                                            <div class=" col-md-12 col-lg-12 ">
+                                                <table class="table table-user-information">
+                                                    <tbody>
+                                                        @foreach (var user in Model.Employee)
+                                        {
+                                            <tr>
+                                                <td>Highest Education</td>
+                                                <td> @user.HighestEducation </td>
+                                            </tr>
+                                            <tr>
+                                                <td> Percentage</td>
+                                                <td> @user.Percentage</td>
+                                            </tr>
+                                            <tr>
+                                                <td> University</td>
+                                                <td> @user.University</td>
+                                            </tr>
+                                            <tr>
+                                                <td> Institute Location</td>
+                                                <td> @user.InstituteLocation</td>
+                                            </tr>
+                                            <tr>
+                                                <td> Year Of Passing</td>
+                                                <td> @user.YearOfPassing</td>
+                                            </tr>
+
+                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+                <section id="section-tzoid-employment">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12 toppad">
+                                <div class="panel panel-info">
+                                    <div class="panel-body panel-font">
+                                        <div class="row">
+                                            <div class=" col-md-12 col-lg-12 ">
+                                                <table class="table table-user-information">
+                                                    <tbody>
+                                                        @foreach (var user in Model.EmploymentDetails)
+    {
+                                                    <tr>
+                                                        <td> Previous Company Name</td>
+                                                        <td> @user.PreviousCompanyName</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Previous Company CTC</td>
+                                                        <td> @user.PreviousCompanyCTC </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td> Previous Company Location</td>
+                                                        <td> @user.PreviousCompanyLocation</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td> Previous Company Last Day</td>
+                                                        <td> @user.PreviousCompanyLastDay</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td> Reason For Leaving</td>
+                                                        <td> @user.ReasonForLeaving</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td> Total Relevant Experience</td>
+                                                        <td> @user.TotalRelevantExperienced</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Date Of Joining</td>
+                                                        <td> @user.DateOfJoining</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Department Name</td>
+                                                        <td> @user.DepartmentName</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td> Current Joined As</td>
+                                                        <td> @user.JoinedAs</td>
+                                                    </tr>
+                                                   
+                                                    <tr>
+                                                        <td>Role</td>
+                                                        <td> @user.Role</td>
+                                                    </tr>
+}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="section-tzoid-other">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12 toppad">
+                                <div class="panel panel-info">
+                                    <div class="panel-body panel-font">
+                                        <div class="row">
+                                            <div class=" col-md-12 col-lg-12 ">
+                                                <table class="table table-user-information">
+                                                    <tbody>
+                                                        @foreach (var user in Model.Employee)
+                                        {
+                                            <tr>
+                                                <td>Bank Name</td>
+                                                <td> @user.BankName </td>
+                                            </tr>
+                                            <tr>
+                                                <td> Account No</td>
+                                                <td> @user.AccountNo</td>
+                                            </tr>
+                                           
+
+
+                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div><!-- /content -->
+        </div><!-- /tabs -->
+    </section>
+</div><!-- /container -->
+<script src="~/js/Tabs/cbpFWTabs.js"></script>
+<script>
+    (function () {
+
+        [].slice.call(document.querySelectorAll('.tabs')).forEach(function (el) {
+            new CBPFWTabs(el);
+        });
+
+    })();
+</script>
+
