@@ -1122,12 +1122,14 @@ namespace PRIT.Controllers
         {
             // Delete the user details from cache.
             Session.Abandon();
+            Session.Clear();
+            Session.RemoveAll();
             // Delete the authentication ticket and sign out.
             FormsAuthentication.SignOut();
             // Clear authentication cookie.
-            HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, "");
-            cookie.Expires = DateTime.Now.AddYears(-1);
-            Response.Cookies.Add(cookie);
+            //HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, "");
+            //cookie.Expires = DateTime.Now.AddYears(-1);
+            //Response.Cookies.Add(cookie);
 
             return RedirectToAction("Index", "Home");
         }

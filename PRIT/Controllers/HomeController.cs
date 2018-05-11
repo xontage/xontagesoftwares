@@ -200,10 +200,10 @@ namespace PRIT.Controllers
                 if (ModelState.IsValid)
                 {
                     tbl_Registration user = null;
-                    string Expiretime = ConfigurationManager.AppSettings["ExpireTime"];
 
-                    if (string.IsNullOrEmpty(Expiretime))
-                        Expiretime = "60";
+                    //string Expiretime = ConfigurationManager.AppSettings["ExpireTime"];
+                    //if (string.IsNullOrEmpty(Expiretime))
+                    //    Expiretime = "60";
 
                     if (string.IsNullOrWhiteSpace(returnUrl))
                     {
@@ -289,14 +289,14 @@ namespace PRIT.Controllers
                             FormsAuthentication.SetAuthCookie(user.Email, false);
 
                             //For checking user roll on View so that we can bind menus dynamically according to ROll Name
-                            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, user.Email, DateTime.Now, DateTime.Now.AddYears(2880), user.RememberMe, user.UserRoleName, FormsAuthentication.FormsCookiePath);
-                            string hash = FormsAuthentication.Encrypt(ticket);
-                            HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, hash);
-                            if (ticket.IsPersistent)
-                            {
-                                cookie.Expires = ticket.Expiration;
-                            }
-                            Response.Cookies.Add(cookie);
+                            //FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, user.Email, DateTime.Now, DateTime.Now.AddYears(2880), user.RememberMe, user.UserRoleName, FormsAuthentication.FormsCookiePath);
+                            //string hash = FormsAuthentication.Encrypt(ticket);
+                            //HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, hash);
+                            //if (ticket.IsPersistent)
+                            //{
+                            //    cookie.Expires = ticket.Expiration;
+                            //}
+                            //Response.Cookies.Add(cookie);
 
 
                             //if (user.RoleId == 1)
