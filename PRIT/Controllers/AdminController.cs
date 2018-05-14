@@ -14,6 +14,9 @@ using Newtonsoft.Json;
 using PRIT.Entity.MetaModel;
 using System.Web.Configuration;
 using static PRIT.Models.JqueryDataTable;
+using System.ComponentModel;
+using PRIT.Entity.ViewModels;
+using OfficeOpenXml;
 
 namespace PRIT.Controllers
 {
@@ -369,6 +372,47 @@ namespace PRIT.Controllers
             //return PartialView("_ViewContactsPartial");
             return Json(new { Status = "success", Message = "Deleted Successfully!!" }, JsonRequestBehavior.AllowGet);
 
+        }
+        /// <summary>
+        ///     Code to export data in Excel format   
+        /// </summary>
+        public void ExportToExcel()
+        {
+            var data = db.tbl_Contact.Select(x => new ExportToExcel
+            {
+                Id = x.Id,
+                Name = x.Name,
+                InquirySpecification = x.InquirySpecification,
+                InquiryText = x.InquiryText,
+                ContactNo = x.ContactNo,
+                Email = x.Email,
+                Date = x.Date
+            }).ToList();
+            Response.ClearContent();
+            Response.AddHeader("content-disposition", "attachment;filename=Contact.xls");
+            Response.AddHeader("Content-Type", "application/vnd.ms-excel");
+            WriteToExcel(data, Response.Output);
+            Response.End();
+        }
+        public void WriteToExcel<T>(IEnumerable<T> data, TextWriter output)
+        {
+            PropertyDescriptorCollection props = TypeDescriptor.GetProperties(typeof(T));
+            foreach (PropertyDescriptor prop in props)
+            {
+                output.Write(prop.DisplayName); // header
+                output.Write("\t");
+            }
+            output.WriteLine();
+            foreach (T item in data)
+            {
+                foreach (PropertyDescriptor prop in props)
+                {
+                    output.Write(prop.Converter.ConvertToString(
+                         prop.GetValue(item)));
+                    output.Write("\t");
+                }
+                output.WriteLine();
+            }
         }
 
         #endregion..End of ..View Contacts functionality
@@ -1158,5 +1202,8 @@ namespace PRIT.Controllers
 
         }
         #endregion
+
+
+         
     }
 }

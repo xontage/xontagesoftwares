@@ -12,5 +12,21 @@ namespace PRIT.Entity
     public partial class tbl_Contact
     {
         public string Actions { get; set; }
+
+        public ExportToExcel exportToExcel { get; set; }
+    }
+
+    public class ExportToExcel
+    {
+        public int Id { get; set; }
+        public string Date { get; set; }
+        public string InquirySpecification { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public Nullable<long> ContactNo { get; set; }
+        public string InquiryText
+        {
+            get; set;
+        }
     }
 }
