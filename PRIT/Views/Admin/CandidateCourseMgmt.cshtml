@@ -1,0 +1,85 @@
+﻿
+@model IEnumerable<PRIT.Entity.tbl_CandidateWithCourseDetails>
+
+@{
+    ViewBag.Title = "CandidateCourseMgmt";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<head>    
+
+    <style>
+        .modal-content {
+            width: 750px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            float: left;
+            width: 38%;
+            margin-right: 51px !important;
+            margin-top: 10px !important;
+            margin-left: 22px !important;
+        }
+    </style>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+</head>
+
+
+<button id="btncandidateCourseModel" style="margin-left:96px; margin-top: 35px;" type="button" class="btn btn-info btn-lg" data-toggle="modal" >New Candidate</button>
+
+@*bind  popup to this div*@
+<div id="candidateCourseRegistationPopUp"></div>
+
+<div id="candidateCourseData">
+    @{ Html.RenderPartial("_candidateCoursePartial", Model);}
+</div>
+
+
+<script>
+
+    $(function () {
+
+        $('#btncandidateCourseModel').click(function () {
+            debugger;
+            $.ajax({
+                type: "GET",
+                url: '../Admin/AddEditCandidateCourse?candidateCourseId=0',
+                success: function (status) {
+                    if (status != null) {
+                        debugger;
+                        $('#candidateCourseRegistationPopUp').html(status);
+                        $('#candidateCourseModal').modal('show');
+                      
+                    }
+                },
+                error: function (err, status) {
+                    sweetAlert("Oops...", data.message, "error");                  
+                }
+            });
+        });
+
+    });
+
+    function fnOnAddEditcandidateCourseSuccess(data) {
+        debugger;
+        $('#candidateCourseModal').find("[data-dismiss=modal]").trigger({ type: "click" });
+        if (data.success == true) {
+            swal('Saved!', data.message, 'success')
+        }
+        else if (data.success == false) {
+            sweetAlert("Oops...", data.message, "error");
+        }
+        if (data.result != "" || data.result != null) {
+            $('#candidateCourseData').html(data.result);
+        }
+
+    }
+
+
+</script>
+

@@ -31,6 +31,7 @@ namespace PRIT.Controllers
         UploadedFileBL uploadedFileBL = new UploadedFileBL();
         EmployeeBL employeeBL = new EmployeeBL();
         EmploymentBL employmentBL = new EmploymentBL();
+        CandidateCourseBL candidateCourseBL = new CandidateCourseBL();
         // GET: Admin
 
         //[CheckSessionTimeOut]
@@ -987,6 +988,99 @@ namespace PRIT.Controllers
             }
         }
 
+        [NonAction]
+        public List<DropdownModelGeneric> GetCourseName()
+        {
+            try
+            {
+                List<DropdownModelGeneric> lstDropdownModelGeneric;
+                lstDropdownModelGeneric = new List<DropdownModelGeneric>  {
+                      //  new DropdownModelGeneric(){Text="SELECT DESIGNATION",Value="0"},
+                        new DropdownModelGeneric(){Text="Java",Value="1"},
+                         new DropdownModelGeneric(){Text=".Net",Value="2"},
+                        new DropdownModelGeneric(){Text="Designing",Value="3"},
+                         new DropdownModelGeneric(){Text="PHP",Value="4"},
+                        new DropdownModelGeneric(){Text="Testing",Value="5"}
+
+                    };
+                return lstDropdownModelGeneric;
+            }
+            catch (Exception ex)
+            {
+                return new List<DropdownModelGeneric>();
+            }
+        }
+        
+        [NonAction]
+        public List<DropdownModelGeneric> GetCourseType()
+        {
+            try
+            {
+                
+                List<DropdownModelGeneric> lstDropdownModelGeneric;
+                lstDropdownModelGeneric = new List<DropdownModelGeneric>  {
+                      //  new DropdownModelGeneric(){Text="SELECT DESIGNATION",Value="0"},
+                        new DropdownModelGeneric(){Text="Crash Regular",Value="1"},
+                         new DropdownModelGeneric(){Text="WeekEnd",Value="2"},
+                        new DropdownModelGeneric(){Text="Crash WeekEnd",Value="3"},
+                         new DropdownModelGeneric(){Text="Regular",Value="4"}
+                        
+
+                    };
+                return lstDropdownModelGeneric;
+            }
+            catch (Exception ex)
+            {
+                return new List<DropdownModelGeneric>();
+            }
+        }
+       
+
+        [NonAction]
+        public List<SelectListItem> GetDuration()
+        {
+            try
+            {
+                List<SelectListItem> lstDropdownModelGeneric;
+                lstDropdownModelGeneric = new List<SelectListItem>  {
+                        //new SelectListItem(){Text="SELECT EMPLOYEE TYPE",Value="0"},
+                        new SelectListItem(){Text="0 - 3 MONTHS",Value="1"},
+                         new SelectListItem(){Text="0 - 6 MONTHS",Value="2"},
+                        new SelectListItem(){Text="0 - 1 YEAR",Value="3"}                       
+
+                    };
+                return lstDropdownModelGeneric;
+            }
+            catch (Exception ex)
+            {
+                return new List<SelectListItem>();
+            }
+
+        }     
+        
+        [NonAction]
+        public List<DropdownModelGeneric> GetCourseCategory()
+        {
+            try
+            {
+
+                List<DropdownModelGeneric> lstDropdownModelGeneric;
+                lstDropdownModelGeneric = new List<DropdownModelGeneric>  {
+                      //  new DropdownModelGeneric(){Text="SELECT DESIGNATION",Value="0"},
+                        new DropdownModelGeneric(){Text="Diploma",Value="1"},
+                         new DropdownModelGeneric(){Text="Certification",Value="2"},
+                        new DropdownModelGeneric(){Text="Advanced Diploma",Value="3"},
+                         new DropdownModelGeneric(){Text="Basic",Value="4"}
+
+
+                    };
+                return lstDropdownModelGeneric;
+            }
+            catch (Exception ex)
+            {
+                return new List<DropdownModelGeneric>();
+            }
+        }
 
         #endregion...End of ...all Dropdowns in application on Pop up window
 
@@ -1131,6 +1225,91 @@ namespace PRIT.Controllers
 
 
         #endregion..End of ..College Management Functionality
+
+        #region ...Candidate Cource management..
+        
+         public ActionResult CandidateCourseMgmt()
+        {
+            List<tbl_CandidateWithCourseDetails> lst = db.tbl_CandidateWithCourseDetails.OrderByDescending(c => c.CandidateId).ToList();
+            return View(lst);
+        }
+
+        
+         [HttpGet]
+        public ActionResult AddEditCandidateCourse(int? candidateCourseId)
+        {
+            tbl_CandidateWithCourseDetails model = new tbl_CandidateWithCourseDetails();
+            if (candidateCourseId > 0)
+            {
+                model = db.tbl_CandidateWithCourseDetails.Where(x => x.CandidateId == candidateCourseId).FirstOrDefault();
+                
+            }
+
+            ViewBag.ddlExperience = new SelectList(GetEmployeeType(), "Value", "Text");
+            ViewBag.ddlCourseName = new SelectList(GetCourseName(), "Value", "Text");
+            ViewBag.ddlCourseType = new SelectList(GetCourseType(), "Value", "Text");
+            ViewBag.ddlDuration = new SelectList(GetDuration(), "Value", "Text");
+            ViewBag.ddlCourseCategory = new SelectList(GetCourseCategory(), "Value", "Text");
+
+            return PartialView("~/Views/Admin/_AddEditCandidateCourse.cshtml", model);
+
+        }
+
+        [HttpPost]
+        public ActionResult AddEditCandidateCourse(tbl_CandidateWithCourseDetails model)
+        {
+            List<tbl_CandidateWithCourseDetails> lstN = new List<tbl_CandidateWithCourseDetails>();
+
+            if (ModelState.IsValid)
+            {
+                candidateCourseBL.AddEditCandidateCourse(model, User.Identity.Name);
+                lstN = db.tbl_CandidateWithCourseDetails.OrderByDescending(person => person.CandidateId).ToList();
+                foreach (var item in lstN)
+                {
+                    //item.CollegeName = (from c in db.tbl_Colleges
+                    //                    join R in db.tbl_Registration on c.collegeId equals R.CollegeID
+                    //                    where c.collegeId == item.CollegeID
+                    //                    select c.collegeName).FirstOrDefault();
+                }
+                var aa = RenderRazorViewToString("_candidateCoursePartial", lstN);
+
+                return new JsonResult()
+                {
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                    Data = new { message = model.CandidateId == 0 ? "user has been created successfully" : "user has been updated successfully", success = true, result = aa }
+                };
+            }
+
+            return new JsonResult()
+            {
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                Data = new { message = "Something went wrong!!", success = false }
+            };
+
+        }
+
+
+        [HttpPost]
+        public ActionResult DeleteCandidateCourse(int? Id)
+        {       
+            List<tbl_CandidateWithCourseDetails> lstN = new List<tbl_CandidateWithCourseDetails>();
+            int deletedEmpId = candidateCourseBL.DeleteCandidateCourse(Id);
+            if (deletedEmpId > 0)
+                lstN = db.tbl_CandidateWithCourseDetails.OrderByDescending(e => e.CandidateId).ToList();
+            //lstN = db.tbl_Employee.OrderByDescending(e => e.ID).Where(e => e.IsDeleted == false).ToList();
+            foreach (var item in lstN)
+            {
+               // item.Status = item.IsDeleted == true ? "Non-Working" : "Working";
+            }
+            return PartialView("_candidateCoursePartial", lstN);
+        }
+
+
+
+
+        #endregion..End of ...Candidate Cource management..
+
+
 
         //Generic Method for Converting any Razor View into String
         public string RenderRazorViewToString(string viewName, object model)
