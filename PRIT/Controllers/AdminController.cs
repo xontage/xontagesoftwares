@@ -20,6 +20,7 @@ using OfficeOpenXml;
 
 namespace PRIT.Controllers
 {
+     
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
@@ -32,6 +33,7 @@ namespace PRIT.Controllers
         EmploymentBL employmentBL = new EmploymentBL();
         // GET: Admin
 
+        //[CheckSessionTimeOut]
         public ActionResult Index()
         {
             return View();
@@ -1204,6 +1206,5 @@ namespace PRIT.Controllers
         #endregion
 
 
-         
     }
 }

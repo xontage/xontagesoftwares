@@ -39,6 +39,7 @@
             -moz-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
             -webkit-box-shadow: rgba(0,0,0, 0.1) 0px 0px 8px;
         }
+
         .no-space {
             padding: 0;
         }
@@ -69,9 +70,6 @@
                 width: 100%;
                 height: auto;
             }
-
-
-
     </style>
 
 
@@ -84,9 +82,9 @@
 
     <header id="header">
 
-@*@if (User.IsInRole("Admin"))
-{*@
-    
+        @*@if (User.IsInRole("Admin"))
+            {*@
+
         <nav class="navbar navbar-inverse" role="banner">
             <div class="container">
                 <div class="navbar-header">
@@ -99,22 +97,35 @@
                     <a class="navbar-brand" href="#"><img src="~/images/logo2.png" alt="logo" /></a>
                 </div>
 
-              
-                    @Html.Partial("_MenuPartialFood")
-                
-                
+
+                @Html.Partial("_MenuPartialFood")
+
+
+                <div id="divPopupTimeOut" style="display:none; text-align: left; margin-top:15px; width:280px !important; position:fixed; top:40px; right:0px; z-index:9999; height:165px;" class="alert alert-warning">
+                    <div class="row" style="margin-top:10px; margin-left:10px;">
+                        Your session is about to expire!
+                        <br />
+                        <span id="CountDownHolder"></span>
+                        <br />
+                        Click OK to continue your session.
+                    </div>
+                    <div class="row">
+                        <div class="text-center button-block" style="text-align:center; margin-top:22px;">
+                            <button type="button" class="btn btn-default btn-sm" onclick="SessionTimeout.sendKeepAlive();" value="ok">OK</button>
+                            <button type="button" class="btn btn-default btn-sm" onclick="SessionTimeout.hidePopup();" value="cancel">Cancel</button>
+                        </div>
+                    </div>
+                </div>
 
             </div><!--/.container-->
         </nav><!--/nav-->
-
-
-@*}*@
+        @*}*@
 
     </header>
 
     @*<div id="divLoader" style="display:none; ">
-        <img src="~/images/loader4.gif" alt="Loader" />
-    </div>*@
+            <img src="~/images/loader4.gif" alt="Loader" />
+        </div>*@
 
 
 
@@ -132,6 +143,9 @@
     <!-- Back To Top -->
     <script src="~/js/Global.js"></script>
     <script type="text/javascript">
+        var loginUrl='@Url.Action("Login", "Home")';
+        var extendMethodUrl = '@Url.Action("ExtendSession","Home")';
+        
         jQuery(document).ready(function () {
             var offset = 300;
             var duration = 500;
@@ -158,9 +172,75 @@
 
             });
 
-
+            //Check User is authenticated or not
+            if('@User.Identity.IsAuthenticated' == 'True'){
+            SessionTimeout.schedulePopup();
+            }
 
         });
+
+//for session popup window and redirect to login page
+        window.SessionTimeout = (function() {
+            var _timeLeft, _popupTimer, _countDownTimer;
+            var stopTimers = function() {
+                window.clearTimeout(_popupTimer);
+                window.clearTimeout(_countDownTimer);
+            };
+            var updateCountDown = function() {
+                var min = Math.floor(_timeLeft / 60);
+                var sec = _timeLeft % 60;
+                if(sec < 10)
+                    sec = "0" + sec;
+
+                document.getElementById("CountDownHolder").innerHTML = min + ":" + sec;
+
+                if(_timeLeft > 0) {
+                    _timeLeft--;
+                    _countDownTimer = window.setTimeout(updateCountDown, 1000);
+                } else {
+                  
+                    document.location = loginUrl;
+                }
+            };
+            var showPopup = function() {
+            $("#divPopupTimeOut").show();
+                _timeLeft = 60 ;
+                updateCountDown();
+            };
+            var schedulePopup = function() {
+            $("#divPopupTimeOut").hide();
+                stopTimers();
+                _popupTimer = window.setTimeout(showPopup, @PopupShowDelay);
+            };
+            var hidePopup=function(){
+            $("#divPopupTimeOut").hide();
+            };
+            var sendKeepAlive = function() {
+                stopTimers();
+                $("#divPopupTimeOut").hide();
+                $.ajax({
+                    type: "GET",
+                    url: extendMethodUrl,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function successFunc(response) {
+                        SessionTimeout.schedulePopup();
+                    },
+                    error:function(){
+                    }
+                });
+            };
+            return {
+                schedulePopup: schedulePopup,
+                sendKeepAlive: sendKeepAlive,
+                hidePopup:hidePopup,
+                stopTimers:stopTimers,
+            };
+
+        })();
+
+
+
     </script>
 
 
@@ -180,4 +260,17 @@
 </body>
 
 </html>
+
+
+
+@functions {
+    public int PopupShowDelay
+    {
+        get
+        {           
+            return 1000 * (Convert.ToInt32(FormsAuthentication.Timeout.TotalSeconds-60)) ;
+
+        }
+    }
+}
 

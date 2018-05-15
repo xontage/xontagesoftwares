@@ -1,5 +1,6 @@
 ﻿using PRIT.BAL;
 using PRIT.Entity;
+using PRIT.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +15,8 @@ namespace PRIT.Controllers
     public class StaffController : Controller
     {
         PRITEntities db = new PRITEntities();
-       
 
+        //[CheckSessionTimeOut]
         // GET: Staff
         public ActionResult Index()
         {

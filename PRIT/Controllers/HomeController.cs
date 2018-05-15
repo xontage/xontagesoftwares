@@ -16,12 +16,13 @@ using System.Configuration;
 
 namespace PRIT.Controllers
 {
+    
     public class HomeController : Controller
     {
 
         PRITEntities db = new PRITEntities();
         ContactsBL contactsBL = new ContactsBL();
-
+        //[CheckSessionTimeOut]
         public ActionResult Index()
         {
 
@@ -161,6 +162,7 @@ namespace PRIT.Controllers
         {
             return View();
         }
+        //[CheckSessionTimeOut]
         public ActionResult Login(string returnUrl)
         {
             try
@@ -343,6 +345,15 @@ namespace PRIT.Controllers
             return View();
         }
 
+
+        [Authorize(Roles = "Staff, Admin")]
+        [HttpGet]
+        public ActionResult ExtendSession()
+        {
+            System.Web.Security.FormsAuthentication.SetAuthCookie(User.Identity.Name, false);
+            var data = new { IsSuccess = true };
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
 
         [HttpPost]
         public ActionResult LoginOld(tbl_Registration model, string returnUrl)
