@@ -1356,7 +1356,38 @@ namespace PRIT.Controllers
 
         #endregion..End of ...Candidate Cource management..
 
+        #region ..Fees Management functionality..
 
+        public ActionResult FeesMgmt()
+        {
+            List<tbl_CourseFees> lst = db.tbl_CourseFees.OrderByDescending(c => c.Id).ToList();
+                       
+            return View(lst);
+        }
+
+        
+        [HttpGet]
+        public ActionResult AddEditCourseFees(int? CourseFeesId)
+        {
+            tbl_CourseFees model = new tbl_CourseFees();
+            if (CourseFeesId > 0)
+            {
+                model = db.tbl_CourseFees.Where(x => x.Id == CourseFeesId).FirstOrDefault();
+
+            }
+         
+            return PartialView("~/Views/Admin/_AddEditCourseFees.cshtml", model);
+
+        }
+        public JsonResult GetCandidateEmail(string countryName)
+        {
+
+          var txtItems=  db.tbl_CandidateWithCourseDetails.Where(m => m.EmailId.Contains(countryName)).ToList().Select(s => s.EmailId);
+                          
+            return Json(txtItems, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion .End Of ..Fees Management functionality..
 
         //Generic Method for Converting any Razor View into String
         public string RenderRazorViewToString(string viewName, object model)

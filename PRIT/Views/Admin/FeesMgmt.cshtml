@@ -1,0 +1,96 @@
+﻿@model IEnumerable<PRIT.Entity.tbl_CourseFees>
+@{
+    ViewBag.Title = "FeesMgmt";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<head>
+
+
+    <link href="~/css/Registration.css" rel="stylesheet" />
+
+    <style type="text/css">
+        .downloadC {
+            margin-left: 10px
+        }
+
+        .error-msg {
+            position: absolute;
+            top: 37px;
+            left: 0;
+        }
+    </style>
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+
+        
+</head>
+<br />
+<br />
+
+
+<button id="btnCourseFeesModel" style="margin-left:96px;" type="button" class="btn btn-info btn-lg" data-toggle="modal" >Add Candidate's Course Fees</button>
+
+@*bind  popup to this div*@
+<div id="courseFeesPopUp"></div>
+
+<div id="courseFeesData">
+    @{ Html.RenderPartial("_CourseFeesPartial", Model); }
+</div>
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+
+        $('#btnCourseFeesModel').click(function () {
+            debugger;
+            $.ajax({
+                type: "GET",
+                url: '../Admin/AddEditCourseFees?CourseFeesId=0',
+                success: function (status) {
+                    if (status != null) {
+                        debugger;
+                        $('#courseFeesPopUp').html(status);
+                        $('#courseFeesModal').modal('show');
+                       
+
+                    }
+                },
+                error: function (err, status) {
+                    sweetAlert("Oops...", data.message, "error");
+                  
+                }
+            });
+        });
+
+
+    });
+
+    function fnOnCourseFeesSuccess(data)
+    {
+        debugger;
+        $('#courseFeesModal').find("[data-dismiss=modal]").trigger({ type: "click" });
+        if (data.success == true) {
+            swal('Saved!', data.message, 'success')
+        }
+        else if (data.success == false)
+        {
+            sweetAlert("Oops...", data.message, "error");
+        }
+        if (data.result != "" || data.result!=null)
+        {
+            $('#courseFeesData').html(data.result);
+        }
+
+
+    }
+
+   
+
+</script>
