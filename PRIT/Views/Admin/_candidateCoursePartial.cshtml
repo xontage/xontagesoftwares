@@ -5,7 +5,7 @@
 }
 
 <style>
- 
+
     .empmgt-main {
         max-width: 100%;
     }
@@ -63,7 +63,7 @@
                         <thead>
                             @*style="background-color: #865FC5;color: #fff;"*@
                             <tr>
-                                
+
                                 <th>Full Name</th>
                                 <th>Email Id</th>
                                 <th>Contact No</th>
@@ -71,6 +71,7 @@
                                 <th>Duration</th>
                                 <th>Course Type</th>
                                 <th>Course Category</th>
+                                <th>Admission Date</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -78,30 +79,31 @@
 
                         <tbody>
                             @foreach (var item in Model)
-            {
+                            {
 
                                 <tr style="white-space: nowrap;">
-                                    
+
                                     <td>@item.FirstName @item.LastName</td>
                                     <td><strong>@item.EmailId</strong></td>
                                     <td>@item.MobileNo</td>
                                     <td>@item.CourseName</td>
                                     <td>@item.DurationName</td>
-                                    <td>@item.CourseType</td>                                    
+                                    <td>@item.CourseType</td>
                                     <td>@item.CourseCategoryName</td>
+                                    <td>@item.AdmissionDate</td>
                                     <th>@item.Status</th>
                                     <td>
-                                        
+
                                         <button type="button" title="Delete" value="Delete" class="btn btn-danger btnCandidateCourseDelete" data-Canid=@item.CandidateId>
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </button>
-                                      
+
                                         <button title="Edit" type="button" value="Update" class="btnUpdateCandidateCourse btn btn-success" data-Canid=@item.CandidateId>
                                             <i class="fa fa-pencil" aria-hidden="true"></i>
                                         </button>
 
 
-                                       
+
                                     </td>
                                 </tr>
 
@@ -127,7 +129,7 @@
             "pagingType": "full_numbers"
         });
 
-  
+
     });
 
     $('.btnCandidateCourseDelete').on('click', function () {
@@ -190,7 +192,7 @@
             }
         });
     });
-   
+
 
 </script>
 

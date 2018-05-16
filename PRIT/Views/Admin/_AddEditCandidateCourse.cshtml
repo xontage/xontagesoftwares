@@ -426,7 +426,7 @@
     }
 
        
-    $('#DateofBirth,#admissionDate,#leavingDate').datepicker({
+    $('#DateofBirth').datepicker({
         format: "dd/mm/yyyy",
         autoclose: true,
         date: function (value, element) {
@@ -438,6 +438,39 @@
     }).on('changeDate', function (e) {
     });
 
+
+    $('#admissionDate').datepicker({
+        format: "dd/mm/yyyy",
+        autoclose: true,
+        date: function (value, element) {
+            $.culture = Globalize.culture("en-GB");
+            var date = Globalize.parseDate(value, "dd/mm/yyyy", "en-GB");
+            return this.optional(element) ||
+                !/Invalid|NaN/.test(new Date(date).toString());
+        },
+    }).on('changeDate', function (e) {
+        $("#leavingDate").prop("disabled", false);
+        var startDate1 = e.date;
+        var endDate1 = startDate1.setDate(e.date.getDate());
+        $('#leavingDate').datepicker('setStartDate', new Date(endDate1));
+        });
+
+    $('#leavingDate').datepicker({
+        format: "dd/mm/yyyy",
+        autoclose: true,
+        date: function (value, element) {
+            $.culture = Globalize.culture("en-GB");
+            var date = Globalize.parseDate(value, "dd/mm/yyyy", "en-GB");
+            return this.optional(element) ||
+                !/Invalid|NaN/.test(new Date(date).toString());
+        },
+    }).on('changeDate', function (e) {
+        $("#admissionDate").prop("disabled", false);
+        var startDate1 = e.date;
+        var endDate1 = startDate1.setDate(e.date.getDate() - 1);
+        $('#admissionDate').datepicker('setEndDate', new Date(endDate1));
+
+    });
 
     $('#YearOfPassing').datepicker({
         minViewMode: 2,
