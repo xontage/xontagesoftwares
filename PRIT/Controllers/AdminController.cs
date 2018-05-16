@@ -32,6 +32,7 @@ namespace PRIT.Controllers
         EmployeeBL employeeBL = new EmployeeBL();
         EmploymentBL employmentBL = new EmploymentBL();
         CandidateCourseBL candidateCourseBL = new CandidateCourseBL();
+
         // GET: Admin
 
         //[CheckSessionTimeOut]
@@ -1019,7 +1020,7 @@ namespace PRIT.Controllers
                 
                 List<DropdownModelGeneric> lstDropdownModelGeneric;
                 lstDropdownModelGeneric = new List<DropdownModelGeneric>  {
-                      //  new DropdownModelGeneric(){Text="SELECT DESIGNATION",Value="0"},
+                        //new DropdownModelGeneric(){Text="--SELECT COURSE TYPE--",Value="0"},
                         new DropdownModelGeneric(){Text="Crash Regular",Value="1"},
                          new DropdownModelGeneric(){Text="WeekEnd",Value="2"},
                         new DropdownModelGeneric(){Text="Crash WeekEnd",Value="3"},
@@ -1043,11 +1044,12 @@ namespace PRIT.Controllers
             {
                 List<SelectListItem> lstDropdownModelGeneric;
                 lstDropdownModelGeneric = new List<SelectListItem>  {
-                        //new SelectListItem(){Text="SELECT EMPLOYEE TYPE",Value="0"},
-                        new SelectListItem(){Text="0 - 3 MONTHS",Value="1"},
-                         new SelectListItem(){Text="0 - 6 MONTHS",Value="2"},
-                        new SelectListItem(){Text="0 - 1 YEAR",Value="3"}                       
-
+                        //new SelectListItem(){Text="--SELECT DURATION--",Value="0"},
+                        new SelectListItem(){Text="1 MONTH",Value="1"},
+                         new SelectListItem(){Text="2 MONTHS",Value="2"},
+                        new SelectListItem(){Text="3 MONTHS",Value="3"},
+                         new SelectListItem(){Text="6 MONTHS",Value="4"},
+                         new SelectListItem(){Text="12 MONTHS",Value="5"}
                     };
                 return lstDropdownModelGeneric;
             }
@@ -1070,7 +1072,10 @@ namespace PRIT.Controllers
                         new DropdownModelGeneric(){Text="Diploma",Value="1"},
                          new DropdownModelGeneric(){Text="Certification",Value="2"},
                         new DropdownModelGeneric(){Text="Advanced Diploma",Value="3"},
-                         new DropdownModelGeneric(){Text="Basic",Value="4"}
+                         new DropdownModelGeneric(){Text="Basic",Value="4"},
+                         new DropdownModelGeneric(){Text="Internship",Value="5"},
+                         new DropdownModelGeneric(){Text="Job Oriented Training Program(JOTP)",Value="6"},
+                         new DropdownModelGeneric(){Text="Other",Value="7"},
 
 
                     };
@@ -1231,6 +1236,24 @@ namespace PRIT.Controllers
          public ActionResult CandidateCourseMgmt()
         {
             List<tbl_CandidateWithCourseDetails> lst = db.tbl_CandidateWithCourseDetails.OrderByDescending(c => c.CandidateId).ToList();
+            var CourseNameList = GetCourseName();
+            var DurationList = GetDuration();
+            var CourseTypeList = GetCourseType();
+            var CourseCategoryList = GetCourseCategory();
+            foreach (var item in lst)
+            {
+                item.Status = item.IsDeleted == true ? "Discontinued" : "Continue..";
+                item.CourseName= CourseNameList.Where(p => p.Value == item.CourseNameId.ToString()).First().Text;
+                item.CourseType = CourseTypeList.Where(p => p.Value == item.CourseTypeId.ToString()).First().Text;
+                if (!string.IsNullOrEmpty(item.Duration.ToString()))
+                    item.DurationName = DurationList.Where(p => p.Value == item.Duration.ToString()).First().Text;
+                else
+                    item.DurationName = "NA";
+                if (!string.IsNullOrEmpty(item.CourseCategory.ToString()))
+                    item.CourseCategoryName = CourseCategoryList.Where(p => p.Value == item.CourseCategory.ToString()).First().Text;
+                else
+                    item.CourseCategoryName = "NA";
+            }
             return View(lst);
         }
 
@@ -1259,17 +1282,27 @@ namespace PRIT.Controllers
         public ActionResult AddEditCandidateCourse(tbl_CandidateWithCourseDetails model)
         {
             List<tbl_CandidateWithCourseDetails> lstN = new List<tbl_CandidateWithCourseDetails>();
-
+            var CourseNameList = GetCourseName();
+            var DurationList = GetDuration();
+            var CourseTypeList = GetCourseType();
+            var CourseCategoryList = GetCourseCategory();
             if (ModelState.IsValid)
             {
                 candidateCourseBL.AddEditCandidateCourse(model, User.Identity.Name);
                 lstN = db.tbl_CandidateWithCourseDetails.OrderByDescending(person => person.CandidateId).ToList();
                 foreach (var item in lstN)
                 {
-                    //item.CollegeName = (from c in db.tbl_Colleges
-                    //                    join R in db.tbl_Registration on c.collegeId equals R.CollegeID
-                    //                    where c.collegeId == item.CollegeID
-                    //                    select c.collegeName).FirstOrDefault();
+                    item.Status = item.IsDeleted == true ? "Discontinued" : "Continue..";
+                    item.CourseName = CourseNameList.Where(p => p.Value == item.CourseNameId.ToString()).First().Text;
+                    item.CourseType = CourseTypeList.Where(p => p.Value == item.CourseTypeId.ToString()).First().Text;
+                    if (!string.IsNullOrEmpty(item.Duration.ToString()))
+                        item.DurationName = DurationList.Where(p => p.Value == item.Duration.ToString()).First().Text;
+                    else
+                        item.DurationName = "NA";
+                    if (!string.IsNullOrEmpty(item.CourseCategory.ToString()))
+                        item.CourseCategoryName = CourseCategoryList.Where(p => p.Value == item.CourseCategory.ToString()).First().Text;
+                    else
+                        item.CourseCategoryName = "NA";
                 }
                 var aa = RenderRazorViewToString("_candidateCoursePartial", lstN);
 
@@ -1293,13 +1326,27 @@ namespace PRIT.Controllers
         public ActionResult DeleteCandidateCourse(int? Id)
         {       
             List<tbl_CandidateWithCourseDetails> lstN = new List<tbl_CandidateWithCourseDetails>();
+            var CourseNameList = GetCourseName();
+            var DurationList = GetDuration();
+            var CourseTypeList = GetCourseType();
+            var CourseCategoryList = GetCourseCategory();
             int deletedEmpId = candidateCourseBL.DeleteCandidateCourse(Id);
             if (deletedEmpId > 0)
                 lstN = db.tbl_CandidateWithCourseDetails.OrderByDescending(e => e.CandidateId).ToList();
             //lstN = db.tbl_Employee.OrderByDescending(e => e.ID).Where(e => e.IsDeleted == false).ToList();
             foreach (var item in lstN)
             {
-               // item.Status = item.IsDeleted == true ? "Non-Working" : "Working";
+                item.Status = item.IsDeleted == true ? "Discontinued" : "Continue..";
+                item.CourseName = CourseNameList.Where(p => p.Value == item.CourseNameId.ToString()).First().Text;
+                item.CourseType = CourseTypeList.Where(p => p.Value == item.CourseTypeId.ToString()).First().Text;
+                if (!string.IsNullOrEmpty(item.Duration.ToString()))
+                    item.DurationName = DurationList.Where(p => p.Value == item.Duration.ToString()).First().Text;
+                else
+                    item.DurationName = "NA";
+                if (!string.IsNullOrEmpty(item.CourseCategory.ToString()))
+                    item.CourseCategoryName = CourseCategoryList.Where(p => p.Value == item.CourseCategory.ToString()).First().Text;
+                else
+                    item.CourseCategoryName = "NA";
             }
             return PartialView("_candidateCoursePartial", lstN);
         }

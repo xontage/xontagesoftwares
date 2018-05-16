@@ -358,7 +358,30 @@
                                     </div>
                                 </div>
                               
-                               
+                                <div class="form-group">
+                                    <label for="admissionDate" class="cols-sm-2 control-label">Admission Date</label>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar" aria-hidden="true"></i></span>
+
+                                            @Html.TextBoxFor(model => model.AdmissionDate, new { @class = "form-control inputstl", id = "admissionDate", placeholder = "Enter Candidate's Admission Date" })
+                                            @Html.ValidationMessageFor(model => model.AdmissionDate, "", new { @class = "text-danger error-msg" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="leavingDate" class="cols-sm-2 control-label">Leaving Date</label>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar" aria-hidden="true"></i></span>
+
+                                            @Html.TextBoxFor(model => model.LeavingDate, new { @class = "form-control inputstl", id = "leavingDate", placeholder = "Enter Candidate's Leaving Date" })
+                                            @Html.ValidationMessageFor(model => model.LeavingDate, "", new { @class = "text-danger error-msg" })
+                                        </div>
+                                    </div>
+                                </div>
 
                               
                                 <div class="form-group" style="margin: 0 auto !important; text-align: center !important; width: 100% !important;">
@@ -385,6 +408,12 @@
         $("#DateofBirth").keypress(function (e) {
             return false;
         });
+        $("#admissionDate").keypress(function (e) {
+            return false;
+        });
+        $("#leavingDate").keypress(function (e) {
+            return false;
+        });
         $("#YearOfPassing").keypress(function (e) {
             return false;
         });
@@ -396,9 +425,8 @@
         console.log(obj);
     }
 
-    
-    var start = new Date();
-    $('#DateofBirth').datepicker({
+       
+    $('#DateofBirth,#admissionDate,#leavingDate').datepicker({
         format: "dd/mm/yyyy",
         autoclose: true,
         date: function (value, element) {

@@ -71,6 +71,7 @@
                                 <th>Duration</th>
                                 <th>Course Type</th>
                                 <th>Course Category</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -84,11 +85,11 @@
                                     <td>@item.FirstName @item.LastName</td>
                                     <td><strong>@item.EmailId</strong></td>
                                     <td>@item.MobileNo</td>
-                                    <td>@item.CourseNameId</td>
-                                    <td>@item.Duration</td>
-                                    <td>@item.CourseTypeId</td>
-                                    <td>@item.CourseCategory</td>
-
+                                    <td>@item.CourseName</td>
+                                    <td>@item.DurationName</td>
+                                    <td>@item.CourseType</td>                                    
+                                    <td>@item.CourseCategoryName</td>
+                                    <th>@item.Status</th>
                                     <td>
                                         
                                         <button type="button" title="Delete" value="Delete" class="btn btn-danger btnCandidateCourseDelete" data-Canid=@item.CandidateId>
