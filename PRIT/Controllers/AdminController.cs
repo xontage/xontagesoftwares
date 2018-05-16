@@ -1381,10 +1381,17 @@ namespace PRIT.Controllers
         }
         public JsonResult GetCandidateEmail(string countryName)
         {
-
-          var txtItems=  db.tbl_CandidateWithCourseDetails.Where(m => m.EmailId.Contains(countryName)).ToList().Select(s => s.EmailId);
-                          
-            return Json(txtItems, JsonRequestBehavior.AllowGet);
+            // Create list
+            var myList = new List<string>();                                          
+            var txtItems=  db.tbl_CandidateWithCourseDetails.Where(m => m.EmailId.Contains(countryName)).ToList();
+            foreach (var item in txtItems)
+            {
+                // Add items to the list
+                myList.Add(item.EmailId); 
+            }
+            // Convert to array
+            var myArray = myList.ToArray();
+            return Json(myArray, JsonRequestBehavior.AllowGet);
         }
 
         #endregion .End Of ..Fees Management functionality..

@@ -6,27 +6,17 @@
 }
 
 
-
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style>
-    input[type="text"], select {
-        width: 250px;
+
+    .ui-menu {
+        z-index:9999 !important;
+        opacity:1 !important;
     }
 
-    a:link, a:active, a:visited, a:hover {
-        text-decoration: none;
-        color: black;
-    }
-    /*--- DROPDOWN ---*/
-    #nav ul {
-        list-style: none;
-        position: absolute;
-        padding: 0;
-        margin: 0;
-        list-style-type: none;
-    }
+   
 </style>
-<link href="~/css/autocomplete-0.3.0.min.css" rel="stylesheet" />
-<script src="~/js/Custom/autocomplete-0.3.0.min.js"></script>
+
 
 <div class="modal fade" id="courseFeesModal" role="dialog">
     <div class="modal-dialog">
@@ -49,21 +39,22 @@
                                     <div class="cols-sm-10">
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                           
+
                                             @Html.TextBoxFor(model => model.CandidateEmailId, new
-                                       {
-                                           @class = "form-control inputstl",
-                                           id = "CandidateEmailId",
-                                           placeholder = "Enter Candidate's Email Id"})
+                                            {
+                                                @class = "form-control inputstl",
+                                                id = "CandidateEmailId",
+                                                placeholder = "Enter Candidate's Email Id"
+                                            })
                                             @Html.ValidationMessageFor(model => model.CandidateEmailId, "", new { @class = "text-danger error-msg" })
                                         </div>
                                     </div>
                                 </div>
 
-                                <div id="nav">
+                                @*<div id="nav">
                                     <input type="text" id="txtCountrty" />
                                     <ul id="selectedValue"></ul>
-                                </div>
+                                </div>*@
 
                                 @*<div class="form-group">
                                         <label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>
@@ -74,10 +65,10 @@
                                             </div>
                                         </div>
                                     </div>*@
-                                
 
-                              
-                              
+
+
+
                                 <div class="form-group" style="margin-left: 216px !important; width:100%; margin-bottom:0 !important;">
                                     <input type="submit" value="Register" class="btn btn-primary btn-block" style="display: inline-block;">
                                 </div>
@@ -86,7 +77,7 @@
                     </div>
                 }
             </div>
-           
+
         </div>
 
     </div>
@@ -95,21 +86,84 @@
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 
+@*<script src="~/js/Custom/jquery.js"></script>*@
+<script src="~/js/Custom/jquery.ui.js"></script>
 <script type="text/javascript">
-    var textbox;
-    var selectValue;
+
+
+    //var textbox;
+    //var selectValue;
+
+    
 
     $(function () {
-        debugger;
-        textbox = $("#txtCountrty");
-        selectValue = $('ul#selectedValue');
+        var availableTags = [
+            "ActionScript",
+            "AppleScript",
+            "Asp",
+            "BASIC",
+            "C",
+            "C++",
+            "Clojure",
+            "COBOL",
+            "ColdFusion",
+            "Erlang",
+            "Fortran",
+            "Groovy",
+            "Haskell",
+            "Java",
+            "JavaScript",
+            "Lisp",
+            "Perl",
+            "PHP",
+            "Python",
+            "Ruby",
+            "Scala",
+            "Scheme"
+        ];
 
-        textbox.on("input", function () {
-            getAutoComplete(textbox.val());
+        //textbox = $("#txtCountrty");
+        //selectValue = $('ul#selectedValue');
+
+        //textbox.on("input", function () {
+        //    getAutoComplete(textbox.val());
+        //});
+        
+        $("#CandidateEmailId").autocomplete({
+            
+            source: function (request, response) {
+                $.ajax({
+                    type: "POST",
+                    url: "../Admin/GetCandidateEmail",
+                    data: "{ 'countryName':'" + request.term + "'}",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        debugger;
+                        response($.map(data, function (item) {
+                            return {
+                                value: item
+                            }
+                        }))
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("Error");
+                    }
+                });
+            },
+            select: function (event, ui) {
+                alert(JSON.stringify(ui))
+                //$(this).val('');
+                //$('#tagsname').text(function () {
+                //    return $(this).text() == '' ? 'You selected: ' + ui.item.value : $(this).text() + ', ' + ui.item.value;
+                //});
+                //return false;
+            }
         });
+
     });
+
     function getAutoComplete(countryName) {
-        debugger;
         var uri = "../Admin/GetCandidateEmail";
         $.getJSON(uri, { countryName: countryName })
             .done(function (data) {
@@ -118,7 +172,7 @@
                 $.each(data, function (key, item) {
                     //$('<option>').text(item).appendTo('#selectedValue');
                     var li = $('<li/>').addClass('ui-menu-item').attr('role', 'menuitem')
-                        .html("<a href='#' onclick=\"setText ('" + item + "') \">" + item + "</a>")                           
+                        .html("<a href='#' onclick=\"setText ('" + item + "') \">" + item + "</a>")
                         .appendTo(selectValue);
 
                     count++;
@@ -130,61 +184,6 @@
         getAutoComplete(text);
     }
 
-</script>
-
-
-
-<script type="text/javascript">
-
-    $(function () {
-        var getData = function (request, response) {
-            $.getJSON(
-                "http://gd.geobytes.com/AutoCompleteCity?callback=?&q=" + request.term,
-                function (data) {
-                    response(data);
-                });
-        };
-
-        var selectItem = function (event, ui) {
-            $("#CandidateEmailId").val(ui.item.value);
-            return false;
-        }
-
-        $("#CandidateEmailId").autocomplete({
-            source: getData,
-            select: selectItem,
-            minLength: 4,
-            change: function () {
-                $("#CandidateEmailId").val("").css("display", 2);
-            }
-        });
-
-
-        $("#CandidateEmailId").autocomplete({
-            source: function (request, response) {
-                $.ajax({
-                    type: "POST",
-                    url: "../Admin/GetCandidateEmail",
-                    data: "{ 'pre':'" + request.term + "'}",
-                    dataType: "json",
-                    contentType: "application/json; charset=utf-8",
-                    success: function (data) {
-                        response($.map(data.d, function (item) {
-                            return {
-                                value: item
-                            }
-                        }))
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        alert("Error");
-                    }
-                });
-            }
-        });  
-
-
-
-    });
 
 </script>
 
