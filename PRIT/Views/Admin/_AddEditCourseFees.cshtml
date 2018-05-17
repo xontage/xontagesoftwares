@@ -8,13 +8,11 @@
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style>
-
     .ui-menu {
-        z-index:9999 !important;
-        opacity:1 !important;
+        z-index: 9999 !important;
+        opacity: 1 !important;
+        background-color:lightgreen !important;
     }
-
-   
 </style>
 
 
@@ -30,51 +28,134 @@
                 {
                     @Html.ValidationSummary(true)
                     @Html.HiddenFor(r => r.Id)
+                    <div class="container" style="margin-left: 160px;">
+                        @*<div class="row glyphicon glyphicon-hand-right" style="margin-left: 495px; color:red">
+                                <label class="cols-sm-2 control-label">Total Paid Fees: </label>
+                                <label  id="TotalPaidFees" class="cols-sm-2 control-label">@Model.TotalPaidFees </label>
+                            </div>*@
+                        <div class="form-group">
+                            <label for="name" class="cols-sm-2 control-label">Total Paid Fees</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
 
-                    <div class="container">
-                        <div class="row main">
-                            <div class="main-login main-center">
-                                <div class="form-group">
-                                    <label for="name" class="cols-sm-2 control-label">Email *</label>
-                                    <div class="cols-sm-10">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                    @Html.TextAreaFor(model => model.TotalPaidFees, new
+                               {
+                                   @class = "form-control inputstl",
+                                   id = "TotalPaidFees",
+                                   @readonly = "readonly"
+                               })
 
-                                            @Html.TextBoxFor(model => model.CandidateEmailId, new
-                                            {
-                                                @class = "form-control inputstl",
-                                                id = "CandidateEmailId",
-                                                placeholder = "Enter Candidate's Email Id"
-                                            })
-                                            @Html.ValidationMessageFor(model => model.CandidateEmailId, "", new { @class = "text-danger error-msg" })
-                                        </div>
-                                    </div>
-                                </div>
-
-                                @*<div id="nav">
-                                    <input type="text" id="txtCountrty" />
-                                    <ul id="selectedValue"></ul>
-                                </div>*@
-
-                                @*<div class="form-group">
-                                        <label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>
-                                        <div class="cols-sm-10">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                                                <input type="password" class="form-control" name="confirm" id="confirm" placeholder="Confirm your Password" />
-                                            </div>
-                                        </div>
-                                    </div>*@
-
-
-
-
-                                <div class="form-group" style="margin-left: 216px !important; width:100%; margin-bottom:0 !important;">
-                                    <input type="submit" value="Register" class="btn btn-primary btn-block" style="display: inline-block;">
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                        <div class="container">
+                            <div class="row main">
+                                <div class="main-login main-center">
+                                    <div class="form-group">
+                                        <label for="name" class="cols-sm-2 control-label">Email *</label>
+                                        <div class="cols-sm-10">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+
+                                                @Html.TextBoxFor(model => model.CandidateEmailId, new
+                                       {
+                                           @class = "form-control inputstl",
+                                           id = "CandidateEmailId",
+                                           placeholder = "Enter Candidate's Email Id"
+                                       })
+                                                @Html.ValidationMessageFor(model => model.CandidateEmailId, "", new { @class = "text-danger error-msg" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="mobileNo" class="cols-sm-2 control-label">Mobile Number *</label>
+                                        <div class="cols-sm-10">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+
+                                                @Html.TextBoxFor(model => model.CandidateMobileNo, new { @class = "form-control inputstl", @readonly = "readonly", id = "contactNo", placeholder = "Enter Mobile Number" })
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="totalFees" class="cols-sm-2 control-label">Total Course Fees *</label>
+                                        <div class="cols-sm-10">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                                @* <input type="text" class="form-control" name="UserName" id="uName" placeholder="Enter your Name" required />*@
+                                                @Html.TextBoxFor(model => model.TotalFees, new { @class = "form-control inputstl", @readonly = "readonly", id = "totalFees", placeholder = "Enter Total Fees" })
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="remainingFees" class="cols-sm-2 control-label">Remaining Fees *</label>
+                                        <div class="cols-sm-10">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                                @* <input type="text" class="form-control" name="UserName" id="uName" placeholder="Enter your Name" required />*@
+                                                @Html.TextBoxFor(model => model.RemainingFees, new { @class = "form-control inputstl", id = "remainingFees", @readonly = "readonly", placeholder = "Enter Remaining Fees " })
+                                              
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                   
+                                       
+                                        <div class="form-group">
+                                            <label for="paidFees" class="cols-sm-2 control-label">Add Fees *</label>
+                                            <div class="cols-sm-10">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                                    @* <input type="text" class="form-control" name="UserName" id="uName" placeholder="Enter your Name" required />*@
+                                                    @Html.TextBoxFor(model => model.PaidFees, new { @class = "form-control inputstl", id = "paidFees", placeholder = "Enter Fees To Be Added" })
+                                                    @Html.ValidationMessageFor(model => model.PaidFees, "", new { @class = "text-danger error-msg" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                   
+                                    
+                                    <div class="form-group">
+                                        <label for="remark" class="cols-sm-2 control-label">Remark </label>
+                                        <div class="cols-sm-10">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                                @* <input type="text" class="form-control" name="UserName" id="uName" placeholder="Enter your Name" required />*@
+                                                @Html.TextAreaFor(model => model.Remark, new { @class = "form-control inputstl", id = "remark", placeholder = "Enter Remark " })
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @*<div id="nav">
+                                            <input type="text" id="txtCountrty" />
+                                            <ul id="selectedValue"></ul>
+                                        </div>*@
+
+                                    @*<div class="form-group">
+                                            <label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>
+                                            <div class="cols-sm-10">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                                                    <input type="password" class="form-control" name="confirm" id="confirm" placeholder="Confirm your Password" />
+                                                </div>
+                                            </div>
+                                        </div>*@
+
+
+
+
+                                    <div class="form-group" style="margin-left: 216px !important; width:100%; margin-bottom:0 !important;">
+                                        <input type="submit" value="Save Added Fees" class="btn btn-primary btn-block" style="display: inline-block;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                 }
             </div>
 
@@ -90,37 +171,37 @@
 <script src="~/js/Custom/jquery.ui.js"></script>
 <script type="text/javascript">
 
+  
 
     //var textbox;
     //var selectValue;
 
-    
 
     $(function () {
-        var availableTags = [
-            "ActionScript",
-            "AppleScript",
-            "Asp",
-            "BASIC",
-            "C",
-            "C++",
-            "Clojure",
-            "COBOL",
-            "ColdFusion",
-            "Erlang",
-            "Fortran",
-            "Groovy",
-            "Haskell",
-            "Java",
-            "JavaScript",
-            "Lisp",
-            "Perl",
-            "PHP",
-            "Python",
-            "Ruby",
-            "Scala",
-            "Scheme"
-        ];
+        //var availableTags = [
+        //    "ActionScript",
+        //    "AppleScript",
+        //    "Asp",
+        //    "BASIC",
+        //    "C",
+        //    "C++",
+        //    "Clojure",
+        //    "COBOL",
+        //    "ColdFusion",
+        //    "Erlang",
+        //    "Fortran",
+        //    "Groovy",
+        //    "Haskell",
+        //    "Java",
+        //    "JavaScript",
+        //    "Lisp",
+        //    "Perl",
+        //    "PHP",
+        //    "Python",
+        //    "Ruby",
+        //    "Scala",
+        //    "Scheme"
+        //];
 
         //textbox = $("#txtCountrty");
         //selectValue = $('ul#selectedValue');
@@ -128,10 +209,36 @@
         //textbox.on("input", function () {
         //    getAutoComplete(textbox.val());
         //});
+
+        $('#paidFees').attr('readonly', true);
+
+        $("#paidFees").keydown(function (e) {
+            // Allow: backspace, delete, tab, escape, enter and .
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                // Allow: Ctrl+A, Command+A
+                (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+                // Allow: home, end, left, right, down, up
+                (e.keyCode >= 35 && e.keyCode <= 40)) {
+                // let it happen, don't do anything
+                return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
         
+        $("#paidFees").on("keypress", function (evt) {
+            var keycode = evt.charCode || evt.keyCode;
+            if (keycode == 46) {
+                return false;
+            }
+        });
+
         $("#CandidateEmailId").autocomplete({
-            
+
             source: function (request, response) {
+              
                 $.ajax({
                     type: "POST",
                     url: "../Admin/GetCandidateEmail",
@@ -140,49 +247,164 @@
                     contentType: "application/json; charset=utf-8",
                     success: function (data) {
                         debugger;
-                        response($.map(data, function (item) {
-                            return {
-                                value: item
-                            }
-                        }))
+                        if (data.length == 0) {
+                            $('#contactNo').val('');
+                            $('#totalFees').val('');
+                            $('#remainingFees').val('');
+                            $('#TotalPaidFees').val('');
+                            $('#paidFees').val('');
+                            $('#remark').val('');
+                            $('#paidFees').attr('readonly', true);
+                        }
+                       
+                            response($.map(data, function (item) {
+                                return {
+                                    value: item.EmailId
+                                }
+                            }))
+                        
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        alert("Error");
+                        //alert("Error");
+                        sweetAlert("Oops...", "Error in GetCourseFeesByEmail during Autocomplete textbox data loading", "error");
                     }
                 });
             },
-            select: function (event, ui) {
-                alert(JSON.stringify(ui))
+            select: function (event, ui) {                            
+                $.ajax({
+                    type: "POST",
+                    url: "../Admin/GetCandidateEmail",
+                    data: "{ 'countryName':'" + ui.item.value + "'}",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                       
+                        $('#contactNo').val(data[0].MobileNo);
+                        $('#totalFees').val(data[0].Fees);
+                        $('#paidFees').attr('readonly', false);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        //alert("Error in GetCandidateEmail");
+                        sweetAlert("Oops...", "Error in GetCandidateEmail after Selecting Email Id from Autocomplete TextBox", "error");
+                    }
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: "../Admin/GetCourseFeesByEmail",
+                    data: "{ 'email':'" + ui.item.value + "'}",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                       
+                        $('#remainingFees').val(data.RemainingFees);
+                        $('#TotalPaidFees').val(data.TotalPaidFees);
+                       
+                        if (data.TotalPaidFees == data.TotalFees) {
+                            $('#paidFees').attr('readonly', true);
+                        
+                            $('#remark').attr('readonly', true);
+                            $(':input[type="submit"]').prop('disabled', true);
+                        }
+                        else {
+                            $('#paidFees').attr('readonly', false);
+                           
+                            $('#remark').attr('readonly', false);
+                            $(':input[type="submit"]').prop('disabled', false);
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        //alert("Error in GetCourseFeesByEmail");
+                        sweetAlert("Oops...", "Error in GetCourseFeesByEmail after Selecting Email Id from Autocomplete TextBox", "error");
+                    }
+                });
+
                 //$(this).val('');
                 //$('#tagsname').text(function () {
                 //    return $(this).text() == '' ? 'You selected: ' + ui.item.value : $(this).text() + ', ' + ui.item.value;
                 //});
                 //return false;
             }
+           
         });
 
+        $("#paidFees").blur(function () {
+                     debugger;
+            
+                if ($('#paidFees').val() != "") {
+
+                    $.ajax({
+                        type: "POST",
+                        url: "../Admin/GetCourseFeesByEmail",
+                        data: "{ 'email':'" + $('#CandidateEmailId').val() + "'}",
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            debugger;
+                            $('#remainingFees').val(data.RemainingFees);
+                            $('#TotalPaidFees').val(data.TotalPaidFees);
+
+                            if (parseInt($('#totalFees').val()) == "" && parseInt($('#remainingFees').val()) == "") {
+                                if ($('#paidFees').val() > $('#totalFees').val()) {
+                                   // alert('Added Fees is Greater than Total Course fees');
+                                    sweetAlert("Oops...", "Added Fees is Greater than Total Course fees", "error");
+                                    $('#paidFees').val('')
+                                } else {
+                                    $('#remainingFees').val($('#totalFees').val() - $('#paidFees').val());
+                                    $('#TotalPaidFees').val($('#paidFees').val());
+                                }
+                            }
+                            else {
+                                if (parseInt($('#paidFees').val()) > parseInt($('#remainingFees').val())) {
+                                   // alert('Added Fees is Greater than Reamining fees');
+                                    sweetAlert("Oops...", "Added Fees is Greater than Reamining fees", "error");
+                                    $('#paidFees').val('')
+                                }
+                                else {
+                                    $('#remainingFees').val($('#remainingFees').val() - $('#paidFees').val());
+                                    $('#TotalPaidFees').val(parseInt($('#TotalPaidFees').val()) + parseInt($('#paidFees').val()));
+                                }
+                            }
+                            debugger;
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            //alert("Error in GetCourseFeesByEmail when add fees textbox blur event");
+                            sweetAlert("Oops...", "Error in GetCourseFeesByEmail when add fees textbox blur event", "error");
+
+                        }
+                    });
+
+
+                }//End if($('#paidFees').val() != "")  condition
+            
+            debugger;
+            
+            
+
+        });
     });
 
-    function getAutoComplete(countryName) {
-        var uri = "../Admin/GetCandidateEmail";
-        $.getJSON(uri, { countryName: countryName })
-            .done(function (data) {
-                selectValue.html("");
-                var count = 0;
-                $.each(data, function (key, item) {
-                    //$('<option>').text(item).appendTo('#selectedValue');
-                    var li = $('<li/>').addClass('ui-menu-item').attr('role', 'menuitem')
-                        .html("<a href='#' onclick=\"setText ('" + item + "') \">" + item + "</a>")
-                        .appendTo(selectValue);
+    //function getAutoComplete(countryName) {
+    //    var uri = "../Admin/GetCandidateEmail";
+    //    $.getJSON(uri, { countryName: countryName })
+    //        .done(function (data) {
+    //            selectValue.html("");
+    //            var count = 0;
+    //            $.each(data, function (key, item) {
+    //                //$('<option>').text(item).appendTo('#selectedValue');
+    //                var li = $('<li/>').addClass('ui-menu-item').attr('role', 'menuitem')
+    //                    .html("<a href='#' onclick=\"setText ('" + item + "') \">" + item + "</a>")
+    //                    .appendTo(selectValue);
 
-                    count++;
-                });
-            });
-    }
-    function setText(text) {
-        textbox.val(text);
-        getAutoComplete(text);
-    }
+    //                count++;
+    //            });
+    //        });
+    //}
+
+    //function setText(text) {
+    //    textbox.val(text);
+    //    getAutoComplete(text);
+    //}
 
 
 </script>

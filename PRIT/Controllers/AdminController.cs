@@ -32,6 +32,7 @@ namespace PRIT.Controllers
         EmployeeBL employeeBL = new EmployeeBL();
         EmploymentBL employmentBL = new EmploymentBL();
         CandidateCourseBL candidateCourseBL = new CandidateCourseBL();
+        CourseFeesBL courseFeesBL = new CourseFeesBL();
 
         // GET: Admin
 
@@ -1370,6 +1371,7 @@ namespace PRIT.Controllers
         public ActionResult AddEditCourseFees(int? CourseFeesId)
         {
             tbl_CourseFees model = new tbl_CourseFees();
+
             if (CourseFeesId > 0)
             {
                 model = db.tbl_CourseFees.Where(x => x.Id == CourseFeesId).FirstOrDefault();
@@ -1379,21 +1381,55 @@ namespace PRIT.Controllers
             return PartialView("~/Views/Admin/_AddEditCourseFees.cshtml", model);
 
         }
+        [HttpPost]
+        public ActionResult AddEditCourseFees(tbl_CourseFees model)
+        {
+            List<tbl_CourseFees> lstN = new List<tbl_CourseFees>();
+       
+            if (ModelState.IsValid)
+            {
+                courseFeesBL.AddEditCourseFees(model, User.Identity.Name);
+                lstN = db.tbl_CourseFees.OrderByDescending(person => person.Id).ToList();
+               
+                var aa = RenderRazorViewToString("_CourseFeesPartial", lstN);
+
+                return new JsonResult()
+                {
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                    Data = new { message = model.Id == 0 ? "user has been created successfully" : "user has been updated successfully", success = true, result = aa }
+                };
+            }
+
+            return new JsonResult()
+            {
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                Data = new { message = "Something went wrong!!", success = false }
+            };
+
+        }
+
         public JsonResult GetCandidateEmail(string countryName)
         {
             // Create list
-            var myList = new List<string>();                                          
+           // var myList = new List<string>();                                          
             var txtItems=  db.tbl_CandidateWithCourseDetails.Where(m => m.EmailId.Contains(countryName)).ToList();
-            foreach (var item in txtItems)
-            {
-                // Add items to the list
-                myList.Add(item.EmailId); 
-            }
-            // Convert to array
-            var myArray = myList.ToArray();
-            return Json(myArray, JsonRequestBehavior.AllowGet);
+            //foreach (var item in txtItems)
+            //{
+            //    // Add items to the list
+            //    myList.Add(item.EmailId); 
+            //}
+            //// Convert to array
+            //var myArray = myList.ToArray();
+            return Json(txtItems, JsonRequestBehavior.AllowGet);
         }
 
+        
+        public JsonResult GetCourseFeesByEmail(string email)
+        {
+
+            var txtItems = db.tbl_CourseFees.Where(m => m.CandidateEmailId == email).OrderByDescending(instalNo => instalNo.InstallmentNo).ToList().FirstOrDefault();           
+            return Json(txtItems, JsonRequestBehavior.AllowGet);
+        }
         #endregion .End Of ..Fees Management functionality..
 
         //Generic Method for Converting any Razor View into String
