@@ -15,10 +15,10 @@
 @*<script src="https://rawgit.com/unconditional/jquery-table2excel/master/src/jquery.table2excel.js"></script>*@
 @*<script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>*@
 <script src="~/js/Custom/DataTable.Custom.js"></script>
-
+<script src="~/js/Custom/jquery.table2excel.js"></script>
 <div class="MarginTop">
     <div class="panel-heading">
-        <a href="@Url.Action("ExportToExcel","Admin")" class="btn btn-primary">Export to Excel</a>
+        <a href="@Url.Action("ExportToExcel","Admin")" class="btn btn-lg btn-danger clearfix" style="  margin-bottom: 30px;"><span class="fa fa-file-excel-o"></span>Export to Excel</a>
     </div>
     @*<button id="btnExportContacts"  class="btn btn-lg btn-danger clearfix" style="  margin-bottom: 30px;"><span class="fa fa-file-excel-o"></span> Export to Excel</button>*@
 
@@ -72,9 +72,9 @@
         var cementsAppsSetting = { tableId: 'tblCementApps', columns: _columnsData, url: "/Admin/GetAppsListData", data: { id: 1 } }
         Grid.InitDynamicGrid(cementsAppsSetting);
 
-        $(document).on('click', '#btnExportContacts', function () {
-            //Grid.ExportTableToExcel("tblCementApps", "Contacts Details Data");
-        });
+        //$(document).on('click', '#btnExportContacts', function () {
+        //    Grid.ExportTableToExcel("tblCementApps", "Contacts Details Data");
+        //});
 
     });
 

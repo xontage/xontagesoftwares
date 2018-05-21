@@ -17,6 +17,11 @@ using static PRIT.Models.JqueryDataTable;
 using System.ComponentModel;
 using PRIT.Entity.ViewModels;
 using OfficeOpenXml;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using iTextSharp.text.html.simpleparser;
+using iTextSharp.tool.xml;
+using System.Text;
 
 namespace PRIT.Controllers
 {
@@ -1362,7 +1367,11 @@ namespace PRIT.Controllers
         public ActionResult FeesMgmt()
         {
             List<tbl_CourseFees> lst = db.tbl_CourseFees.OrderByDescending(c => c.Id).ToList();
-                       
+            //GeneratePDF();//pdf with text color generated in browser downloads.
+            //GeneratePDF2();//simple pdf generated in browser downloads.
+            //converttopdf();//Generate PDF at filelocation using stringbuilder.
+            //converttopdf2();//Generate PDF at browser downloads using stringbuilder.
+          
             return View(lst);
         }
 
@@ -1389,14 +1398,14 @@ namespace PRIT.Controllers
             if (ModelState.IsValid)
             {
                 courseFeesBL.AddEditCourseFees(model, User.Identity.Name);
-                lstN = db.tbl_CourseFees.OrderByDescending(person => person.Id).ToList();
-               
-                var aa = RenderRazorViewToString("_CourseFeesPartial", lstN);
+                
+                lstN = db.tbl_CourseFees.OrderByDescending(person => person.Id).ToList();                
+                var aa = RenderRazorViewToString("_CourseFeesPartial", lstN);               
 
                 return new JsonResult()
                 {
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet,
-                    Data = new { message = model.Id == 0 ? "user has been created successfully" : "user has been updated successfully", success = true, result = aa }
+                    Data = new { message = model.Id == 0 ? "user has been created successfully" : "user has been updated successfully", success = true, result = aa ,extra=model.Id}
                 };
             }
 
@@ -1407,7 +1416,7 @@ namespace PRIT.Controllers
             };
 
         }
-
+       
         public JsonResult GetCandidateEmail(string countryName)
         {
             // Create list
@@ -1423,7 +1432,526 @@ namespace PRIT.Controllers
             return Json(txtItems, JsonRequestBehavior.AllowGet);
         }
 
-        
+
+        public void GeneratePDF() {
+
+            using (System.IO.MemoryStream memoryStream = new System.IO.MemoryStream())
+            {
+                Document document = new Document(PageSize.A4, 10, 10, 10, 10);
+
+                PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
+                document.Open();
+
+                Chunk chunk = new Chunk("This is from chunk. ");
+                document.Add(chunk);
+
+                Phrase phrase = new Phrase("This is from Phrase.");
+                document.Add(phrase);
+
+                Paragraph para = new Paragraph("This is from paragraph.");
+                document.Add(para);
+
+                PdfPTable table = new PdfPTable(3);
+                table.AddCell("Row 1, Col 1");
+                table.AddCell("Row 1, Col 2");
+                table.AddCell("Row 1, Col 3");
+
+                table.AddCell("Row 2, Col 1");
+                table.AddCell("Row 2, Col 2");
+                table.AddCell("Row 2, Col 3");
+
+                table.AddCell("Row 3, Col 1");
+                table.AddCell("Row 3, Col 2");
+                table.AddCell("Row 3, Col 3");
+                document.Add(table);
+
+                string text = @"you are successfully created PDF file.";
+                Paragraph paragraph = new Paragraph();
+                paragraph.SpacingBefore = 10;
+                paragraph.SpacingAfter = 10;
+                paragraph.Alignment = Element.ALIGN_LEFT;
+                paragraph.Font = FontFactory.GetFont(FontFactory.HELVETICA, 12f, BaseColor.GREEN);
+                paragraph.Add(text);
+                document.Add(paragraph);
+
+                document.Close();
+                byte[] bytes = memoryStream.ToArray();
+                memoryStream.Close();
+                Response.Clear();
+                Response.ContentType = "application/pdf";
+
+                string pdfName = "User";
+                Response.AddHeader("Content-Disposition", "attachment; filename=" + pdfName + ".pdf");
+                Response.ContentType = "application/pdf";
+                Response.Buffer = true;
+                Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
+                Response.BinaryWrite(bytes);
+                Response.End();
+                Response.Close();
+            }
+        }
+        public void GeneratePDF2()
+        {
+            try
+            {
+
+                Document pdfDoc = new Document(PageSize.A4, 25, 10, 25, 10);
+                PdfWriter pdfWriter = PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
+                pdfDoc.Open();
+                Paragraph Text = new Paragraph("This is test file");
+                pdfDoc.Add(Text);
+                pdfWriter.CloseStream = false;
+                pdfDoc.Close();
+                Response.Buffer = true;
+                Response.ContentType = "application/pdf";
+                Response.AddHeader("content-disposition", "attachment;filename=Example.pdf");
+                Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                Response.Write(pdfDoc);
+                Response.End();
+            }
+            catch (Exception ex)
+            { Response.Write(ex.Message); }
+        }
+
+        /// <summary>
+        /// Generate PDF at filelocation using stringbuilder.
+        /// //Convert HTML or Text to Javascript or Java variable stringbuilder- Online.....http://pojo.sodhanalibrary.com/string.html      
+        /// </summary>
+        public void converttopdf()
+        {
+
+            System.Text.StringBuilder myvar = new System.Text.StringBuilder();
+            myvar.Append("<div class=\"container\">")
+                 .Append("    <div class=\"row\">")
+                 .Append("        <div class=\"well col-xs-10 col-sm-10 col-md-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-3\">")
+                 .Append("            <div class=\"row\">")
+                 .Append("                <div class=\"col-xs-6 col-sm-6 col-md-6\">")
+                 .Append("                    <address>")
+                 .Append("                        <strong>Elf Cafe</strong>")
+                 .Append("                        <br>")
+                 .Append("                        2135 Sunset Blvd")
+                 .Append("                        <br>")
+                 .Append("                        Los Angeles, CA 90026")
+                 .Append("                        <br>")
+                 .Append("                        <abbr title=\"Phone\">P:</abbr> (213) 484-6829")
+                 .Append("                    </address>")
+                 .Append("                </div>")
+                 .Append("                <div class=\"col-xs-6 col-sm-6 col-md-6 text-right\">")
+                 .Append("                    <p>")
+                 .Append("                        <em>Date: 1st November, 2013</em>")
+                 .Append("                    </p>")
+                 .Append("                    <p>")
+                 .Append("                        <em>Receipt #: 34522677W</em>")
+                 .Append("                    </p>")
+                 .Append("                </div>")
+                 .Append("            </div>")
+                 .Append("            <div class=\"row\">")
+                 .Append("                <div class=\"text-center\">")
+                 .Append("                    <h1>Receipt</h1>")
+                 .Append("                </div>")
+                 .Append("                </span>")
+                 .Append("                <table class=\"table table-hover\">")
+                 .Append("                    <thead>")
+                 .Append("                        <tr>")
+                 .Append("                            <th>Product</th>")
+                 .Append("                            <th>#</th>")
+                 .Append("                            <th class=\"text-center\">Price</th>")
+                 .Append("                            <th class=\"text-center\">Total</th>")
+                 .Append("                        </tr>")
+                 .Append("                    </thead>")
+                 .Append("                    <tbody>")
+                 .Append("                        <tr>")
+                 .Append("                            <td class=\"col-md-9\"><em>Baked Rodopa Sheep Feta</em></h4></td>")
+                 .Append("                            <td class=\"col-md-1\" style=\"text-align: center\"> 2 </td>")
+                 .Append("                            <td class=\"col-md-1 text-center\">$13</td>")
+                 .Append("                            <td class=\"col-md-1 text-center\">$26</td>")
+                 .Append("                        </tr>")
+                 .Append("                        <tr>")
+                 .Append("                            <td class=\"col-md-9\"><em>Lebanese Cabbage Salad</em></h4></td>")
+                 .Append("                            <td class=\"col-md-1\" style=\"text-align: center\"> 1 </td>")
+                 .Append("                            <td class=\"col-md-1 text-center\">$8</td>")
+                 .Append("                            <td class=\"col-md-1 text-center\">$8</td>")
+                 .Append("                        </tr>")
+                 .Append("                        <tr>")
+                 .Append("                            <td class=\"col-md-9\"><em>Baked Tart with Thyme and Garlic</em></h4></td>")
+                 .Append("                            <td class=\"col-md-1\" style=\"text-align: center\"> 3 </td>")
+                 .Append("                            <td class=\"col-md-1 text-center\">$16</td>")
+                 .Append("                            <td class=\"col-md-1 text-center\">$48</td>")
+                 .Append("                        </tr>")
+                 .Append("                        <tr>")
+                 .Append("                            <td>   </td>")
+                 .Append("                            <td>   </td>")
+                 .Append("                            <td class=\"text-right\">")
+                 .Append("                            <p>")
+                 .Append("                                <strong>Subtotal: </strong>")
+                 .Append("                            </p>")
+                 .Append("                            <p>")
+                 .Append("                                <strong>Tax: </strong>")
+                 .Append("                            </p></td>")
+                 .Append("                            <td class=\"text-center\">")
+                 .Append("                            <p>")
+                 .Append("                                <strong>$6.94</strong>")
+                 .Append("                            </p>")
+                 .Append("                            <p>")
+                 .Append("                                <strong>$6.94</strong>")
+                 .Append("                            </p></td>")
+                 .Append("                        </tr>")
+                 .Append("                        <tr>")
+                 .Append("                            <td>   </td>")
+                 .Append("                            <td>   </td>")
+                 .Append("                            <td class=\"text-right\"><h4><strong>Total: </strong></h4></td>")
+                 .Append("                            <td class=\"text-center text-danger\"><h4><strong>$31.53</strong></h4></td>")
+                 .Append("                        </tr>")
+                 .Append("                    </tbody>")
+                 .Append("                </table>")
+                 .Append("                <button type=\"button\" class=\"btn btn-success btn-lg btn-block\">")
+                 .Append("                    Pay Now   <span class=\"glyphicon glyphicon-chevron-right\"></span>")
+                 .Append("                </button></td>")
+                 .Append("            </div>")
+                 .Append("        </div>")
+                 .Append("    </div>");
+
+
+            //HTMLString = Pass your Html , fileLocation = File Store Location    
+
+            //string myvar = "<h1>INVOICE</h1>";
+            Document document = new Document();
+            string fileLocation = @"E:\RahulGIT\PRIT\UploadedFiles\Example.pdf";
+            PdfWriter.GetInstance(document, new FileStream(fileLocation, FileMode.Create));
+            document.Open();
+
+            List<IElement> htmlarraylist = HTMLWorker.ParseToList(new StringReader(myvar.ToString()), null);
+            for (int k = 0; k < htmlarraylist.Count; k++)
+            {
+                document.Add((IElement)htmlarraylist[k]);
+            }
+
+            document.Close();
+        }
+
+        /// <summary>
+        /// Generate PDF at browser downloads using stringbuilder.
+        /// </summary>
+        public void converttopdf2()
+        {
+
+            System.Text.StringBuilder myvar = new System.Text.StringBuilder();
+            myvar.Append("<div class=\"container\">")
+                 .Append("    <div class=\"row\">")
+                 .Append("        <div class=\"well col-xs-10 col-sm-10 col-md-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-3\">")
+                 .Append("            <div class=\"row\">")
+                 .Append("                <div class=\"col-xs-6 col-sm-6 col-md-6\">")
+                 .Append("                    <address>")
+                 .Append("                        <strong>Elf Cafe</strong>")
+                 .Append("                        <br>")
+                 .Append("                        2135 Sunset Blvd")
+                 .Append("                        <br>")
+                 .Append("                        Los Angeles, CA 90026")
+                 .Append("                        <br>")
+                 .Append("                        <abbr title=\"Phone\">P:</abbr> (213) 484-6829")
+                 .Append("                    </address>")
+                 .Append("                </div>")
+                 .Append("                <div class=\"col-xs-6 col-sm-6 col-md-6 text-right\">")
+                 .Append("                    <p>")
+                 .Append("                        <em>Date: 1st November, 2013</em>")
+                 .Append("                    </p>")
+                 .Append("                    <p>")
+                 .Append("                        <em>Receipt #: 34522677W</em>")
+                 .Append("                    </p>")
+                 .Append("                </div>")
+                 .Append("            </div>")
+                 .Append("            <div class=\"row\">")
+                 .Append("                <div class=\"text-center\">")
+                 .Append("                    <h1>Receipt</h1>")
+                 .Append("                </div>")
+                 .Append("                </span>")
+                 .Append("                <table class=\"table table-hover\">")
+                 .Append("                    <thead>")
+                 .Append("                        <tr>")
+                 .Append("                            <th>Product</th>")
+                 .Append("                            <th>#</th>")
+                 .Append("                            <th class=\"text-center\">Price</th>")
+                 .Append("                            <th class=\"text-center\">Total</th>")
+                 .Append("                        </tr>")
+                 .Append("                    </thead>")
+                 .Append("                    <tbody>")
+                 .Append("                        <tr>")
+                 .Append("                            <td class=\"col-md-9\"><em>Baked Rodopa Sheep Feta</em></h4></td>")
+                 .Append("                            <td class=\"col-md-1\" style=\"text-align: center\"> 2 </td>")
+                 .Append("                            <td class=\"col-md-1 text-center\">$13</td>")
+                 .Append("                            <td class=\"col-md-1 text-center\">$26</td>")
+                 .Append("                        </tr>")
+                 .Append("                        <tr>")
+                 .Append("                            <td class=\"col-md-9\"><em>Lebanese Cabbage Salad</em></h4></td>")
+                 .Append("                            <td class=\"col-md-1\" style=\"text-align: center\"> 1 </td>")
+                 .Append("                            <td class=\"col-md-1 text-center\">$8</td>")
+                 .Append("                            <td class=\"col-md-1 text-center\">$8</td>")
+                 .Append("                        </tr>")
+                 .Append("                        <tr>")
+                 .Append("                            <td class=\"col-md-9\"><em>Baked Tart with Thyme and Garlic</em></h4></td>")
+                 .Append("                            <td class=\"col-md-1\" style=\"text-align: center\"> 3 </td>")
+                 .Append("                            <td class=\"col-md-1 text-center\">$16</td>")
+                 .Append("                            <td class=\"col-md-1 text-center\">$48</td>")
+                 .Append("                        </tr>")
+                 .Append("                        <tr>")
+                 .Append("                            <td>   </td>")
+                 .Append("                            <td>   </td>")
+                 .Append("                            <td class=\"text-right\">")
+                 .Append("                            <p>")
+                 .Append("                                <strong>Subtotal: </strong>")
+                 .Append("                            </p>")
+                 .Append("                            <p>")
+                 .Append("                                <strong>Tax: </strong>")
+                 .Append("                            </p></td>")
+                 .Append("                            <td class=\"text-center\">")
+                 .Append("                            <p>")
+                 .Append("                                <strong>$6.94</strong>")
+                 .Append("                            </p>")
+                 .Append("                            <p>")
+                 .Append("                                <strong>$6.94</strong>")
+                 .Append("                            </p></td>")
+                 .Append("                        </tr>")
+                 .Append("                        <tr>")
+                 .Append("                            <td>   </td>")
+                 .Append("                            <td>   </td>")
+                 .Append("                            <td class=\"text-right\"><h4><strong>Total: </strong></h4></td>")
+                 .Append("                            <td class=\"text-center text-danger\"><h4><strong>$31.53</strong></h4></td>")
+                 .Append("                        </tr>")
+                 .Append("                    </tbody>")
+                 .Append("                </table>")
+                 .Append("                <button type=\"button\" class=\"btn btn-success btn-lg btn-block\">")
+                 .Append("                    Pay Now   <span class=\"glyphicon glyphicon-chevron-right\"></span>")
+                 .Append("                </button></td>")
+                 .Append("            </div>")
+                 .Append("        </div>")
+                 .Append("    </div>");
+
+           
+            Document pdfDoc = new Document(PageSize.A4, 25, 10, 25, 10);
+            PdfWriter pdfWriter = PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
+            pdfDoc.Open();
+            Paragraph Text = new Paragraph("This is test file");            
+            pdfDoc.Add(Text);
+            
+            List<IElement> htmlarraylist = HTMLWorker.ParseToList(new StringReader(myvar.ToString()), null);
+            for (int k = 0; k < htmlarraylist.Count; k++)
+            {
+                pdfDoc.Add((IElement)htmlarraylist[k]);
+            }
+
+            pdfWriter.CloseStream = false;
+            pdfDoc.Close();
+            Response.Buffer = true;
+            Response.ContentType = "application/pdf";
+            Response.AddHeader("content-disposition", "attachment;filename=Example.pdf");
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Write(pdfDoc);
+            Response.End();
+
+        }
+
+
+        /// <summary>
+        /// generate pdf using css 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+
+        public void generatePDFusingCSSCode(int? CourseFeesId)
+        {
+            try
+            {
+
+                tbl_CourseFees model = new tbl_CourseFees();
+                List<tbl_CourseFees> modelList = new List<tbl_CourseFees>();
+                tbl_CourseFees latestEntry = new tbl_CourseFees();
+                string candidateAddress="", createdDate = "";
+                int? paidFees=0;
+                List<string> createdDateList = new List<string>();
+                List<int?> paidFeesList = new List<int?>();
+                //string sqlFormattedDate = myDate.Value.ToString("yyyy-MM-dd HH:mm:ss");
+                if (CourseFeesId > 0)
+                {
+                    model = db.tbl_CourseFees.Where(x => x.Id == CourseFeesId).FirstOrDefault();
+                    latestEntry = db.tbl_CourseFees.Where(m => m.CandidateEmailId == model.CandidateEmailId).OrderByDescending(instalNo => instalNo.InstallmentNo).ToList().FirstOrDefault();
+                    candidateAddress = db.tbl_CandidateWithCourseDetails.Where(m => m.EmailId == model.CandidateEmailId).FirstOrDefault().Address;
+
+                    modelList = db.tbl_CourseFees.Where(x => x.CandidateEmailId == model.CandidateEmailId).ToList();
+
+
+                }
+
+                if (modelList != null)
+                {
+                    foreach (var item in modelList)
+                    {
+                        createdDate = item.CreatedDate.Value.ToString("d MMM ddd yyyy HH:mm");
+                        paidFees = item.PaidFees;
+                        createdDateList.Add(createdDate);
+                        paidFeesList.Add(paidFees);
+                    }
+                }
+
+
+                StringBuilder htmlText = new StringBuilder();
+                htmlText.Append("<div class=\"container\">")
+                     .Append("        <div class=\"row\">")
+                     .Append("            <div class=\"receipt-main col-xs-10 col-sm-10 col-md-6 col-xs-offset-1 col-sm-offset-1 col-md-offset-3\">")
+                     .Append("                <div class=\"row\">")
+                     .Append("                    <div class=\"col-xs-12 col-sm-12 col-md-12\">")
+                     .Append("                        <div class=\"receipt-left\">")
+                     .Append("                            <h1>RECEIPT </h1>")
+                     .Append("                        </div>")
+                     .Append("                    </div>")
+                     .Append("                </div>")
+                     .Append("                <div class=\"row\">")
+                     .Append("                    <div class=\"receipt-header\">")
+                     .Append("                        <div class=\"col-xs-12 col-sm-12 col-md-12\">")
+                     .Append("                            <div class=\"receipt-left\">")
+                     .Append("                                <img class=\"img-responsive\" alt=\"iamgurdeeposahan\" src=\"http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg\" style=\"width: 71px; border-radius: 43px;\"/>")
+                     .Append("                            </div>")
+                     .Append("                        </div>")
+                     .Append("                       ")
+                     .Append("                    </div>")
+                     .Append("                </div>")
+                     .Append("                <div class=\"row\">")
+                     .Append("                    <div class=\"receipt-header receipt-header-mid\">")
+                     .Append("                        <div class=\"col-xs-12 col-sm-12 col-md-12 text-left\">")
+                     .Append("                            <div class=\"receipt-right\">")
+                     .Append("                                <h5>Gurdeep Singh <small>  |  Reciept No : "+model.Id+"</small></h5>")
+                     .Append("                                <p><b>Mobile :</b> +91 "+model.CandidateMobileNo+"</p>")
+                     .Append("                                <p><b>Email :</b> " + model.CandidateEmailId + "</p>")
+                     .Append("                                <p><b>Address :</b> " + candidateAddress + "</p>")
+                     .Append("                            </div>")
+                     .Append("                        </div>")
+                     .Append("                       ")
+                     .Append("                    </div>")
+                     .Append("                </div>")
+                     .Append("               <br/>")
+                     .Append("                <div>")
+                     .Append("                    <table class=\"table table-bordered\">")
+                     .Append("                        <thead>")
+                     .Append("                            <tr>")
+                     .Append("                                <th>Description</th>")
+                     .Append("                                <th>Amount</th>")
+                     .Append("                            </tr>")
+                     .Append("                        </thead>")
+                     .Append("                        <tbody>                            ")
+                     .Append("                            <tr>")
+                     .Append("                                <td class=\"col-md-9\">Payment for " + createdDateList[0] + "</td>")
+                     .Append("                                <td class=\"col-md-3\"><i class=\"fa fa-inr\"></i> " + paidFeesList[0] + "/-</td>")
+                     .Append("                            </tr>")
+                     .Append("                            <tr>")
+                     .Append("                                <td class=\"col-md-9\">Payment for " + createdDateList[1] + "</td>")
+                     .Append("                                <td class=\"col-md-3\"><i class=\"fa fa-inr\"></i> " + paidFeesList[1] + "/-</td>")
+                     .Append("                            </tr>")
+                     .Append("                            <tr>")
+                     .Append("                                <td class=\"col-md-9\">Payment for " + createdDateList[2] + "</td>")
+                     .Append("                                <td class=\"col-md-3\"><i class=\"fa fa-inr\"></i> " + paidFeesList[2] + "/-</td>")
+                     .Append("                            </tr>")
+                     .Append("                            <tr>")
+                     .Append("                                <td class=\"col-md-9\">Payment for " + createdDateList[3] + "</td>")
+                     .Append("                                <td class=\"col-md-3\"><i class=\"fa fa-inr\"></i> " + paidFeesList[3] + "/-</td>")
+                     .Append("                            </tr>")
+                     .Append("                            <tr>")
+                     .Append("                                <td class=\"col-md-9\">Payment for " + createdDateList[4] + "</td>")
+                     .Append("                                <td class=\"col-md-3\"><i class=\"fa fa-inr\"></i> " + paidFeesList[4] + "/-</td>")
+                     .Append("                            </tr>")
+                     .Append("                            <tr>")
+                     .Append("                                <td class=\"text-right\">")
+                     .Append("                                    ")
+                     .Append("                                    <p>")
+                     .Append("                                        <strong>Total Course Fees: </strong>")
+                     .Append("                                    </p>                                   ")
+                     .Append("                                    <p>")
+                     .Append("                                        <strong>Balance Due: </strong>")
+                     .Append("                                    </p>")
+                     .Append("                                </td>")
+                     .Append("                                <td>")
+                     .Append("                                    <p>")
+                     .Append("                                        <strong><i class=\"fa fa-inr\"></i> " + model.TotalFees + "/-</strong>")
+                     .Append("                                    </p>")
+                     .Append("                                    <p>")
+                     .Append("                                        <strong><i class=\"fa fa-inr\"></i> " + latestEntry.RemainingFees + "/-</strong>")
+                     .Append("                                    </p>                                   ")
+                     .Append("                                </td>")
+                     .Append("                            </tr>")
+                     .Append("                            <tr>")
+                     .Append("                                <td class=\"text-right\"><h2><strong>Total Paid Fees: </strong></h2></td>")
+                     .Append("                                <td class=\"text-left text-danger\"><h2><strong><i class=\"fa fa-inr\"></i> " + latestEntry.TotalPaidFees + "/-</strong></h2></td>")
+                     .Append("                            </tr>")
+                     .Append("                        </tbody>")
+                     .Append("                    </table>")
+                     .Append("                </div>")
+                     .Append("                <div class=\"row\">")
+                     .Append("                    <div class=\"receipt-header receipt-header-mid receipt-footer\">")
+                     .Append("                        <div class=\"col-xs-12 col-sm-12 col-md-12 text-left\">")
+                     .Append("                            <div class=\"receipt-right\">")
+                     .Append("                                <p><b>Date :</b> 15 Aug 2016</p>")
+                     .Append("                                <h5 style=\"color: rgb(140, 140, 140);\">Thank you for your business!</h5>")
+                     .Append("                            </div>")
+                     .Append("                        </div>")
+                     .Append("                        ")
+                     .Append("                    </div>")
+                     .Append("                </div>")
+                     .Append("                <div class=\"row\">")
+                     .Append("                    <div class=\"col-xs-12 col-sm-12 col-md-12\">")
+                     .Append("                        <div class=\"receipt-left\" style=\"margin-left:500px\">")
+                     .Append("                            SIGNATURE")
+                     .Append("                        </div>")
+                     .Append("                    </div>")
+                     .Append("                </div>")
+                     .Append("            </div>")
+                     .Append("        </div>")
+                     .Append("    </div>");
+
+                
+                var cssText = System.IO.File.ReadAllText(@"E:\RahulGIT\PRIT\css\PDFCustomFiles\PDF.css");
+                //var htmlText = System.IO.File.ReadAllText(@"E:\RahulGIT\PRIT\css\PDFCustomFiles\RecieptPDF.html");
+
+                //var cssText = System.IO.File.ReadAllText(@"E:\RahulGIT\PRIT\css\PDFCustomFiles\StyleSheet.css");
+                //var htmlText = System.IO.File.ReadAllText(@"E:\RahulGIT\PRIT\css\PDFCustomFiles\HtmlPage.html");
+
+                //var cssText = System.IO.File.ReadAllText(@"E:\RahulGIT\PRIT\css\PDFCustomFiles\CustomBootstrap.css");
+                //var htmlText = System.IO.File.ReadAllText(@"E:\RahulGIT\PRIT\css\PDFCustomFiles\Bootstrap.html");
+
+                //var xmlWorkerFontProvider = new XMLWorkerFontProvider();
+                //xmlWorkerFontProvider.Register(@"E:\RahulGIT\PRIT\fonts\fontawesome-webfont.ttf");          
+
+                Document pdfDoc = new Document();
+                PdfWriter pdfWriter = PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
+                pdfDoc.Open();
+                //Paragraph Text = new Paragraph("This is test file");
+                //pdfDoc.Add(Text);
+
+                List<IElement> htmlarraylist = XMLWorkerHelper.ParseToElementList(htmlText.ToString(), cssText);
+
+                for (int k = 0; k < htmlarraylist.Count; k++)
+                {
+                    pdfDoc.Add((IElement)htmlarraylist[k]);
+                }
+
+                pdfWriter.CloseStream = false;
+                pdfDoc.Close();
+                Response.Buffer = true;
+                Response.ContentType = "application/pdf";
+                Response.AddHeader("content-disposition", "attachment;filename=Example.pdf");
+                Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                Response.Write(pdfDoc);
+                Response.End();
+               
+
+            }
+            catch (Exception ex)
+            {
+               
+                throw;
+            }
+
+            
+        }
+
+
         public JsonResult GetCourseFeesByEmail(string email)
         {
 
@@ -1504,6 +2032,27 @@ namespace PRIT.Controllers
 
         }
         #endregion
+
+
+    }
+
+    internal class PdfContent:ActionResult
+    {       
+
+        public MemoryStream MemoryStream { get; set; }
+        public string FileName { get; set; }
+        public override void ExecuteResult(ControllerContext context)
+        {
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
+            var response = context.HttpContext.Response;
+            response.ContentType = "pdf/application";
+            response.AddHeader("content-disposition", "attachment;filename=" + FileName + ".pdf");
+            response.OutputStream.Write(MemoryStream.GetBuffer(), 0, MemoryStream.GetBuffer().Length);
+        }
+
 
 
     }

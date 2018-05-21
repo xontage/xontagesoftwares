@@ -96,9 +96,7 @@
         },
 
         ExportTableToExcel = function (tableId, sheetName) {
-            $('#' + tableId).table2excel({
-                // exclude CSS class
-                exclude: ".noExl",
+            $('#' + tableId).table2excel({                               
                 name: "Worksheet Name",
                 filename: sheetName,
                 sheetName: sheetName

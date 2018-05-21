@@ -46,9 +46,11 @@
                                     <th>@item.TotalPaidFees</th>
                                     <td>
 
-                                        <button type="button" title="Delete" value="Delete" class="btn btn-danger btnCourseFeesDelete" data-cid=@item.Id>
-                                            <i class="fa fa-trash" aria-hidden="true"></i>
-                                        </button>
+                                        @*<button type="button" title="Receipt" value="Print Receipt" class="btn btn-danger btnCourseFeesDelete" data-cid=@item.Id>
+                                            <i class="fa fa-print" aria-hidden="true"></i>
+                                        </button>*@
+
+                                        <a href="@Url.Action("generatePDFusingCSSCode","Admin",new { CourseFeesId = item.Id })" class="btn btn-danger" ><span class="fa fa-print"></span>Print Receipt</a>
 
                                         <button title="Edit" type="button" value="Update" class="btnUpdateCourseFees btn btn-success" data-cid=@item.Id>
                                             <i class="fa fa-pencil" aria-hidden="true"></i>

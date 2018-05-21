@@ -57,9 +57,7 @@
                     if (status != null) {
                         debugger;
                         $('#courseFeesPopUp').html(status);
-                        $('#courseFeesModal').modal('show');
-                       
-
+                        $('#courseFeesModal').modal('show');                       
                     }
                 },
                 error: function (err, status) {
@@ -77,6 +75,21 @@
         debugger;
         $('#courseFeesModal').find("[data-dismiss=modal]").trigger({ type: "click" });
         if (data.success == true) {
+            
+            //var id = data.extra;
+
+            //$.ajax({
+            //    type: "GET",
+            //    url: "../Admin/generatePDFusingCSS?CourseFeesId=" + id,
+            //    success: function (status) {
+            //        debugger;
+            //        swal('Great!', "hhhhhh", 'success')
+            //    },
+            //    error: function (err, status) {
+            //        sweetAlert("Oops...", data.message, "error");
+
+            //    }
+            //});
             swal('Saved!', data.message, 'success')
         }
         else if (data.success == false)
