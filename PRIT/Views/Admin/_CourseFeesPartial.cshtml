@@ -50,7 +50,7 @@
                                             <i class="fa fa-print" aria-hidden="true"></i>
                                         </button>*@
 
-                                        <a href="@Url.Action("generatePDFusingCSSCode","Admin",new { CourseFeesId = item.Id })" class="btn btn-danger" ><span class="fa fa-print"></span>Print Receipt</a>
+                                        <a href="@Url.Action("generatePDFusingCSSCode","Admin",new { CourseFeesId = item.Id })" class="btn btn-danger" target="_blank"><span class="fa fa-print"></span>Print Receipt</a>
 
                                         <button title="Edit" type="button" value="Update" class="btnUpdateCourseFees btn btn-success" data-cid=@item.Id>
                                             <i class="fa fa-pencil" aria-hidden="true"></i>
@@ -138,7 +138,8 @@
 
                 $('#courseFeesPopUp').html(result);
                 $('#courseFeesModal').modal('show');
-
+                $('#paidFees').attr('readonly', false);
+                $('#CandidateEmailId').attr('readonly', true);
             },
             error: function (xhr, status, error) {
                 sweetAlert("Oops...", "Something went wrong!", "error");

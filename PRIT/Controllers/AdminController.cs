@@ -2052,7 +2052,7 @@ namespace PRIT.Controllers
                 pdfDoc.Close();
                 Response.Buffer = true;
                 Response.ContentType = "application/pdf";
-                Response.AddHeader("content-disposition", "attachment;filename=Example.pdf");
+                Response.AddHeader("content-disposition", "inline;filename=" + candidateName+".pdf");
                 Response.Cache.SetCacheability(HttpCacheability.NoCache);
                 Response.Write(pdfDoc);
                 Response.End();

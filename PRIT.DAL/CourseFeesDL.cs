@@ -15,9 +15,21 @@ namespace PRIT.DAL
         {
 
             try
-            {                
+            {
+                if (obj.Id > 0)
+                {                  
+                    var lst = db.tbl_CourseFees.Where(Ind => Ind.Id == obj.Id).FirstOrDefault();
+                    lst.PaidFees = obj.PaidFees;                    
+                    lst.ModifiedDate = obj.ModifiedDate;
+                    lst.ModifiedBy = obj.ModifiedBy;                    
                     db.Configuration.ValidateOnSaveEnabled = false;
-                    db.tbl_CourseFees.Add(obj);                
+
+                }
+                else {
+                    db.Configuration.ValidateOnSaveEnabled = false;
+                    db.tbl_CourseFees.Add(obj);
+                }
+                              
                 var result = db.SaveChanges();
                 db.Configuration.ValidateOnSaveEnabled = true;
 

@@ -18,15 +18,25 @@ namespace PRIT.BAL
         {
 
             try
-            {                               
+            {
+                if (obj.Id > 0) {
+                    obj.ModifiedBy = db.tbl_Registration.Where(x => x.Email == userName).FirstOrDefault().UserName;
+                    obj.ModifiedDate = DateTime.Now;
+                    courseFeesDL.AddEditCourseFees(obj);
+
+                }
+                else {
                     var counter = db.tbl_CourseFees.Where(m => m.CandidateEmailId == obj.CandidateEmailId).Count();
                     counter++;
                     obj.InstallmentNo = counter;
                     obj.PaidOnDate = DateTime.Now.ToString();
                     obj.CreatedBy = db.tbl_Registration.Where(x => x.Email == userName).FirstOrDefault().UserName;
                     obj.CreatedDate = DateTime.Now;
+                    courseFeesDL.AddEditCourseFees(obj);
+                }
+                   
                 
-                courseFeesDL.AddEditCourseFees(obj);
+              
             }
             catch (Exception ex)
             {
