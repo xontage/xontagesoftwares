@@ -1366,7 +1366,11 @@ namespace PRIT.Controllers
 
         public ActionResult FeesMgmt()
         {
-            List<tbl_CourseFees> lst = db.tbl_CourseFees.OrderByDescending(c => c.Id).ToList();
+           // List<tbl_CourseFees> lst = db.tbl_CourseFees.OrderByDescending(c => c.Id).ToList();
+
+            List<tbl_CourseFees> lst = db.GetDistinctRecordOfCourseFees().OrderByDescending(c => c.Id).ToList();
+                          
+
             var CourseNameList = GetCourseName();            
             var DurationList = GetDuration();
             
@@ -1374,16 +1378,25 @@ namespace PRIT.Controllers
             {
                 var CourseNameId = db.tbl_CandidateWithCourseDetails.Where(m => m.EmailId == item.CandidateEmailId).FirstOrDefault().CourseNameId;
                 var DurationId = db.tbl_CandidateWithCourseDetails.Where(m => m.EmailId == item.CandidateEmailId).FirstOrDefault().Duration;
-                item.CourseName = CourseNameList.Where(p => p.Value == CourseNameId.ToString()).First().Text;
-                item.DurationName = DurationList.Where(p => p.Value == DurationId.ToString()).First().Text;
-                if (!string.IsNullOrEmpty(item.DurationName.ToString()))
-                    item.DurationName = DurationList.Where(p => p.Value == DurationId.ToString()).First().Text;
-                else
-                    item.DurationName = "NA";
-                if (!string.IsNullOrEmpty(item.CourseName.ToString()))
+
                     item.CourseName = CourseNameList.Where(p => p.Value == CourseNameId.ToString()).First().Text;
-                else
-                    item.CourseName = "NA";
+                    if (!string.IsNullOrEmpty(item.CourseName.ToString()))
+                        item.CourseName = CourseNameList.Where(p => p.Value == CourseNameId.ToString()).First().Text;
+                    else
+                        item.CourseName = "NA";
+
+
+                if (DurationId != null)
+                {
+                    item.DurationName = DurationList.Where(p => p.Value == DurationId.ToString()).First().Text;
+                    if (!string.IsNullOrEmpty(item.DurationName.ToString()))
+                        item.DurationName = DurationList.Where(p => p.Value == DurationId.ToString()).First().Text;
+                    else
+                        item.DurationName = "NA";
+                }
+                else {
+                    item.DurationName = "NA";
+                }
             }
             //GeneratePDF();//pdf with text color generated in browser downloads.
             //GeneratePDF2();//simple pdf generated in browser downloads.
@@ -1417,26 +1430,38 @@ namespace PRIT.Controllers
             {
                 courseFeesBL.AddEditCourseFees(model, User.Identity.Name);
                 
-                lstN = db.tbl_CourseFees.OrderByDescending(person => person.Id).ToList();
+                //lstN = db.tbl_CourseFees.OrderByDescending(person => person.Id).ToList();
+                 lstN = db.GetDistinctRecordOfCourseFees().OrderByDescending(c => c.Id).ToList();
+
                 var CourseNameList = GetCourseName();
                 var DurationList = GetDuration();
 
+                
                 foreach (var item in lstN)
                 {
                     var CourseNameId = db.tbl_CandidateWithCourseDetails.Where(m => m.EmailId == item.CandidateEmailId).FirstOrDefault().CourseNameId;
                     var DurationId = db.tbl_CandidateWithCourseDetails.Where(m => m.EmailId == item.CandidateEmailId).FirstOrDefault().Duration;
+
                     item.CourseName = CourseNameList.Where(p => p.Value == CourseNameId.ToString()).First().Text;
-                    item.DurationName = DurationList.Where(p => p.Value == DurationId.ToString()).First().Text;
-                    if (!string.IsNullOrEmpty(item.DurationName.ToString()))
-                        item.DurationName = DurationList.Where(p => p.Value == DurationId.ToString()).First().Text;
-                    else
-                        item.DurationName = "NA";
                     if (!string.IsNullOrEmpty(item.CourseName.ToString()))
                         item.CourseName = CourseNameList.Where(p => p.Value == CourseNameId.ToString()).First().Text;
                     else
                         item.CourseName = "NA";
-                }
 
+
+                    if (DurationId != null)
+                    {
+                        item.DurationName = DurationList.Where(p => p.Value == DurationId.ToString()).First().Text;
+                        if (!string.IsNullOrEmpty(item.DurationName.ToString()))
+                            item.DurationName = DurationList.Where(p => p.Value == DurationId.ToString()).First().Text;
+                        else
+                            item.DurationName = "NA";
+                    }
+                    else
+                    {
+                        item.DurationName = "NA";
+                    }
+                }
                 var aa = RenderRazorViewToString("_CourseFeesPartial", lstN);               
 
                 return new JsonResult()

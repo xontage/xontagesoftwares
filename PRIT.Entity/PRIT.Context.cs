@@ -12,6 +12,8 @@ namespace PRIT.Entity
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class PRITEntities : DbContext
     {
@@ -25,8 +27,10 @@ namespace PRIT.Entity
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<tbl_CandidateWithCourseDetails> tbl_CandidateWithCourseDetails { get; set; }
         public virtual DbSet<tbl_Colleges> tbl_Colleges { get; set; }
         public virtual DbSet<tbl_Contact> tbl_Contact { get; set; }
+        public virtual DbSet<tbl_CourseFees> tbl_CourseFees { get; set; }
         public virtual DbSet<tbl_Degree> tbl_Degree { get; set; }
         public virtual DbSet<tbl_Employee> tbl_Employee { get; set; }
         public virtual DbSet<tbl_EmploymentDetails> tbl_EmploymentDetails { get; set; }
@@ -34,8 +38,24 @@ namespace PRIT.Entity
         public virtual DbSet<tbl_MainMenu> tbl_MainMenu { get; set; }
         public virtual DbSet<tbl_Notification> tbl_Notification { get; set; }
         public virtual DbSet<tbl_Registration> tbl_Registration { get; set; }
+        public virtual DbSet<tbl_SkillSet> tbl_SkillSet { get; set; }
         public virtual DbSet<tbl_SubMenu> tbl_SubMenu { get; set; }
         public virtual DbSet<tbl_UserRole> tbl_UserRole { get; set; }
         public virtual DbSet<tbl_Feedback> tbl_Feedback { get; set; }
+    
+        public virtual ObjectResult<sp_getDistingRecordsOfEmailId_Result> sp_getDistingRecordsOfEmailId()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_getDistingRecordsOfEmailId_Result>("sp_getDistingRecordsOfEmailId");
+        }
+    
+        public virtual ObjectResult<tbl_CourseFees> GetDistinctRecordOfCourseFees()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<tbl_CourseFees>("GetDistinctRecordOfCourseFees");
+        }
+    
+        public virtual ObjectResult<tbl_CourseFees> GetDistinctRecordOfCourseFees(MergeOption mergeOption)
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<tbl_CourseFees>("GetDistinctRecordOfCourseFees", mergeOption);
+        }
     }
 }
