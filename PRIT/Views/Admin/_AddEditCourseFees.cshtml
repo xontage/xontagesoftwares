@@ -370,14 +370,16 @@
                                 }
                                 else {
                                     if (data.PaidFees != $('#paidFees').val()) {
-                                        $('#remainingFees').val(parseInt($('#remainingFees').val()) + data.PaidFees);
-                                        $('#TotalPaidFees').val(parseInt($('#TotalPaidFees').val()) - data.PaidFees);
+                                      
                                         if (parseInt($('#paidFees').val()) > parseInt($('#remainingFees').val())) {
                                             // alert('Added Fees is Greater than Reamining fees');
                                             sweetAlert("Oops...", "Added Fees is Greater than Reamining fees", "error");
                                             $('#paidFees').val('')
                                         }
                                         else {
+                                            $('#remainingFees').val(parseInt($('#remainingFees').val()) + data.PaidFees);
+                                            $('#TotalPaidFees').val(parseInt($('#TotalPaidFees').val()) - data.PaidFees);
+
                                             $('#remainingFees').val($('#remainingFees').val() - $('#paidFees').val());
                                             $('#TotalPaidFees').val(parseInt($('#TotalPaidFees').val()) + parseInt($('#paidFees').val()));
                                         }

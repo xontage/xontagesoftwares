@@ -1367,11 +1367,29 @@ namespace PRIT.Controllers
         public ActionResult FeesMgmt()
         {
             List<tbl_CourseFees> lst = db.tbl_CourseFees.OrderByDescending(c => c.Id).ToList();
+            var CourseNameList = GetCourseName();            
+            var DurationList = GetDuration();
+            
+            foreach (var item in lst)
+            {
+                var CourseNameId = db.tbl_CandidateWithCourseDetails.Where(m => m.EmailId == item.CandidateEmailId).FirstOrDefault().CourseNameId;
+                var DurationId = db.tbl_CandidateWithCourseDetails.Where(m => m.EmailId == item.CandidateEmailId).FirstOrDefault().Duration;
+                item.CourseName = CourseNameList.Where(p => p.Value == CourseNameId.ToString()).First().Text;
+                item.DurationName = DurationList.Where(p => p.Value == DurationId.ToString()).First().Text;
+                if (!string.IsNullOrEmpty(item.DurationName.ToString()))
+                    item.DurationName = DurationList.Where(p => p.Value == DurationId.ToString()).First().Text;
+                else
+                    item.DurationName = "NA";
+                if (!string.IsNullOrEmpty(item.CourseName.ToString()))
+                    item.CourseName = CourseNameList.Where(p => p.Value == CourseNameId.ToString()).First().Text;
+                else
+                    item.CourseName = "NA";
+            }
             //GeneratePDF();//pdf with text color generated in browser downloads.
             //GeneratePDF2();//simple pdf generated in browser downloads.
             //converttopdf();//Generate PDF at filelocation using stringbuilder.
             //converttopdf2();//Generate PDF at browser downloads using stringbuilder.
-          
+
             return View(lst);
         }
 
@@ -1399,7 +1417,26 @@ namespace PRIT.Controllers
             {
                 courseFeesBL.AddEditCourseFees(model, User.Identity.Name);
                 
-                lstN = db.tbl_CourseFees.OrderByDescending(person => person.Id).ToList();                
+                lstN = db.tbl_CourseFees.OrderByDescending(person => person.Id).ToList();
+                var CourseNameList = GetCourseName();
+                var DurationList = GetDuration();
+
+                foreach (var item in lstN)
+                {
+                    var CourseNameId = db.tbl_CandidateWithCourseDetails.Where(m => m.EmailId == item.CandidateEmailId).FirstOrDefault().CourseNameId;
+                    var DurationId = db.tbl_CandidateWithCourseDetails.Where(m => m.EmailId == item.CandidateEmailId).FirstOrDefault().Duration;
+                    item.CourseName = CourseNameList.Where(p => p.Value == CourseNameId.ToString()).First().Text;
+                    item.DurationName = DurationList.Where(p => p.Value == DurationId.ToString()).First().Text;
+                    if (!string.IsNullOrEmpty(item.DurationName.ToString()))
+                        item.DurationName = DurationList.Where(p => p.Value == DurationId.ToString()).First().Text;
+                    else
+                        item.DurationName = "NA";
+                    if (!string.IsNullOrEmpty(item.CourseName.ToString()))
+                        item.CourseName = CourseNameList.Where(p => p.Value == CourseNameId.ToString()).First().Text;
+                    else
+                        item.CourseName = "NA";
+                }
+
                 var aa = RenderRazorViewToString("_CourseFeesPartial", lstN);               
 
                 return new JsonResult()
@@ -1765,19 +1802,24 @@ namespace PRIT.Controllers
                 tbl_CourseFees model = new tbl_CourseFees();
                 List<tbl_CourseFees> modelList = new List<tbl_CourseFees>();
                 tbl_CourseFees latestEntry = new tbl_CourseFees();
-                string candidateName = "", createdDate = "";
+                string candidateName = "", createdDate = "",courseName="";
                 int? paidFees=0;
-                string logoImagePath = @"E:\RahulGIT\PRIT\images\Xontage_Logo.png";
+                
+                string logoImagePath = @"D:\PravinGIT\PRIT\images\Xontage_Logo.png";
                 List<string> createdDateList = new List<string>(new string[5]);
                 List<int?> paidFeesList = new List<int?>(new int?[5]);
                 //List<string> createdDateList = new List<string>();
                 //List<int?> paidFeesList = new List<int?>();
                 //string sqlFormattedDate = myDate.Value.ToString("yyyy-MM-dd HH:mm:ss");
+                var CourseNameList = GetCourseName();
+            
                 if (CourseFeesId > 0)
                 {
                     model = db.tbl_CourseFees.Where(x => x.Id == CourseFeesId).FirstOrDefault();
                     latestEntry = db.tbl_CourseFees.Where(m => m.CandidateEmailId == model.CandidateEmailId).OrderByDescending(instalNo => instalNo.InstallmentNo).ToList().FirstOrDefault();
                     candidateName = db.tbl_CandidateWithCourseDetails.Where(m => m.EmailId == model.CandidateEmailId).FirstOrDefault().FirstName +" "+ db.tbl_CandidateWithCourseDetails.Where(m => m.EmailId == model.CandidateEmailId).FirstOrDefault().LastName;
+                   var courseNameId = db.tbl_CandidateWithCourseDetails.Where(m => m.EmailId == model.CandidateEmailId).FirstOrDefault().CourseNameId;
+                    courseName = CourseNameList.Where(p => p.Value == courseNameId.ToString()).First().Text;
                     modelList = db.tbl_CourseFees.Where(x => x.CandidateEmailId == model.CandidateEmailId).ToList();
                 }
 
@@ -1833,6 +1875,7 @@ namespace PRIT.Controllers
                      .Append("                        <div class=\"receipt-right\">")
                      .Append("                            <h5>Reciept No : "+model.Id+"</h5>")
                      .Append("                            <h5>"+ candidateName + "</h5>")
+                      .Append("                            <h5>" + courseName + "</h5>")
                      .Append("                        </div>")
                      .Append("                    </div>")
                      .Append("                </div>")
@@ -2037,7 +2080,7 @@ namespace PRIT.Controllers
                 //     .Append("    </div>");
 
 
-                var cssText = System.IO.File.ReadAllText(@"E:\RahulGIT\PRIT\css\PDFCustomFiles\PDF.css");
+                var cssText = System.IO.File.ReadAllText(@"D:\PravinGIT\PRIT\css\PDFCustomFiles\PDF.css");
                 //var htmlText = System.IO.File.ReadAllText(@"E:\RahulGIT\PRIT\css\PDFCustomFiles\RecieptPDF.html");
 
                 //var cssText = System.IO.File.ReadAllText(@"E:\RahulGIT\PRIT\css\PDFCustomFiles\StyleSheet.css");

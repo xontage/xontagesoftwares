@@ -326,7 +326,7 @@
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
 
                                             @Html.TextBoxFor(model => model.Fees, new { @class = "form-control inputstl", id = "Fees", placeholder = "Enter Fees" })
-
+                                            @Html.ValidationMessageFor(model => model.Fees, "", new { @class = "text-danger error-msg" })
                                         </div>
                                     </div>
                                 </div>

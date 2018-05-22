@@ -52,7 +52,7 @@ namespace PRIT.Entity.MetaModel
         public short CourseNameId { get; set; }
         [Required(ErrorMessage = "Please select Course Type ")]
         public short CourseTypeId { get; set; }
-                        
-
+        [Required(ErrorMessage = "Please enter fees ")]
+        public Nullable<int> Fees { get; set; }
     }
 }

@@ -20,14 +20,15 @@
                     <table id="exampleCourseFees" class="table  table-hover" cellspacing="0" align="center" width="100%">
                         <thead>
                             @*style="background-color: #865FC5;color: #fff;"*@
-                            <tr>                               
+                            <tr>
                                 <th>Email Id</th>
                                 <th>Mobile No</th>
+                                <th>Course Name</th>
+                                <th>Duration</th>
                                 <th>Total Fees</th>
-                                <th>Paid Fees</th>
-                                <th>Paid Fees Date</th>
+                                <th>Total Paid Fees</th>
                                 <th>Remaining Fees</th>
-                                <th>Total Paid Fees</th>                                                             
+
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -36,30 +37,31 @@
                             @foreach (var item in Model)
                             {
 
-                                <tr style="white-space: nowrap;">                                    
-                                    <td>@item.CandidateEmailId</td>
-                                    <td>@item.CandidateMobileNo</td>
-                                    <td>@item.TotalFees</td>
-                                    <td>@item.PaidFees</td>
-                                    <td>@item.PaidOnDate</td>
-                                    <td>@item.RemainingFees</td>
-                                    <th>@item.TotalPaidFees</th>
-                                    <td>
+                            <tr style="white-space: nowrap;">
+                                <td>@item.CandidateEmailId</td>
+                                <td>@item.CandidateMobileNo</td>
+                                <td>@item.CourseName</td>
+                                <td>@item.DurationName</td>
+                                <td>@item.TotalFees</td>
+                                <th>@item.TotalPaidFees</th>
+                                <td>@item.RemainingFees</td>
 
-                                        @*<button type="button" title="Receipt" value="Print Receipt" class="btn btn-danger btnCourseFeesDelete" data-cid=@item.Id>
-                                            <i class="fa fa-print" aria-hidden="true"></i>
-                                        </button>*@
+                                <td>
 
-                                        <a href="@Url.Action("generatePDFusingCSSCode","Admin",new { CourseFeesId = item.Id })" class="btn btn-danger" target="_blank"><span class="fa fa-print"></span>View Receipt</a>
+                                    @*<button type="button" title="Receipt" value="Print Receipt" class="btn btn-danger btnCourseFeesDelete" data-cid=@item.Id>
+                <i class="fa fa-print" aria-hidden="true"></i>
+            </button>*@
 
-                                        <button title="Edit" type="button" value="Update" class="btnUpdateCourseFees btn btn-success" data-cid=@item.Id>
-                                            <i class="fa fa-pencil" aria-hidden="true"></i>
-                                        </button>
+                                    <a href="@Url.Action("generatePDFusingCSSCode","Admin",new { CourseFeesId = item.Id })" class="btn btn-danger" target="_blank"><span class="fa fa-print"></span>View Receipt</a>
+
+                                    <button title="Edit" type="button" value="Update" class="btnUpdateCourseFees btn btn-success" data-cid=@item.Id>
+                                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    </button>
 
 
 
-                                    </td>
-                                </tr>
+                                </td>
+                            </tr>
 
                             }
 

@@ -11,5 +11,7 @@ namespace PRIT.Entity
     [MetadataType(typeof(tbl_CourseFeesMetaModel))]
     public partial class tbl_CourseFees
     {
+        public string CourseName { get; set; }
+        public string  DurationName { get; set; }
     }
 }
