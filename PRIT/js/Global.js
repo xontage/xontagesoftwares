@@ -1,4 +1,4 @@
-﻿debugger;
+﻿
 //var loadingMessageText = '<img src="' + baseURL + '/loading.gif" alt="" /> Loading... ';
 var isToDisableBusyModel = false;
 
@@ -9,9 +9,9 @@ hideBusyModal();
 
 
 $(function () {
-    debugger;
+   
     $('a:not([href*="mailto:"],[href*="#"],[href*="javascript:void"],[target=_blank],[rel*=lightbox],.close-reveal-modal,.saleType)').click(function (event, element) {
-        debugger;
+       
 		if (event.which == 1/*LEFT CLICK*/) {
 			showBusyModal();
 			ShowLoadingMessage();
@@ -48,16 +48,16 @@ $.ajaxSetup({ global: true, cache: false });
 
 $(document)
     .ajaxStart(function () {
-        debugger;
+       
 		onAjaxStart();
 	})
     .ajaxStop(function () {
-        debugger;
+        
 		onAjaxStop();
 	})
 	.ajaxError(
 	function (e, request, settings, exception) {
-        debugger;
+     
 		hideBusyModal();
 		if (request.status == 403) {
 			window.location.href = window.location.href;
@@ -88,14 +88,14 @@ function onAjaxStop() {
 
 // SHOW LOADING MESSAGE FOR Non-ASYNC Ajax calls.
 function NonAsyncAjaxStart() {
-    debugger;
+
 	showBusyModal();
 	ShowLoadingMessage();
 }
 
 //HIDE LOADING MESSAGE FOR Non-ASYNC Ajax calls.
 function NonAsyncAjaxStop() {
-    debugger;
+
 	hideBusyModal();
 
 }

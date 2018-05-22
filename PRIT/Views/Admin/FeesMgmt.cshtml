@@ -49,13 +49,13 @@
     $(document).ready(function () {
 
         $('#btnCourseFeesModel').click(function () {
-            debugger;
+        
             $.ajax({
                 type: "GET",
                 url: '../Admin/AddEditCourseFees?CourseFeesId=0',
                 success: function (status) {
                     if (status != null) {
-                        debugger;
+                        
                         $('#courseFeesPopUp').html(status);
                         $('#courseFeesModal').modal('show');                       
                     }
@@ -71,25 +71,9 @@
     });
 
     function fnOnCourseFeesSuccess(data)
-    {
-        debugger;
+    {        
         $('#courseFeesModal').find("[data-dismiss=modal]").trigger({ type: "click" });
-        if (data.success == true) {
-            
-            //var id = data.extra;
-
-            //$.ajax({
-            //    type: "GET",
-            //    url: "../Admin/generatePDFusingCSS?CourseFeesId=" + id,
-            //    success: function (status) {
-            //        debugger;
-            //        swal('Great!', "hhhhhh", 'success')
-            //    },
-            //    error: function (err, status) {
-            //        sweetAlert("Oops...", data.message, "error");
-
-            //    }
-            //});
+        if (data.success == true) {                       
             swal('Saved!', data.message, 'success')
         }
         else if (data.success == false)

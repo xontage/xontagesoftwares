@@ -19,7 +19,10 @@ namespace PRIT.DAL
                 if (obj.Id > 0)
                 {                  
                     var lst = db.tbl_CourseFees.Where(Ind => Ind.Id == obj.Id).FirstOrDefault();
-                    lst.PaidFees = obj.PaidFees;                    
+                    lst.PaidFees = obj.PaidFees;
+                    lst.TotalPaidFees = obj.TotalPaidFees;
+                    lst.RemainingFees = obj.RemainingFees;
+                    lst.Remark = obj.Remark;
                     lst.ModifiedDate = obj.ModifiedDate;
                     lst.ModifiedBy = obj.ModifiedBy;                    
                     db.Configuration.ValidateOnSaveEnabled = false;

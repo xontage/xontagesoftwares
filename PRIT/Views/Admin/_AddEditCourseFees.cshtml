@@ -278,17 +278,20 @@
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     success: function (data) {
-                       
+                        debugger;
                         $('#contactNo').val(data[0].MobileNo);
                         $('#totalFees').val(data[0].Fees);
                         $('#paidFees').attr('readonly', false);
+                        $('#paidFees').val('');
+                        $('#remark').val('');
+                       // $("#paidFees").removeAttr("disabled"); 
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
                         //alert("Error in GetCandidateEmail");
                         sweetAlert("Oops...", "Error in GetCandidateEmail after Selecting Email Id from Autocomplete TextBox", "error");
                     }
                 });
-
+                debugger;
                 $.ajax({
                     type: "POST",
                     url: "../Admin/GetCourseFeesByEmail",
@@ -296,19 +299,19 @@
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     success: function (data) {
-                       
+                        debugger;
                         $('#remainingFees').val(data.RemainingFees);
                         $('#TotalPaidFees').val(data.TotalPaidFees);
                        
                         if (data.TotalPaidFees == data.TotalFees) {
                             $('#paidFees').attr('readonly', true);
-                        
+
                             $('#remark').attr('readonly', true);
                             $(':input[type="submit"]').prop('disabled', true);
                         }
                         else {
                             $('#paidFees').attr('readonly', false);
-                           
+
                             $('#remark').attr('readonly', false);
                             $(':input[type="submit"]').prop('disabled', false);
                         }
@@ -318,6 +321,7 @@
                         sweetAlert("Oops...", "Error in GetCourseFeesByEmail after Selecting Email Id from Autocomplete TextBox", "error");
                     }
                 });
+              
 
                 //$(this).val('');
                 //$('#tagsname').text(function () {
@@ -331,49 +335,108 @@
         $("#paidFees").blur(function () {
                      debugger;
             
-                if ($('#paidFees').val() != "") {
+                     if ($('#paidFees').val() != "") {
 
-                    $.ajax({
-                        type: "POST",
-                        url: "../Admin/GetCourseFeesByEmail",
-                        data: "{ 'email':'" + $('#CandidateEmailId').val() + "'}",
-                        dataType: "json",
-                        contentType: "application/json; charset=utf-8",
-                        success: function (data) {
-                            debugger;
-                            $('#remainingFees').val(data.RemainingFees);
-                            $('#TotalPaidFees').val(data.TotalPaidFees);
+                    if ($('.modal-title').text() == "Update Course Fees") {
 
-                            if (parseInt($('#totalFees').val()) == "" && parseInt($('#remainingFees').val()) == "") {
-                                if ($('#paidFees').val() > $('#totalFees').val()) {
-                                   // alert('Added Fees is Greater than Total Course fees');
-                                    sweetAlert("Oops...", "Added Fees is Greater than Total Course fees", "error");
-                                    $('#paidFees').val('')
-                                } else {
-                                    $('#remainingFees').val($('#totalFees').val() - $('#paidFees').val());
-                                    $('#TotalPaidFees').val($('#paidFees').val());
-                                }
-                            }
-                            else {
-                                if (parseInt($('#paidFees').val()) > parseInt($('#remainingFees').val())) {
-                                   // alert('Added Fees is Greater than Reamining fees');
-                                    sweetAlert("Oops...", "Added Fees is Greater than Reamining fees", "error");
-                                    $('#paidFees').val('')
+                        $.ajax({
+                            type: "POST",
+                            url: "../Admin/GetCourseFeesByEmail",
+                            data: "{ 'email':'" + $('#CandidateEmailId').val() + "'}",
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (data) {
+                                debugger;
+                                $('#remainingFees').val(data.RemainingFees);
+                                $('#TotalPaidFees').val(data.TotalPaidFees);
+
+                                if (parseInt($('#totalFees').val()) == "" && parseInt($('#remainingFees').val()) == "") {
+                                    if (data.PaidFees != $('#paidFees').val()) {
+
+                                        if ($('#paidFees').val() > $('#totalFees').val()) {
+                                            // alert('Added Fees is Greater than Total Course fees');
+                                            sweetAlert("Oops...", "Added Fees is Greater than Total Course fees", "error");
+                                            $('#paidFees').val('')
+                                        } else {
+
+                                            $('#remainingFees').val(parseInt($('#remainingFees').val()) + data.PaidFees);
+                                            $('#TotalPaidFees').val(parseInt($('#TotalPaidFees').val()) - data.PaidFees);
+                                            $('#remainingFees').val($('#totalFees').val() - $('#paidFees').val());
+                                            $('#TotalPaidFees').val($('#paidFees').val());
+                                        }
+                                    }
+
+                                    
                                 }
                                 else {
-                                    $('#remainingFees').val($('#remainingFees').val() - $('#paidFees').val());
-                                    $('#TotalPaidFees').val(parseInt($('#TotalPaidFees').val()) + parseInt($('#paidFees').val()));
+                                    if (data.PaidFees != $('#paidFees').val()) {
+                                        $('#remainingFees').val(parseInt($('#remainingFees').val()) + data.PaidFees);
+                                        $('#TotalPaidFees').val(parseInt($('#TotalPaidFees').val()) - data.PaidFees);
+                                        if (parseInt($('#paidFees').val()) > parseInt($('#remainingFees').val())) {
+                                            // alert('Added Fees is Greater than Reamining fees');
+                                            sweetAlert("Oops...", "Added Fees is Greater than Reamining fees", "error");
+                                            $('#paidFees').val('')
+                                        }
+                                        else {
+                                            $('#remainingFees').val($('#remainingFees').val() - $('#paidFees').val());
+                                            $('#TotalPaidFees').val(parseInt($('#TotalPaidFees').val()) + parseInt($('#paidFees').val()));
+                                        }
+                                    }
+                                    
+                                       
+                                    
                                 }
+                                debugger;
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                //alert("Error in GetCourseFeesByEmail when add fees textbox blur event");
+                                sweetAlert("Oops...", "Error in GetCourseFeesByEmail when add fees textbox blur event", "error");
+
                             }
-                            debugger;
-                        },
-                        error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            //alert("Error in GetCourseFeesByEmail when add fees textbox blur event");
-                            sweetAlert("Oops...", "Error in GetCourseFeesByEmail when add fees textbox blur event", "error");
+                        });
+                    }
+                    else {
 
-                        }
-                    });
+                        $.ajax({
+                            type: "POST",
+                            url: "../Admin/GetCourseFeesByEmail",
+                            data: "{ 'email':'" + $('#CandidateEmailId').val() + "'}",
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (data) {
+                                debugger;
+                                $('#remainingFees').val(data.RemainingFees);
+                                $('#TotalPaidFees').val(data.TotalPaidFees);
 
+                                if (data.RemainingFees == 0 && data.TotalPaidFees == 0) {
+                                    if (parseInt($('#paidFees').val()) > parseInt($('#totalFees').val())) {                                       
+                                        sweetAlert("Oops...", "Added Fees is Greater than Total Course fees", "error");
+                                        $('#paidFees').val('')
+                                    } else {
+                                        $('#remainingFees').val($('#totalFees').val() - $('#paidFees').val());
+                                        $('#TotalPaidFees').val($('#paidFees').val());
+                                    }
+                                }
+                                else {
+                                    if (parseInt($('#paidFees').val()) > parseInt($('#remainingFees').val())) {                                        
+                                        sweetAlert("Oops...", "Added Fees is Greater than Reamining fees", "error");
+                                        $('#paidFees').val('')
+                                    }
+                                    else {
+                                        $('#remainingFees').val($('#remainingFees').val() - $('#paidFees').val());
+                                        $('#TotalPaidFees').val(parseInt($('#TotalPaidFees').val()) + parseInt($('#paidFees').val()));
+                                    }
+
+                                }                                
+                                debugger;
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {                                
+                                sweetAlert("Oops...", "Error in GetCourseFeesByEmail when add fees textbox blur event", "error");
+
+                            }
+                        });
+                        
+                    }
 
                 }//End if($('#paidFees').val() != "")  condition
             

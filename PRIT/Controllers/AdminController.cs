@@ -1405,7 +1405,7 @@ namespace PRIT.Controllers
                 return new JsonResult()
                 {
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet,
-                    Data = new { message = model.Id == 0 ? "user has been created successfully" : "user has been updated successfully", success = true, result = aa ,extra=model.Id}
+                    Data = new { message = model.Id == 0 ? "user has been created successfully" : "user has been updated successfully", success = true, result = aa }
                 };
             }
 
@@ -1768,8 +1768,10 @@ namespace PRIT.Controllers
                 string candidateName = "", createdDate = "";
                 int? paidFees=0;
                 string logoImagePath = @"E:\RahulGIT\PRIT\images\Xontage_Logo.png";
-                List<string> createdDateList = new List<string>();
-                List<int?> paidFeesList = new List<int?>();
+                List<string> createdDateList = new List<string>(new string[5]);
+                List<int?> paidFeesList = new List<int?>(new int?[5]);
+                //List<string> createdDateList = new List<string>();
+                //List<int?> paidFeesList = new List<int?>();
                 //string sqlFormattedDate = myDate.Value.ToString("yyyy-MM-dd HH:mm:ss");
                 if (CourseFeesId > 0)
                 {
@@ -1781,15 +1783,27 @@ namespace PRIT.Controllers
 
                 if (modelList != null)
                 {
+                    int i = 0;
                     foreach (var item in modelList)
                     {
+                        
                         createdDate = item.CreatedDate.Value.ToString("d MMM ddd yyyy HH:mm");
                         paidFees = item.PaidFees;
-                        createdDateList.Add(createdDate);
-                        paidFeesList.Add(paidFees);
+                        createdDateList[i] = createdDate;
+                        paidFeesList[i] = paidFees;
+                        i++;
                     }
                 }
-
+                if (modelList.Count()<5)
+                {
+                    var h =  modelList.Count();
+                    do
+                    {
+                        //createdDateList[5 - h] = "need to pay";
+                        paidFeesList[h] = 0;
+                        h=h+1;
+                    } while (h < 5);
+                }
                 StringBuilder htmlText = new StringBuilder();                
                 htmlText.Append("<div class=\"container\">")
                      .Append("    <div class=\"row\">")
@@ -2071,8 +2085,10 @@ namespace PRIT.Controllers
 
         public JsonResult GetCourseFeesByEmail(string email)
         {
-
-            var txtItems = db.tbl_CourseFees.Where(m => m.CandidateEmailId == email).OrderByDescending(instalNo => instalNo.InstallmentNo).ToList().FirstOrDefault();           
+            tbl_CourseFees txtItems = new tbl_CourseFees(); 
+             txtItems = db.tbl_CourseFees.Where(m => m.CandidateEmailId == email).OrderByDescending(instalNo => instalNo.InstallmentNo).ToList().FirstOrDefault();
+           if(txtItems==null)
+                txtItems= new tbl_CourseFees();
             return Json(txtItems, JsonRequestBehavior.AllowGet);
         }
         #endregion .End Of ..Fees Management functionality..
