@@ -51,8 +51,7 @@ namespace PRIT.Entity
         public virtual ObjectResult<tbl_CourseFees> GetDistinctRecordOfCourseFees()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<tbl_CourseFees>("GetDistinctRecordOfCourseFees");
-        }
-    
+        }    
         public virtual ObjectResult<tbl_CourseFees> GetDistinctRecordOfCourseFees(MergeOption mergeOption)
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<tbl_CourseFees>("GetDistinctRecordOfCourseFees", mergeOption);
