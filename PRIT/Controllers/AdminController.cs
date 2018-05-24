@@ -22,7 +22,6 @@ using iTextSharp.text.pdf;
 using iTextSharp.text.html.simpleparser;
 using iTextSharp.tool.xml;
 using System.Text;
-using AutoMapper;
 using System.Data;
 
 namespace PRIT.Controllers
@@ -2309,6 +2308,9 @@ namespace PRIT.Controllers
         public JsonResult GetCollectionInfo(int courseNameId)
         {
             tbl_CourseFees model = new tbl_CourseFees();
+            tbl_Expense modelExpense = new tbl_Expense();
+            int TotalPaidFees = 0;
+            long TotalExpenseAmount = 0;
             if (courseNameId == 6)
             {
                 model.CoursewiseTotalAdmissions = db.tbl_CandidateWithCourseDetails.Count();
@@ -2327,12 +2329,15 @@ namespace PRIT.Controllers
                 model.TotalFeesTocollect = db.tbl_CandidateWithCourseDetails.Sum(r => r.Fees);
                 model.TotalFeesCollected = lst.Sum(row => row.TotalPaidFees);
                 model.TotalFeesRemaining = lst.Sum(row => row.RemainingFees);
+                TotalPaidFees = lst.Sum(row => row.TotalPaidFees);
+                TotalExpenseAmount = db.tbl_Expense.OrderByDescending(m => m.TotalExpenseAmount).FirstOrDefault().TotalExpenseAmount;
+                model.TotalProfit = TotalPaidFees - TotalExpenseAmount;
             }
             else
             {
                 model.TotalFeesTocollect = db.tbl_CandidateWithCourseDetails.Where(m => m.CourseNameId == courseNameId).Sum(r => r.Fees);
                 model.TotalFeesCollected = lst.Where(m => m.CourseNameId == courseNameId).Sum(row => row.TotalPaidFees);
-                model.TotalFeesRemaining = lst.Where(m => m.CourseNameId == courseNameId).Sum(row => row.RemainingFees);
+                model.TotalFeesRemaining = lst.Where(m => m.CourseNameId == courseNameId).Sum(row => row.RemainingFees);                
             }
 
             //  model.TotalFeesTocollect = lst.Where(m=>m.InstallmentNo==1).Sum(row => row.TotalFees);

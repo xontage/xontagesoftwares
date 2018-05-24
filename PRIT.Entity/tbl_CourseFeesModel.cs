@@ -18,6 +18,8 @@ namespace PRIT.Entity
         public int? TotalFeesTocollect { get; set; }
         public int? TotalFeesCollected { get; set; }
         public int TotalFeesRemaining { get; set; }
+        public long TotalProfit { get; set; }
+        
 
     }
 }

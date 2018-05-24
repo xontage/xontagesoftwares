@@ -74,6 +74,20 @@
                 </div>
             </div>
         </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">Total Profit</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="cols-sm-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
+                            @Html.TextBox("remainingFeesToCollect", null, new { @class = "form-control inputstl", id = "totalProfit", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -92,7 +106,7 @@
                 $('#totalFeesToCollect').val(response.TotalFeesTocollect);
                 $('#totalPaidFees').val(response.TotalFeesCollected);
                 $('#remainingFeesToCollect').val(response.TotalFeesRemaining);                                
-                
+                $('#totalProfit').val(response.TotalProfit);         
             }
         );
 
