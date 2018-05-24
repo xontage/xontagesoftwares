@@ -421,6 +421,34 @@
        
     });
 
+    $("#email").blur(function () {
+        debugger;
+
+        if ($('#email').val() != "") {
+
+            if ($('.modal-title').text() != "Update Candidate Course") {
+
+
+                $.get("../Admin/CheckEmailAlreadyExists",
+                    { emailId: $('#email').val() },
+                    function (data) {
+                        debugger;
+                        if (data != "Valid") {
+                            sweetAlert("Oops...", data, "error");
+                            $('#email').val('')
+                        }
+                    });  
+
+               
+            }            
+
+        }//End if($('#paidFees').val() != "")  condition
+
+        debugger;
+
+    });
+
+
     function response(obj) {
         console.log(obj);
     }

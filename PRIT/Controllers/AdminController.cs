@@ -27,7 +27,7 @@ using System.Data;
 
 namespace PRIT.Controllers
 {
-     
+
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
@@ -847,7 +847,7 @@ namespace PRIT.Controllers
                          new SelectListItem(){Text="8 - 9 YEARS",Value="8 - 9 YEARS"},
                          new SelectListItem(){Text="9 - 10 YEARS",Value="9 - 10 YEARS"},
                          new SelectListItem(){Text="10 - 11 YEARS",Value="10 - 11 YEARS"}
-                         
+
                     };
                 return lstDropdownModelGeneric;
             }
@@ -1050,7 +1050,7 @@ namespace PRIT.Controllers
         {
             try
             {
-                
+
                 List<DropdownModelGeneric> lstDropdownModelGeneric;
                 lstDropdownModelGeneric = new List<DropdownModelGeneric>  {
                         //new DropdownModelGeneric(){Text="--SELECT COURSE TYPE--",Value="0"},
@@ -1058,7 +1058,7 @@ namespace PRIT.Controllers
                          new DropdownModelGeneric(){Text="WeekEnd",Value="2"},
                         new DropdownModelGeneric(){Text="Crash WeekEnd",Value="3"},
                          new DropdownModelGeneric(){Text="Regular",Value="4"}
-                        
+
 
                     };
                 return lstDropdownModelGeneric;
@@ -1068,7 +1068,7 @@ namespace PRIT.Controllers
                 return new List<DropdownModelGeneric>();
             }
         }
-       
+
 
         [NonAction]
         public List<SelectListItem> GetDuration()
@@ -1091,8 +1091,8 @@ namespace PRIT.Controllers
                 return new List<SelectListItem>();
             }
 
-        }     
-        
+        }
+
         [NonAction]
         public List<DropdownModelGeneric> GetCourseCategory()
         {
@@ -1265,8 +1265,8 @@ namespace PRIT.Controllers
         #endregion..End of ..College Management Functionality
 
         #region ...Candidate Cource management..
-        
-         public ActionResult CandidateCourseMgmt()
+
+        public ActionResult CandidateCourseMgmt()
         {
             List<tbl_CandidateWithCourseDetails> lst = db.tbl_CandidateWithCourseDetails.OrderByDescending(c => c.CandidateId).ToList();
             var CourseNameList = GetCourseName();
@@ -1276,7 +1276,7 @@ namespace PRIT.Controllers
             foreach (var item in lst)
             {
                 item.Status = item.IsDeleted == true ? "Discontinued" : "Continue..";
-                item.CourseName= CourseNameList.Where(p => p.Value == item.CourseNameId.ToString()).First().Text;
+                item.CourseName = CourseNameList.Where(p => p.Value == item.CourseNameId.ToString()).First().Text;
                 item.CourseType = CourseTypeList.Where(p => p.Value == item.CourseTypeId.ToString()).First().Text;
                 if (!string.IsNullOrEmpty(item.Duration.ToString()))
                     item.DurationName = DurationList.Where(p => p.Value == item.Duration.ToString()).First().Text;
@@ -1290,15 +1290,15 @@ namespace PRIT.Controllers
             return View(lst);
         }
 
-        
-         [HttpGet]
+
+        [HttpGet]
         public ActionResult AddEditCandidateCourse(int? candidateCourseId)
         {
             tbl_CandidateWithCourseDetails model = new tbl_CandidateWithCourseDetails();
             if (candidateCourseId > 0)
             {
                 model = db.tbl_CandidateWithCourseDetails.Where(x => x.CandidateId == candidateCourseId).FirstOrDefault();
-                
+
             }
 
             ViewBag.ddlExperience = new SelectList(GetEmployeeType(), "Value", "Text");
@@ -1311,38 +1311,42 @@ namespace PRIT.Controllers
 
         }
 
+
         [HttpPost]
         public ActionResult AddEditCandidateCourse(tbl_CandidateWithCourseDetails model)
         {
             List<tbl_CandidateWithCourseDetails> lstN = new List<tbl_CandidateWithCourseDetails>();
+            var razorViewToString = "";
             var CourseNameList = GetCourseName();
             var DurationList = GetDuration();
             var CourseTypeList = GetCourseType();
             var CourseCategoryList = GetCourseCategory();
             if (ModelState.IsValid)
             {
-                candidateCourseBL.AddEditCandidateCourse(model, User.Identity.Name);
-                lstN = db.tbl_CandidateWithCourseDetails.OrderByDescending(person => person.CandidateId).ToList();
-                foreach (var item in lstN)
-                {
-                    item.Status = item.IsDeleted == true ? "Discontinued" : "Continue..";
-                    item.CourseName = CourseNameList.Where(p => p.Value == item.CourseNameId.ToString()).First().Text;
-                    item.CourseType = CourseTypeList.Where(p => p.Value == item.CourseTypeId.ToString()).First().Text;
-                    if (!string.IsNullOrEmpty(item.Duration.ToString()))
-                        item.DurationName = DurationList.Where(p => p.Value == item.Duration.ToString()).First().Text;
-                    else
-                        item.DurationName = "NA";
-                    if (!string.IsNullOrEmpty(item.CourseCategory.ToString()))
-                        item.CourseCategoryName = CourseCategoryList.Where(p => p.Value == item.CourseCategory.ToString()).First().Text;
-                    else
-                        item.CourseCategoryName = "NA";
-                }
-                var aa = RenderRazorViewToString("_candidateCoursePartial", lstN);
+                
+                    candidateCourseBL.AddEditCandidateCourse(model, User.Identity.Name);
+                    lstN = db.tbl_CandidateWithCourseDetails.OrderByDescending(person => person.CandidateId).ToList();
+                    foreach (var item in lstN)
+                    {
+                        item.Status = item.IsDeleted == true ? "Discontinued" : "Continue..";
+                        item.CourseName = CourseNameList.Where(p => p.Value == item.CourseNameId.ToString()).First().Text;
+                        item.CourseType = CourseTypeList.Where(p => p.Value == item.CourseTypeId.ToString()).First().Text;
+                        if (!string.IsNullOrEmpty(item.Duration.ToString()))
+                            item.DurationName = DurationList.Where(p => p.Value == item.Duration.ToString()).First().Text;
+                        else
+                            item.DurationName = "NA";
+                        if (!string.IsNullOrEmpty(item.CourseCategory.ToString()))
+                            item.CourseCategoryName = CourseCategoryList.Where(p => p.Value == item.CourseCategory.ToString()).First().Text;
+                        else
+                            item.CourseCategoryName = "NA";
+                    }
+                    razorViewToString = RenderRazorViewToString("_candidateCoursePartial", lstN);
+               
 
                 return new JsonResult()
                 {
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet,
-                    Data = new { message = model.CandidateId == 0 ? "user has been created successfully" : "user has been updated successfully", success = true, result = aa }
+                    Data = new { message = model.CandidateId == 0 ? "User has been created successfully" : "User has been updated successfully", success = true, result = razorViewToString }
                 };
             }
 
@@ -1354,10 +1358,106 @@ namespace PRIT.Controllers
 
         }
 
+        //[HttpPost]
+        //public ActionResult AddEditCandidateCourseWithEmailChecking(tbl_CandidateWithCourseDetails model)
+        //{
+        //    List<tbl_CandidateWithCourseDetails> lstN = new List<tbl_CandidateWithCourseDetails>();
+        //    var razorViewToString = "";
+        //    var CourseNameList = GetCourseName();
+        //    var DurationList = GetDuration();
+        //    var CourseTypeList = GetCourseType();
+        //    var CourseCategoryList = GetCourseCategory();
+        //    if (ModelState.IsValid)
+        //    {
+        //        if (model.CandidateId > 0)
+        //        {
+        //            candidateCourseBL.AddEditCandidateCourse(model, User.Identity.Name);
+        //            lstN = db.tbl_CandidateWithCourseDetails.OrderByDescending(person => person.CandidateId).ToList();
+        //            foreach (var item in lstN)
+        //            {
+        //                item.Status = item.IsDeleted == true ? "Discontinued" : "Continue..";
+        //                item.CourseName = CourseNameList.Where(p => p.Value == item.CourseNameId.ToString()).First().Text;
+        //                item.CourseType = CourseTypeList.Where(p => p.Value == item.CourseTypeId.ToString()).First().Text;
+        //                if (!string.IsNullOrEmpty(item.Duration.ToString()))
+        //                    item.DurationName = DurationList.Where(p => p.Value == item.Duration.ToString()).First().Text;
+        //                else
+        //                    item.DurationName = "NA";
+        //                if (!string.IsNullOrEmpty(item.CourseCategory.ToString()))
+        //                    item.CourseCategoryName = CourseCategoryList.Where(p => p.Value == item.CourseCategory.ToString()).First().Text;
+        //                else
+        //                    item.CourseCategoryName = "NA";
+        //            }
+        //            razorViewToString = RenderRazorViewToString("_candidateCoursePartial", lstN);
+        //        }
+        //        else {
+        //            tbl_CandidateWithCourseDetails user = null;
+
+        //            user = db.tbl_CandidateWithCourseDetails.Where(m => m.EmailId == model.EmailId && m.IsDeleted == false).FirstOrDefault();
+        //            if (user != null)
+        //            {
+
+        //                return new JsonResult()
+        //                {
+        //                    JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+        //                    Data = new { message = "Candiddate Email Id Already Exists. Please Enter Another Email Id!!!", success = false }
+        //                };
+        //            }
+        //            else {
+
+        //                candidateCourseBL.AddEditCandidateCourse(model, User.Identity.Name);
+        //                lstN = db.tbl_CandidateWithCourseDetails.OrderByDescending(person => person.CandidateId).ToList();
+        //                foreach (var item in lstN)
+        //                {
+        //                    item.Status = item.IsDeleted == true ? "Discontinued" : "Continue..";
+        //                    item.CourseName = CourseNameList.Where(p => p.Value == item.CourseNameId.ToString()).First().Text;
+        //                    item.CourseType = CourseTypeList.Where(p => p.Value == item.CourseTypeId.ToString()).First().Text;
+        //                    if (!string.IsNullOrEmpty(item.Duration.ToString()))
+        //                        item.DurationName = DurationList.Where(p => p.Value == item.Duration.ToString()).First().Text;
+        //                    else
+        //                        item.DurationName = "NA";
+        //                    if (!string.IsNullOrEmpty(item.CourseCategory.ToString()))
+        //                        item.CourseCategoryName = CourseCategoryList.Where(p => p.Value == item.CourseCategory.ToString()).First().Text;
+        //                    else
+        //                        item.CourseCategoryName = "NA";
+        //                }
+        //                razorViewToString = RenderRazorViewToString("_candidateCoursePartial", lstN);
+        //            }
+
+        //        }
+
+        //        return new JsonResult()
+        //        {
+        //            JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+        //            Data = new { message = model.CandidateId == 0 ? "User has been created successfully" : "User has been updated successfully", success = true, result = razorViewToString }
+        //        };
+        //    }
+
+        //    return new JsonResult()
+        //    {
+        //        JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+        //        Data = new { message = "Something went wrong!!", success = false }
+        //    };
+
+        //}
+
+        
+
+        public string CheckEmailAlreadyExists(string emailId)
+        {
+            
+                tbl_CandidateWithCourseDetails user = null;
+                user = db.tbl_CandidateWithCourseDetails.Where(m => m.EmailId == emailId && m.IsDeleted == false).FirstOrDefault();
+                if (user != null)
+                {
+                    return "The Candidate Email Id is Already Registered, Please enter another EMail Id !!!";
+                }
+
+            return "Valid";
+        }
 
         [HttpPost]
         public ActionResult DeleteCandidateCourse(int? Id)
-        {       
+        {
             List<tbl_CandidateWithCourseDetails> lstN = new List<tbl_CandidateWithCourseDetails>();
             var CourseNameList = GetCourseName();
             var DurationList = GetDuration();
@@ -1393,28 +1493,28 @@ namespace PRIT.Controllers
 
         public ActionResult FeesMgmt()
         {
-           List<tbl_CourseFees> lst = db.tbl_CourseFees.OrderByDescending(c => c.Id).ToList();
+            //  List<tbl_CourseFees> lst = db.tbl_CourseFees.OrderByDescending(c => c.Id).ToList();
 
-          var lst = db.GetDistingRecordsOfEmailId().OrderByDescending(c => c.Id).ToList();
+            var lst = db.GetDistingRecordsOfEmailId().OrderByDescending(c => c.Id).ToList();
 
-           // List<tbl_CourseFees> lstMap = new List<tbl_CourseFees>();
+            // List<tbl_CourseFees> lstMap = new List<tbl_CourseFees>();
             //tbl_CourseFees oo = new tbl_CourseFees();
             //sp_getDistingRecordsOfEmailId_Result sp = new sp_getDistingRecordsOfEmailId_Result();
             //oo.CandidateEmailId = sp.CandidateEmailId;
 
-            var CourseNameList = GetCourseName();            
+            var CourseNameList = GetCourseName();
             var DurationList = GetDuration();
-            
+
             foreach (var item in lst)
             {
                 var CourseNameId = db.tbl_CandidateWithCourseDetails.Where(m => m.EmailId == item.CandidateEmailId).FirstOrDefault().CourseNameId;
                 var DurationId = db.tbl_CandidateWithCourseDetails.Where(m => m.EmailId == item.CandidateEmailId).FirstOrDefault().Duration;
 
+                item.CourseName = CourseNameList.Where(p => p.Value == CourseNameId.ToString()).First().Text;
+                if (!string.IsNullOrEmpty(item.CourseName.ToString()))
                     item.CourseName = CourseNameList.Where(p => p.Value == CourseNameId.ToString()).First().Text;
-                    if (!string.IsNullOrEmpty(item.CourseName.ToString()))
-                        item.CourseName = CourseNameList.Where(p => p.Value == CourseNameId.ToString()).First().Text;
-                    else
-                        item.CourseName = "NA";
+                else
+                    item.CourseName = "NA";
 
 
                 if (DurationId != null)
@@ -1425,7 +1525,8 @@ namespace PRIT.Controllers
                     else
                         item.DurationName = "NA";
                 }
-                else {
+                else
+                {
                     item.DurationName = "NA";
                 }
             }
@@ -1437,7 +1538,7 @@ namespace PRIT.Controllers
             return View(lst);
         }
 
-        
+
         [HttpGet]
         public ActionResult AddEditCourseFees(int? CourseFeesId)
         {
@@ -1448,7 +1549,7 @@ namespace PRIT.Controllers
                 model = db.tbl_CourseFees.Where(x => x.Id == CourseFeesId).FirstOrDefault();
 
             }
-         
+
             return PartialView("~/Views/Admin/_AddEditCourseFees.cshtml", model);
 
         }
@@ -1456,18 +1557,18 @@ namespace PRIT.Controllers
         public ActionResult AddEditCourseFees(tbl_CourseFees model)
         {
             List<tbl_CourseFees> lstN = new List<tbl_CourseFees>();
-       
+
             if (ModelState.IsValid)
             {
                 courseFeesBL.AddEditCourseFees(model, User.Identity.Name);
-                
+
                 //lstN = db.tbl_CourseFees.OrderByDescending(person => person.Id).ToList();
-                 lstN = db.GetDistingRecordsOfEmailId().OrderByDescending(c => c.Id).ToList();
+                lstN = db.GetDistingRecordsOfEmailId().OrderByDescending(c => c.Id).ToList();
 
                 var CourseNameList = GetCourseName();
                 var DurationList = GetDuration();
 
-                
+
                 foreach (var item in lstN)
                 {
                     var CourseNameId = db.tbl_CandidateWithCourseDetails.Where(m => m.EmailId == item.CandidateEmailId).FirstOrDefault().CourseNameId;
@@ -1493,7 +1594,7 @@ namespace PRIT.Controllers
                         item.DurationName = "NA";
                     }
                 }
-                var aa = RenderRazorViewToString("_CourseFeesPartial", lstN);               
+                var aa = RenderRazorViewToString("_CourseFeesPartial", lstN);
 
                 return new JsonResult()
                 {
@@ -1509,12 +1610,12 @@ namespace PRIT.Controllers
             };
 
         }
-       
+
         public JsonResult GetCandidateEmail(string countryName)
         {
             // Create list
-           // var myList = new List<string>();                                          
-            var txtItems=  db.tbl_CandidateWithCourseDetails.Where(m => m.EmailId.Contains(countryName)).ToList();
+            // var myList = new List<string>();                                          
+            var txtItems = db.tbl_CandidateWithCourseDetails.Where(m => m.EmailId.Contains(countryName) && m.IsDeleted!=true).ToList();
             //foreach (var item in txtItems)
             //{
             //    // Add items to the list
@@ -1526,7 +1627,8 @@ namespace PRIT.Controllers
         }
 
 
-        public void GeneratePDF() {
+        public void GeneratePDF()
+        {
 
             using (System.IO.MemoryStream memoryStream = new System.IO.MemoryStream())
             {
@@ -1819,13 +1921,13 @@ namespace PRIT.Controllers
                  .Append("        </div>")
                  .Append("    </div>");
 
-           
+
             Document pdfDoc = new Document(PageSize.A4, 25, 10, 25, 10);
             PdfWriter pdfWriter = PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
             pdfDoc.Open();
-            Paragraph Text = new Paragraph("This is test file");            
+            Paragraph Text = new Paragraph("This is test file");
             pdfDoc.Add(Text);
-            
+
             List<IElement> htmlarraylist = HTMLWorker.ParseToList(new StringReader(myvar.ToString()), null);
             for (int k = 0; k < htmlarraylist.Count; k++)
             {
@@ -1858,9 +1960,9 @@ namespace PRIT.Controllers
                 tbl_CourseFees model = new tbl_CourseFees();
                 List<tbl_CourseFees> modelList = new List<tbl_CourseFees>();
                 tbl_CourseFees latestEntry = new tbl_CourseFees();
-                string candidateName = "", createdDate = "",courseName="";
-                int? paidFees=0;
-                
+                string candidateName = "", createdDate = "", courseName = "";
+                int? paidFees = 0;
+
                 string logoImagePath = @"D:\PravinGIT\PRIT\images\Xontage_Logo.png";
                 List<string> createdDateList = new List<string>(new string[5]);
                 List<int?> paidFeesList = new List<int?>(new int?[5]);
@@ -1868,13 +1970,13 @@ namespace PRIT.Controllers
                 //List<int?> paidFeesList = new List<int?>();
                 //string sqlFormattedDate = myDate.Value.ToString("yyyy-MM-dd HH:mm:ss");
                 var CourseNameList = GetCourseName();
-            
+
                 if (CourseFeesId > 0)
                 {
                     model = db.tbl_CourseFees.Where(x => x.Id == CourseFeesId).FirstOrDefault();
                     latestEntry = db.tbl_CourseFees.Where(m => m.CandidateEmailId == model.CandidateEmailId).OrderByDescending(instalNo => instalNo.InstallmentNo).ToList().FirstOrDefault();
-                    candidateName = db.tbl_CandidateWithCourseDetails.Where(m => m.EmailId == model.CandidateEmailId).FirstOrDefault().FirstName +" "+ db.tbl_CandidateWithCourseDetails.Where(m => m.EmailId == model.CandidateEmailId).FirstOrDefault().LastName;
-                   var courseNameId = db.tbl_CandidateWithCourseDetails.Where(m => m.EmailId == model.CandidateEmailId).FirstOrDefault().CourseNameId;
+                    candidateName = db.tbl_CandidateWithCourseDetails.Where(m => m.EmailId == model.CandidateEmailId).FirstOrDefault().FirstName + " " + db.tbl_CandidateWithCourseDetails.Where(m => m.EmailId == model.CandidateEmailId).FirstOrDefault().LastName;
+                    var courseNameId = db.tbl_CandidateWithCourseDetails.Where(m => m.EmailId == model.CandidateEmailId).FirstOrDefault().CourseNameId;
                     courseName = CourseNameList.Where(p => p.Value == courseNameId.ToString()).First().Text;
                     modelList = db.tbl_CourseFees.Where(x => x.CandidateEmailId == model.CandidateEmailId).ToList();
                 }
@@ -1884,7 +1986,7 @@ namespace PRIT.Controllers
                     int i = 0;
                     foreach (var item in modelList)
                     {
-                        
+
                         createdDate = item.CreatedDate.Value.ToString("d MMM ddd yyyy HH:mm");
                         paidFees = item.PaidFees;
                         createdDateList[i] = createdDate;
@@ -1892,24 +1994,24 @@ namespace PRIT.Controllers
                         i++;
                     }
                 }
-                if (modelList.Count()<5)
+                if (modelList.Count() < 5)
                 {
-                    var h =  modelList.Count();
+                    var h = modelList.Count();
                     do
                     {
                         //createdDateList[5 - h] = "need to pay";
                         paidFeesList[h] = 0;
-                        h=h+1;
+                        h = h + 1;
                     } while (h < 5);
                 }
-                StringBuilder htmlText = new StringBuilder();                
+                StringBuilder htmlText = new StringBuilder();
                 htmlText.Append("<div class=\"container\">")
                      .Append("    <div class=\"row\">")
                      .Append("        <div class=\"row\">")
                      .Append("            <div class=\"receipt-header\">")
                      .Append("                <div class=\"col-xs-12 col-sm-12 col-md-12\">")
                      .Append("                    <div class=\"receipt-left\">")
-                     .Append("                        <img src="+ logoImagePath + " style=\" width: 171px; border-radius: 43px;\"/>")
+                     .Append("                        <img src=" + logoImagePath + " style=\" width: 171px; border-radius: 43px;\"/>")
                      .Append("                    </div>")
                      .Append("                </div>")
                      .Append("            </div>")
@@ -1923,14 +2025,14 @@ namespace PRIT.Controllers
                      .Append("                </div>")
                      .Append("            </div>")
                      .Append("            <div class=\"row\">")
-                     .Append("                <p><h5 style=\"margin-left:350px\">Date : "+DateTime.Now+"</h5> </p>")
+                     .Append("                <p><h5 style=\"margin-left:350px\">Date : " + DateTime.Now + "</h5> </p>")
                      .Append("            </div>")
                      .Append("            <div class=\"row\">")
                      .Append("                <div class=\"receipt-header receipt-header-mid\">")
                      .Append("                    <div class=\"col-xs-12 col-sm-12 col-md-12 text-left\">")
                      .Append("                        <div class=\"receipt-right\">")
-                     .Append("                            <h5>Reciept No : "+model.Id+"</h5>")
-                     .Append("                            <h5>"+ candidateName + "</h5>")
+                     .Append("                            <h5>Reciept No : " + model.Id + "</h5>")
+                     .Append("                            <h5>" + candidateName + "</h5>")
                       .Append("                            <h5>" + courseName + "</h5>")
                      .Append("                        </div>")
                      .Append("                    </div>")
@@ -1947,7 +2049,7 @@ namespace PRIT.Controllers
                      .Append("                    </thead>")
                      .Append("                    <tbody>")
                      .Append("                        <tr>")
-                     .Append("                            <td class=\"col-md-9\">Payment for "+ createdDateList[0] + "</td>")
+                     .Append("                            <td class=\"col-md-9\">Payment for " + createdDateList[0] + "</td>")
                      .Append("                            <td class=\"col-md-3\"><i class=\"fa fa-inr\"></i> " + paidFeesList[0] + "/-</td>")
                      .Append("                        </tr>")
                      .Append("                        <tr>")
@@ -2021,7 +2123,7 @@ namespace PRIT.Controllers
                      .Append("        </div>")
                      .Append("    </div>")
                      .Append("</div>");
-                
+
 
                 //StringBuilder htmlText = new StringBuilder();
                 //htmlText.Append("<div class=\"container\">")
@@ -2165,29 +2267,29 @@ namespace PRIT.Controllers
                 pdfDoc.Close();
                 Response.Buffer = true;
                 Response.ContentType = "application/pdf";
-                Response.AddHeader("content-disposition", "inline;filename=" + candidateName+".pdf");
+                Response.AddHeader("content-disposition", "inline;filename=" + candidateName + ".pdf");
                 Response.Cache.SetCacheability(HttpCacheability.NoCache);
                 Response.Write(pdfDoc);
                 Response.End();
-               
+
 
             }
             catch (Exception ex)
             {
-               
+
                 throw;
             }
 
-            
+
         }
 
 
         public JsonResult GetCourseFeesByEmail(string email)
         {
-            tbl_CourseFees txtItems = new tbl_CourseFees(); 
-             txtItems = db.tbl_CourseFees.Where(m => m.CandidateEmailId == email).OrderByDescending(instalNo => instalNo.InstallmentNo).ToList().FirstOrDefault();
-           if(txtItems==null)
-                txtItems= new tbl_CourseFees();
+            tbl_CourseFees txtItems = new tbl_CourseFees();
+            txtItems = db.tbl_CourseFees.Where(m => m.CandidateEmailId == email).OrderByDescending(instalNo => instalNo.InstallmentNo).ToList().FirstOrDefault();
+            if (txtItems == null)
+                txtItems = new tbl_CourseFees();
             return Json(txtItems, JsonRequestBehavior.AllowGet);
         }
         #endregion .End Of ..Fees Management functionality..
@@ -2195,25 +2297,28 @@ namespace PRIT.Controllers
 
         #region ...Fees Collection functionality
 
-        public ActionResult FeesCollection() {
+        public ActionResult FeesCollection()
+        {
 
             ViewBag.ddlCourseName = new SelectList(GetCourseNameForCollection(), "Value", "Text");
             return View();
 
         }
 
-    [HttpPost]
+        [HttpPost]
         public JsonResult GetCollectionInfo(int courseNameId)
         {
             tbl_CourseFees model = new tbl_CourseFees();
-            if (courseNameId == 6) {
+            if (courseNameId == 6)
+            {
                 model.CoursewiseTotalAdmissions = db.tbl_CandidateWithCourseDetails.Count();
             }
-            else {
+            else
+            {
                 model.CoursewiseTotalAdmissions = db.tbl_CandidateWithCourseDetails.Where(m => m.CourseNameId == courseNameId).Count();
             }
 
-           
+
             //B.Calculate Sum(Total) of DataTable Columns using LINQ
             var lst = db.GetDistingRecordsOfEmailId().OrderByDescending(c => c.Id).ToList();
             //LINQ calculate sum of all rows
@@ -2223,14 +2328,15 @@ namespace PRIT.Controllers
                 model.TotalFeesCollected = lst.Sum(row => row.TotalPaidFees);
                 model.TotalFeesRemaining = lst.Sum(row => row.RemainingFees);
             }
-            else {
+            else
+            {
                 model.TotalFeesTocollect = db.tbl_CandidateWithCourseDetails.Where(m => m.CourseNameId == courseNameId).Sum(r => r.Fees);
                 model.TotalFeesCollected = lst.Where(m => m.CourseNameId == courseNameId).Sum(row => row.TotalPaidFees);
                 model.TotalFeesRemaining = lst.Where(m => m.CourseNameId == courseNameId).Sum(row => row.RemainingFees);
             }
-         
-          //  model.TotalFeesTocollect = lst.Where(m=>m.InstallmentNo==1).Sum(row => row.TotalFees);
-            
+
+            //  model.TotalFeesTocollect = lst.Where(m=>m.InstallmentNo==1).Sum(row => row.TotalFees);
+
 
             // LINQ calculate sum of specific rows
             //int sumx = dt.AsEnumerable().Where(row => row.Field<int>("EmployeeId") > 2).Sum(row => row.Field<int>("Salary"));
@@ -2320,17 +2426,17 @@ namespace PRIT.Controllers
         public ActionResult ExpenseMgmt()
         {
             List<tbl_Expense> lst = db.tbl_Expense.OrderByDescending(c => c.ID).ToList();
-            var ExpenseTypeList = GetExpenseType();            
+            var ExpenseTypeList = GetExpenseType();
             foreach (var item in lst)
             {
-                var ExpenseTypeId = db.tbl_Expense.Where(m => m.ID == item.ID).FirstOrDefault().ExpenseType;                
+                var ExpenseTypeId = db.tbl_Expense.Where(m => m.ID == item.ID).FirstOrDefault().ExpenseType;
                 item.ExpenseTypeName = ExpenseTypeList.Where(p => p.Value == ExpenseTypeId.ToString()).First().Text;
                 //if (!string.IsNullOrEmpty(item.ExpenseTypeName.ToString()))
                 //    item.ExpenseTypeName = ExpenseTypeList.Where(p => p.Value == ExpenseTypeId.ToString()).First().Text;
                 //else
                 //    item.ExpenseTypeName = "NA";                            
             }
-               return View(lst);
+            return View(lst);
         }
         [HttpGet]
         public ActionResult AddEditExpense(int? expenseId)
@@ -2384,7 +2490,7 @@ namespace PRIT.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet,
                 Data = new { message = "Something went wrong!!", success = false }
             };
-         
+
         }
 
         public JsonResult GetLastExpense()
@@ -2399,7 +2505,7 @@ namespace PRIT.Controllers
         public JsonResult GetLastExpenseById(int id)
         {
             tbl_Expense txtItems = new tbl_Expense();
-            txtItems = db.tbl_Expense.Where(m=>m.ID==id).OrderByDescending(exp => exp.ID).ToList().FirstOrDefault();
+            txtItems = db.tbl_Expense.Where(m => m.ID == id).OrderByDescending(exp => exp.ID).ToList().FirstOrDefault();
             if (txtItems == null)
                 txtItems = new tbl_Expense();
             return Json(txtItems, JsonRequestBehavior.AllowGet);
@@ -2447,8 +2553,8 @@ namespace PRIT.Controllers
         #endregion
     }
 
-    internal class PdfContent:ActionResult
-    {       
+    internal class PdfContent : ActionResult
+    {
 
         public MemoryStream MemoryStream { get; set; }
         public string FileName { get; set; }

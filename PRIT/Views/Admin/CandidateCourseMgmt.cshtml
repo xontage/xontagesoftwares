@@ -67,6 +67,7 @@
 
     function fnOnAddEditcandidateCourseSuccess(data) {
         debugger;
+        alert(data.result);
         $('#candidateCourseModal').find("[data-dismiss=modal]").trigger({ type: "click" });
         if (data.success == true) {
             swal('Saved!', data.message, 'success')
