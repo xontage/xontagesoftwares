@@ -22,6 +22,8 @@ using iTextSharp.text.pdf;
 using iTextSharp.text.html.simpleparser;
 using iTextSharp.tool.xml;
 using System.Text;
+using AutoMapper;
+using System.Data;
 
 namespace PRIT.Controllers
 {
@@ -1018,7 +1020,31 @@ namespace PRIT.Controllers
                 return new List<DropdownModelGeneric>();
             }
         }
-        
+
+        [NonAction]
+        public List<DropdownModelGeneric> GetCourseNameForCollection()
+        {
+            try
+            {
+                List<DropdownModelGeneric> lstDropdownModelGeneric;
+                lstDropdownModelGeneric = new List<DropdownModelGeneric>  {
+                      //  new DropdownModelGeneric(){Text="SELECT DESIGNATION",Value="0"},
+                        new DropdownModelGeneric(){Text="Java",Value="1"},
+                         new DropdownModelGeneric(){Text=".Net",Value="2"},
+                        new DropdownModelGeneric(){Text="Designing",Value="3"},
+                         new DropdownModelGeneric(){Text="PHP",Value="4"},
+                        new DropdownModelGeneric(){Text="Testing",Value="5"},
+                        new DropdownModelGeneric(){Text="All",Value="6" }
+
+                    };
+                return lstDropdownModelGeneric;
+            }
+            catch (Exception ex)
+            {
+                return new List<DropdownModelGeneric>();
+            }
+        }
+
         [NonAction]
         public List<DropdownModelGeneric> GetCourseType()
         {
@@ -1369,8 +1395,12 @@ namespace PRIT.Controllers
         {
            List<tbl_CourseFees> lst = db.tbl_CourseFees.OrderByDescending(c => c.Id).ToList();
 
-           // List<tbl_CourseFees> lst = db.GetDistinctRecordOfCourseFees().OrderByDescending(c => c.Id).ToList();
-                          
+          var lst = db.GetDistingRecordsOfEmailId().OrderByDescending(c => c.Id).ToList();
+
+           // List<tbl_CourseFees> lstMap = new List<tbl_CourseFees>();
+            //tbl_CourseFees oo = new tbl_CourseFees();
+            //sp_getDistingRecordsOfEmailId_Result sp = new sp_getDistingRecordsOfEmailId_Result();
+            //oo.CandidateEmailId = sp.CandidateEmailId;
 
             var CourseNameList = GetCourseName();            
             var DurationList = GetDuration();
@@ -1431,8 +1461,8 @@ namespace PRIT.Controllers
             {
                 courseFeesBL.AddEditCourseFees(model, User.Identity.Name);
                 
-                lstN = db.tbl_CourseFees.OrderByDescending(person => person.Id).ToList();
-                 //lstN = db.GetDistinctRecordOfCourseFees().OrderByDescending(c => c.Id).ToList();
+                //lstN = db.tbl_CourseFees.OrderByDescending(person => person.Id).ToList();
+                 lstN = db.GetDistingRecordsOfEmailId().OrderByDescending(c => c.Id).ToList();
 
                 var CourseNameList = GetCourseName();
                 var DurationList = GetDuration();
@@ -2162,7 +2192,57 @@ namespace PRIT.Controllers
         }
         #endregion .End Of ..Fees Management functionality..
 
-        
+
+        #region ...Fees Collection functionality
+
+        public ActionResult FeesCollection() {
+
+            ViewBag.ddlCourseName = new SelectList(GetCourseNameForCollection(), "Value", "Text");
+            return View();
+
+        }
+
+    [HttpPost]
+        public JsonResult GetCollectionInfo(int courseNameId)
+        {
+            tbl_CourseFees model = new tbl_CourseFees();
+            if (courseNameId == 6) {
+                model.CoursewiseTotalAdmissions = db.tbl_CandidateWithCourseDetails.Count();
+            }
+            else {
+                model.CoursewiseTotalAdmissions = db.tbl_CandidateWithCourseDetails.Where(m => m.CourseNameId == courseNameId).Count();
+            }
+
+           
+            //B.Calculate Sum(Total) of DataTable Columns using LINQ
+            var lst = db.GetDistingRecordsOfEmailId().OrderByDescending(c => c.Id).ToList();
+            //LINQ calculate sum of all rows
+            if (courseNameId == 6)
+            {
+                model.TotalFeesTocollect = db.tbl_CandidateWithCourseDetails.Sum(r => r.Fees);
+                model.TotalFeesCollected = lst.Sum(row => row.TotalPaidFees);
+                model.TotalFeesRemaining = lst.Sum(row => row.RemainingFees);
+            }
+            else {
+                model.TotalFeesTocollect = db.tbl_CandidateWithCourseDetails.Where(m => m.CourseNameId == courseNameId).Sum(r => r.Fees);
+                model.TotalFeesCollected = lst.Where(m => m.CourseNameId == courseNameId).Sum(row => row.TotalPaidFees);
+                model.TotalFeesRemaining = lst.Where(m => m.CourseNameId == courseNameId).Sum(row => row.RemainingFees);
+            }
+         
+          //  model.TotalFeesTocollect = lst.Where(m=>m.InstallmentNo==1).Sum(row => row.TotalFees);
+            
+
+            // LINQ calculate sum of specific rows
+            //int sumx = dt.AsEnumerable().Where(row => row.Field<int>("EmployeeId") > 2).Sum(row => row.Field<int>("Salary"));
+
+            return Json(model);
+
+
+        }
+
+
+        #endregion
+
         //Generic Method for Converting any Razor View into String
         public string RenderRazorViewToString(string viewName, object model)
         {

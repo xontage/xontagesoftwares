@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewBag.Title = "FeesCollection";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="container">
+    <h2>Fees Collection</h2>
+    @*<p>The panel-group class clears the bottom-margin. Try to remove the class and see what happens.</p>*@
+    <div class="panel-group">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Course Name</div>
+            <div class="panel-body">
+                <div class="form-group">                   
+                    <div class="cols-sm-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-repeat" aria-hidden="true"></i></span>
+                            @Html.DropDownList("CourseNameId", new SelectList(ViewBag.ddlCourseName as SelectList, "Value", "Text"), "--SELECT COURSE NAME--", new { @class = "form-control inputstl" })                         
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">Total Admissions of Candidates</div>
+            <div class="panel-body">
+                <div class="form-group">                   
+                    <div class="cols-sm-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
+                            @Html.TextBox("adminssions",null, new { @class = "form-control inputstl", id = "adminssions",@readonly = "readonly"})
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">Total Fees To Collect</div>
+            <div class="panel-body">
+                <div class="form-group">                 
+                    <div class="cols-sm-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
+                            @Html.TextBox("totalFeesToCollect", null, new { @class = "form-control inputstl", id = "totalFeesToCollect", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">Total Paid Fees</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="cols-sm-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
+                            @Html.TextBox("totalPaidFees", null, new { @class = "form-control inputstl", id = "totalPaidFees", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">Remaining Fees To Collect</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="cols-sm-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
+                            @Html.TextBox("remainingFeesToCollect", null, new { @class = "form-control inputstl", id = "remainingFeesToCollect", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $(document).on("change", "#CourseNameId", function () {
+
+        var courseNameId = $("#CourseNameId option:selected").val();
+
+        $.post("../Admin/GetCollectionInfo",
+            { courseNameId: courseNameId },
+            function (response) {                
+                debugger;
+                $('#adminssions').val(response.CoursewiseTotalAdmissions);
+                $('#totalFeesToCollect').val(response.TotalFeesTocollect);
+                $('#totalPaidFees').val(response.TotalFeesCollected);
+                $('#remainingFeesToCollect').val(response.TotalFeesRemaining);                                
+                
+            }
+        );
+
+
+        //$.ajax({
+        //    type: "GET",
+        //    url: "../Admin/GetCollectionInfo?courseNameId=" + id,
+        //    //contentType: "application/json; charset=utf-8",
+        //    //dataType: "json",
+        //    success: function (result) {
+        //        debugger;               
+        //    },
+        //    error: function (xhr, status, error) {
+        //        sweetAlert("Oops...", "Something went wrong!", "error");
+        //        //alert('Error in downloading File');
+        //    }
+        //});
+
+    });
+
+
+</script>
