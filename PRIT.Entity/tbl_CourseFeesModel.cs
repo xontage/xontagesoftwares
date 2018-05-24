@@ -13,5 +13,11 @@ namespace PRIT.Entity
     {
         public string CourseName { get; set; }
         public string  DurationName { get; set; }
+
+        public int CoursewiseTotalAdmissions { get; set; }
+        public int? TotalFeesTocollect { get; set; }
+        public int? TotalFeesCollected { get; set; }
+        public int TotalFeesRemaining { get; set; }
+
     }
 }

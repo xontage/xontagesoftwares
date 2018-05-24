@@ -95,9 +95,10 @@ span.signup {
 .wrap-login100 {
     border: 1px solid black;
     background: #70b9c5 !important;
-    width: 560px;
+    width: 400px;
     background: #fff;
-    border-radius: 10px;
+    border-radius: 4px;
+    padding:20px;
     overflow: hidden;
     display: -webkit-box;
     display: -webkit-flex;
@@ -106,7 +107,6 @@ span.signup {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    padding: 33px 95px 33px 95px;
 }
 
 .login100-pic {
@@ -130,7 +130,7 @@ span.signup {
     text-align: center;
     width: 100%;
     display: block;
-    padding-bottom: 54px;
+    margin: 25px 0;
 }
 
 
@@ -138,7 +138,7 @@ span.signup {
     position: relative;
     width: 100%;
     z-index: 1;
-    margin-bottom: 10px;
+    margin: 10px 0;
 }
 
 .input100 {
@@ -149,8 +149,7 @@ span.signup {
     color: #666666;
     display: block;
     width: 100%;
-    background: #e6e6e6;
-    height: 50px;
+    height: 43px;
     border-radius: 25px;
     padding: 0 30px 0 68px;
 }
@@ -212,7 +211,6 @@ span.signup {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    padding-top: 20px;
 }
 
 .login100-form-btn {
@@ -222,7 +220,7 @@ span.signup {
     color: #fff;
     text-transform: uppercase;
     width: 100%;
-    height: 50px;
+    height: 43px;
     border-radius: 25px;
     background: #57b846;
     display: -webkit-box;
@@ -245,4 +243,8 @@ span.signup {
 
 input, select, textarea {
     max-width: none;
+}
+
+.space-bottom{
+    margin-bottom:20px;
 }

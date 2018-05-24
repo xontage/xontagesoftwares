@@ -2630,3 +2630,16 @@ img
 {
     color: #C6E2FF !important;
 }
+
+.wrap-input100 {
+    position: relative;
+    width: 100%;
+    z-index: 1;
+    margin: 10px 0;
+}
+
+
+element.style {
+}
+
+
