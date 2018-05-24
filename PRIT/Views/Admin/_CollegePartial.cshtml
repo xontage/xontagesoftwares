@@ -11,7 +11,7 @@
     <table style="width:100%" id="exampleCollege" class="display" cellspacing="0">
         <thead>
             <tr>
-                <th>Id</th>
+                
                 <th>Registration Id</th>
                 <th>College Name</th>
                 <th>Contact Numbers</th>
@@ -28,7 +28,7 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@item.collegeId </td>
+                    
                     <td>@item.registrationId </td>
                     <td><strong>@item.collegeName</strong></td>
                     <td>@item.contact1 / @item.contact2</td>
@@ -66,7 +66,10 @@
     $(document).ready(function () {
 
         $('#exampleCollege').DataTable({
-            "pagingType": "full_numbers"
+            "pagingType": "full_numbers",
+            "columnDefs": [
+                { "orderable": false, "targets": [2, 3, 4, 5,6,7,8] }
+            ]
         });
 
     });

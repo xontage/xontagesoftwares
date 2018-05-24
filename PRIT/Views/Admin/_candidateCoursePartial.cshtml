@@ -89,7 +89,10 @@
     $(document).ready(function () {
 
         $('#exampleCandidateCourse').DataTable({
-            "pagingType": "full_numbers"
+            "pagingType": "full_numbers",
+            "columnDefs": [
+                { "orderable": false, "targets": [2, 3, 4, 5, 6, 7, 8,9] }
+            ]
         });
 
 

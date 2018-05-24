@@ -10,7 +10,7 @@
     <table style="width:100%" id="example" class="display" cellspacing="0">
         <thead>
             <tr>
-                <th>RegId</th>
+                
                 <th>Full Name</th>
                 <th>User Name</th>
                 <th>Contact No</th>
@@ -24,7 +24,7 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@item.Id </td>
+                    
                     <td>@item.FullName</td>
                     <td><strong>@item.UserName</strong></td>
                     <td>@item.ContactNo</td>
@@ -69,11 +69,12 @@
     $(document).ready(function () {
       
         $('#example').DataTable({
-            "pagingType": "full_numbers"
-        });     
+            "pagingType": "full_numbers",
+            "columnDefs": [
+                { "orderable": false, "targets": [2,3,4,5] }
+            ]
+        }); 
     });
-
-
 
     $('.btnUserDelete').on('click', function () {
         var id = $(this).data("regid");
@@ -137,8 +138,8 @@
         });
     })
 
-
-
-
+    
+ 
+    
 
 </script>

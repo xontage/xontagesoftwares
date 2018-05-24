@@ -10,7 +10,7 @@
     <table style="width:100%" id="exampleExpense" class="display" cellspacing="0">
         <thead>
             <tr>
-                <th>Id</th>
+                 
                 <th>Expense Type</th>
                 <th>Total Expense Amount</th>
                 <th>Current Amount Paid</th>
@@ -23,7 +23,7 @@
             @foreach (var item in Model)
             {
             <tr>
-                <td>@item.ID</td>
+                 
                 <td>@item.ExpenseTypeName </td>
                 <td>@item.TotalExpenseAmount </td>
                 <td>@item.Amount </td>
@@ -48,7 +48,10 @@
     $(document).ready(function () {
 
         $('#exampleExpense').DataTable({
-            "pagingType": "full_numbers"
+            "pagingType": "full_numbers",
+            "columnDefs": [
+                { "orderable": false, "targets": [0,1,2, 3, 4] }
+            ]
         });
 
     });
