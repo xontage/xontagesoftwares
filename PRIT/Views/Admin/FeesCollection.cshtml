@@ -12,11 +12,11 @@
         <div class="panel panel-primary">
             <div class="panel-heading">Course Name</div>
             <div class="panel-body">
-                <div class="form-group">                   
+                <div class="form-group">
                     <div class="cols-sm-12">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-repeat" aria-hidden="true"></i></span>
-                            @Html.DropDownList("CourseNameId", new SelectList(ViewBag.ddlCourseName as SelectList, "Value", "Text"), "--SELECT COURSE NAME--", new { @class = "form-control inputstl" })                         
+                            @Html.DropDownList("CourseNameId", new SelectList(ViewBag.ddlCourseName as SelectList, "Value", "Text"), "--SELECT COURSE NAME--", new { @class = "form-control inputstl" })
                         </div>
                     </div>
                 </div>
@@ -25,11 +25,11 @@
         <div class="panel panel-primary">
             <div class="panel-heading">Total Admissions of Candidates</div>
             <div class="panel-body">
-                <div class="form-group">                   
+                <div class="form-group">
                     <div class="cols-sm-12">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
-                            @Html.TextBox("adminssions",null, new { @class = "form-control inputstl", id = "adminssions",@readonly = "readonly"})
+                            @Html.TextBox("adminssions", null, new { @class = "form-control inputstl", id = "adminssions", @readonly = "readonly" })
                         </div>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
         <div class="panel panel-primary">
             <div class="panel-heading">Total Fees To Collect</div>
             <div class="panel-body">
-                <div class="form-group">                 
+                <div class="form-group">
                     <div class="cols-sm-12">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>

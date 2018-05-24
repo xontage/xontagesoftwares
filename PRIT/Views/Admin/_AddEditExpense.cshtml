@@ -32,8 +32,17 @@
     }
 
     .custom-width-modal {
-        width: 1038px;
+        width: 750px;
         margin: 0 auto;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+        float: left;
+        width: 38%;
+        margin-right: 51px !important;
+        margin-top: 10px !important;
+        margin-left: 22px !important;
     }
 
     .custom-width-gender {
@@ -64,7 +73,7 @@
                                     <label for="TotalExpenseAmount" class="cols-sm-2 control-label">Total Expense Amount</label>
                                     <div class="cols-sm-10">
                                         <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                            <span class="input-group-addon"><i class="fa fa-rupee" aria-hidden="true"></i></span>
 
                                             @Html.TextBoxFor(model => model.TotalExpenseAmount, new
                                             {
@@ -95,7 +104,7 @@
                                     <label for="Amount" class="cols-sm-2 control-label">Amount</label>
                                     <div class="cols-sm-10">
                                         <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                            <span class="input-group-addon"><i class="fa fa-money fa" aria-hidden="true"></i></span>
 
                                             @Html.TextBoxFor(model => model.Amount, new
                                             {
@@ -113,14 +122,14 @@
                                     <div class="cols-sm-10">
                                         <div class="input-group">
 
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
+                                            <span class="input-group-addon"><i class="fa fa-comments fa" aria-hidden="true"></i></span>
 
                                             @Html.TextAreaFor(model => model.Comment, new { @class = "form-control inputstl", id = "Comment", placeholder = "Enter Comment" })
 
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group" style="margin: 0 auto !important; text-align: center !important; width: 100% !important;">
+                                <div class="form-group" style="margin-right:15px !important; margin: 0 auto !important; text-align: center !important; width: 100% !important;">
                                     <input type="submit" value="Save Expense" class="btn btn-primary btn-block" style="display: inline-block;">
                                 </div>
                             </div>
