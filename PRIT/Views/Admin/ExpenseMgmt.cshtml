@@ -1,0 +1,86 @@
+﻿@model IEnumerable<PRIT.Entity.tbl_Expense>
+@{
+    /**/
+
+    ViewBag.Title = "ExpenseMgmt";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>ExpenseMgmt</h2>
+<head>
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+
+</head>
+
+<button id="expenseModel" style="margin-left:96px; margin-top: 35px;" type="button" class="btn btn-info btn-lg" data-toggle="modal" @*data-target="#myModal"*@>Add Expense</button>
+
+@*bind  popup to this div*@
+<div id="expensePopUp"></div>
+
+<div id="expenseData">
+    @{ Html.RenderPartial("_ExpensePartial", Model);}
+</div>
+
+
+<script>
+    $(function () {
+        $('#expenseModel').click(function () {
+           
+            $.ajax({
+                type: "GET",
+                url: '../Admin/AddEditExpense?ExpenseId=0',
+                success: function (status) {
+                    if (status != null) {
+                       
+                        $('#expensePopUp').html(status);
+                        $('#myExpenseModal').modal('show');
+                        $.ajax({
+                            type: "POST",
+                            url: "../Admin/GetLastExpense",
+                            //data: "{ 'email':'" + $('#CandidateEmailId').val() + "'}",
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (data) {
+                             
+                               $('#TotalExpenseAmount').val(data.TotalExpenseAmount);                        
+                                
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                sweetAlert("Oops...", "Error in GetLastExpense when add expense model click", "error");
+
+                            }
+                        });
+
+
+                    }
+                },
+                error: function (err, status) {
+                    sweetAlert("Oops...", data.message, "error");
+                }
+            });
+        });
+    });
+
+    function fnOnAddEditExpenseSuccess(data) {
+        debugger;
+        $('#myExpenseModal').find("[data-dismiss=modal]").trigger({ type: "click" });
+        if (data.success == true) {
+            swal('Saved!', data.message, 'success')
+        }
+        else if (data.success == false) {
+            sweetAlert("Oops...", data.message, "error");
+        }
+        if (data.result != "" || data.result != null) {
+            $('#expenseData').html(data.result);
+        }
+
+
+    }
+
+
+</script>
+

@@ -8,32 +8,38 @@ using System.Threading.Tasks;
 
 namespace PRIT.BAL
 {
-    public class CourseFeesBL
+    public class ExpenseBL
     {
-
-        CourseFeesDL courseFeesDL = new CourseFeesDL();
+        ExpenseDL expenseDL = new ExpenseDL();
         PRITEntities db = new PRITEntities();
-
-        public void AddEditCourseFees(tbl_CourseFees obj, string userName)
+        public void SaveExpense(tbl_Expense obj, string userName)
         {
-
             try
             {
-                if (obj.Id > 0)
-                {
+                if (obj.ID > 0) {
                     obj.ModifiedBy = db.tbl_Registration.Where(x => x.Email == userName).FirstOrDefault().UserName;
                     obj.ModifiedDate = DateTime.Now;
+
                 }
                 else
                 {
-                    var counter = db.tbl_CourseFees.Where(m => m.CandidateEmailId == obj.CandidateEmailId).Count();
-                    counter++;
-                    obj.InstallmentNo = counter;
-                    obj.PaidOnDate = DateTime.Now.ToString();
                     obj.CreatedBy = db.tbl_Registration.Where(x => x.Email == userName).FirstOrDefault().UserName;
                     obj.CreatedDate = DateTime.Now;
                 }
-                courseFeesDL.AddEditCourseFees(obj);
+              
+                expenseDL.SaveExpense(obj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }   
+        }
+
+        public void DeleteExpense(int expenseId)
+        {
+            try
+            {
+                expenseDL.DeleteExpense(expenseId);
             }
             catch (Exception ex)
             {

@@ -1,0 +1,71 @@
+﻿@model IEnumerable<PRIT.Entity.tbl_Expense>
+@{
+    Layout = null;
+}
+
+<div class="container">
+    <br />
+    <br />
+
+    <table style="width:100%" id="exampleExpense" class="display" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Expense Type</th>
+                <th>Total Expense Amount</th>
+                <th>Current Amount Paid</th>
+                <th>Comment</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>@item.ID</td>
+                <td>@item.ExpenseTypeName </td>
+                <td>@item.TotalExpenseAmount </td>
+                <td>@item.Amount </td>
+                <td>@item.Comment </td>
+                <td style="width:15%;">
+
+
+                    <button title="Edit" type="button" value="Update" class="btnUpdateExpense btn btn-success" data-expenseid=@item.ID>
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </button>
+
+                </td>
+            </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $('#exampleExpense').DataTable({
+            "pagingType": "full_numbers"
+        });
+
+    });
+    $(".btnUpdateExpense").click(function () {
+        debugger
+        var id = $(this).data("expenseid");
+        $.ajax({
+            type: "GET",
+            url: "../Admin/AddEditExpense?expenseid=" + id,
+            success: function (result) {
+                $('#expensePopUp').html(result);
+                $('#myExpenseModal').modal('show');
+            },
+            error: function (xhr, status, error) {
+                sweetAlert("Oops...", "Something went wrong!", "error");
+            }
+        });
+    });
+
+</script>

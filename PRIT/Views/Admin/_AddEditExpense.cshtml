@@ -1,0 +1,243 @@
+﻿@model PRIT.Entity.tbl_Expense
+
+@{
+    Layout = null;
+}
+
+
+<style>
+    .form-group {
+        margin-bottom: 15px;
+        margin-bottom: 15px;
+        float: left;
+        width: 26%;
+        margin-right: 63px !important;
+        margin-top: 10px !important;
+        margin-left: 10px !important;
+    }
+
+    .input-group {
+        width: 465px;
+    }
+
+    .error-msg {
+        position: absolute;
+        top: 37px;
+        left: 0;
+    }
+
+    .genderspace {
+        margin-left: 15px !important;
+        margin-top: 7px !important;
+    }
+
+    .custom-width-modal {
+        width: 1038px;
+        margin: 0 auto;
+    }
+
+    .custom-width-gender {
+        width: 318px !important;
+    }
+</style>
+
+<link href="~/css/jquery-ui.min.css" rel="stylesheet" />
+
+
+<div class="modal fade" id="myExpenseModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content custom-width-modal">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">@(Model.ID == 0 ? "Expense Management" : "Update Expense")</h4>
+            </div>
+            <div class="modal-body">
+                @using (Ajax.BeginForm("AddEditExpense", "Admin", new { area = "" }, new AjaxOptions { OnSuccess = "fnOnAddEditExpenseSuccess", HttpMethod = "POST" }, new { @class = "form-horizontal", @id = "frmResourceCategory" }))
+                {
+                    @Html.ValidationSummary(true)
+                    @Html.HiddenFor(r => r.ID)
+
+                    <div class="container">
+                        <div class="row main">
+                            <div class="main-login main-center">
+                                <div class="form-group">
+                                    <label for="TotalExpenseAmount" class="cols-sm-2 control-label">Total Expense Amount</label>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+
+                                            @Html.TextBoxFor(model => model.TotalExpenseAmount, new
+                                            {
+                                                @class = "form-control inputstl",
+                                                id = "TotalExpenseAmount",
+                                                placeholder = "Enter Total Expense Amount"
+                                            })
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="ExpenseType" class="cols-sm-2 control-label">Expense Type*</label>
+                                    <div class="cols-sm-10">
+
+                                        <div class="input-group">
+
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-repeat" aria-hidden="true"></i></span>
+                                            @*@Html.DropDownListFor(model => model.EmployeeType, ViewBag.ddlEmployeeType as SelectList, new { @class = "form-control" })*@
+                                            @Html.DropDownListFor(model => model.ExpenseType, new SelectList(ViewBag.ddlExpenseType as SelectList, "Value", "Text"), "--SELECT EXPENSE TYPE--", new { @class = "form-control inputstl" })
+                                            @Html.ValidationMessageFor(model => model.ExpenseType, "", new { @class = "text-danger error-msg" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Amount" class="cols-sm-2 control-label">Amount</label>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+
+                                            @Html.TextBoxFor(model => model.Amount, new
+                                            {
+                                                @class = "form-control inputstl",
+                                                id = "Amount",
+                                                placeholder = "Enter Amount"
+                                            })
+                                            @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger error-msg" })
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="Comment" class="cols-sm-2 control-label">Comment</label>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
+
+                                            @Html.TextAreaFor(model => model.Comment, new { @class = "form-control inputstl", id = "Comment", placeholder = "Enter Comment" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin: 0 auto !important; text-align: center !important; width: 100% !important;">
+                                    <input type="submit" value="Save Expense" class="btn btn-primary btn-block" style="display: inline-block;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<script type="text/javascript">
+
+
+
+    
+    $(function () {
+     
+        $('#TotalExpenseAmount').attr('readonly', true);
+        debugger
+        $("#Amount").keydown(function (e) {
+
+            // Allow: backspace, delete, tab, escape, enter and .
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                // Allow: Ctrl+A, Command+A
+                (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+                // Allow: home, end, left, right, down, up
+                (e.keyCode >= 35 && e.keyCode <= 40)) {
+                // let it happen, don't do anything
+                return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
+
+        $("#Amount").on("keypress", function (evt) {
+            var keycode = evt.charCode || evt.keyCode;
+            if (keycode == 46) {
+                return false;
+            }
+        });
+    
+        $("#Amount").blur(function () {
+
+            debugger;
+            if ($('#Amount').val() != "") {
+
+                if ($('.modal-title').text() == "Update Expense") {
+                  var id=  $('#ID').val()
+                    $.ajax({
+                        type: "POST",
+                        url: "../Admin/GetLastExpenseById?id=" + id,
+                        //data: "{ 'email':'" + $('#CandidateEmailId').val() + "'}",
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+
+                            debugger;
+                            $('#TotalExpenseAmount').val(parseInt($('#TotalExpenseAmount').val()) - data.Amount);
+
+                            $('#TotalExpenseAmount').val(parseInt($('#TotalExpenseAmount').val()) + parseInt($('#Amount').val()));
+
+                            debugger;
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            sweetAlert("Oops...", "Error in GetLastExpense when add expense textbox blur event", "error");
+
+                        }
+                    });
+
+                   
+
+                }
+                else {
+
+                    $.ajax({
+                        type: "POST",
+                        url: "../Admin/GetLastExpense",
+                        //data: "{ 'email':'" + $('#CandidateEmailId').val() + "'}",
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+
+                            debugger;
+                            $('#TotalExpenseAmount').val(data.TotalExpenseAmount);
+
+                            $('#TotalExpenseAmount').val(parseInt($('#TotalExpenseAmount').val()) + parseInt($('#Amount').val()));
+
+                            debugger;
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            sweetAlert("Oops...", "Error in GetLastExpense when add expense textbox blur event", "error");
+
+                        }
+                    });
+
+
+
+                }//End if($('#paidFees').val() != "")  condition
+
+            }
+
+
+
+        });
+    });
+
+
+
+  
+
+
+</script>
