@@ -489,6 +489,32 @@
     function response(obj) {
         console.log(obj);
     }
+
+    $("#email").blur(function () {
+        debugger;
+
+        if ($('#email').val() != "") {
+
+            if ($('.modal-title').text() != "Update Employee") {
+
+
+                $.get("../Admin/CheckEmailAlreadyExistsInEmployee",
+                    { emailId: $('#email').val() },
+                    function (data) {
+                        debugger;
+                        if (data != "Valid") {
+                            sweetAlert("Oops...", data, "error");
+                            $('#email').val('')
+                        }
+                    });
+
+
+            }
+
+        }//End if($('#email').val() != "")  condition    
+
+    });
+
     $("#pincode").blur(function () {
         var zip = document.forms[0].pincode.value;
         debugger

@@ -598,6 +598,19 @@ namespace PRIT.Controllers
             return PartialView("_EmployeePartial", lstN);
         }
 
+        
+         public string CheckEmailAlreadyExistsInEmployee(string emailId)
+        {
+
+            tbl_Employee user = null;
+            user = db.tbl_Employee.Where(m => m.EmailId == emailId && m.IsDeleted != true).FirstOrDefault();
+            if (user != null)
+            {
+                return "The Employee Email Id is Already Registered, Please enter another Email Id !!!";
+            }
+
+            return "Valid";
+        }
 
         #endregion..End of ....Code related to Employee management functionality
 
@@ -802,6 +815,21 @@ namespace PRIT.Controllers
             lstN = db.tbl_Registration.OrderByDescending(person => person.Id).ToList();
             return PartialView("_RegistrationPartial", lstN);
         }
+        public string CheckEmailAlreadyExistsInRegistration(string emailId)
+        {
+
+            tbl_Registration user = null;
+            user = db.tbl_Registration.Where(m => m.Email == emailId && m.IsActive == true).FirstOrDefault();
+            if (user != null)
+            {
+                return "The User Email Id is Already Registered, Please enter another Email Id !!!";
+            }
+
+            return "Valid";
+        }
+        
+
+
 
         #endregion...End of ....Code related to User Registration functionality
 
@@ -1445,10 +1473,10 @@ namespace PRIT.Controllers
         {
             
                 tbl_CandidateWithCourseDetails user = null;
-                user = db.tbl_CandidateWithCourseDetails.Where(m => m.EmailId == emailId && m.IsDeleted == false).FirstOrDefault();
+                user = db.tbl_CandidateWithCourseDetails.Where(m => m.EmailId == emailId && m.IsDeleted != true).FirstOrDefault();
                 if (user != null)
                 {
-                    return "The Candidate Email Id is Already Registered, Please enter another EMail Id !!!";
+                    return "The Candidate Email Id is Already Registered, Please enter another Email Id !!!";
                 }
 
             return "Valid";

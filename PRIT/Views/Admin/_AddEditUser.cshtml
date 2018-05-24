@@ -225,6 +225,29 @@
 
     });
 
+    $("#email").blur(function () {
+        debugger;
+
+        if ($('#email').val() != "") {
+
+            if ($('.modal-title').text() != "Update Profile") {
+
+                $.get("../Admin/CheckEmailAlreadyExistsInRegistration",
+                    { emailId: $('#email').val() },
+                    function (data) {
+                        debugger;
+                        if (data != "Valid") {
+                            sweetAlert("Oops...", data, "error");
+                            $('#email').val('')
+                        }
+                    });
+
+            }
+
+        }//End if($('#email').val() != "")  condition
+        
+    });
+
     function myFunction() {
 
         var x = document.getElementById("password");
