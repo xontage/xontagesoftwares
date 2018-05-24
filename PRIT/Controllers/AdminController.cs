@@ -38,6 +38,7 @@ namespace PRIT.Controllers
         EmploymentBL employmentBL = new EmploymentBL();
         CandidateCourseBL candidateCourseBL = new CandidateCourseBL();
         CourseFeesBL courseFeesBL = new CourseFeesBL();
+        ExpenseBL expenseBL = new ExpenseBL();
 
         // GET: Admin
 
@@ -1366,9 +1367,9 @@ namespace PRIT.Controllers
 
         public ActionResult FeesMgmt()
         {
-           // List<tbl_CourseFees> lst = db.tbl_CourseFees.OrderByDescending(c => c.Id).ToList();
+           List<tbl_CourseFees> lst = db.tbl_CourseFees.OrderByDescending(c => c.Id).ToList();
 
-            List<tbl_CourseFees> lst = db.GetDistinctRecordOfCourseFees().OrderByDescending(c => c.Id).ToList();
+           // List<tbl_CourseFees> lst = db.GetDistinctRecordOfCourseFees().OrderByDescending(c => c.Id).ToList();
                           
 
             var CourseNameList = GetCourseName();            
@@ -1430,8 +1431,8 @@ namespace PRIT.Controllers
             {
                 courseFeesBL.AddEditCourseFees(model, User.Identity.Name);
                 
-                //lstN = db.tbl_CourseFees.OrderByDescending(person => person.Id).ToList();
-                 lstN = db.GetDistinctRecordOfCourseFees().OrderByDescending(c => c.Id).ToList();
+                lstN = db.tbl_CourseFees.OrderByDescending(person => person.Id).ToList();
+                 //lstN = db.GetDistinctRecordOfCourseFees().OrderByDescending(c => c.Id).ToList();
 
                 var CourseNameList = GetCourseName();
                 var DurationList = GetDuration();
@@ -2161,6 +2162,7 @@ namespace PRIT.Controllers
         }
         #endregion .End Of ..Fees Management functionality..
 
+        
         //Generic Method for Converting any Razor View into String
         public string RenderRazorViewToString(string viewName, object model)
         {
@@ -2234,7 +2236,135 @@ namespace PRIT.Controllers
         }
         #endregion
 
+        #region ..Expense Management
+        public ActionResult ExpenseMgmt()
+        {
+            List<tbl_Expense> lst = db.tbl_Expense.OrderByDescending(c => c.ID).ToList();
+            var ExpenseTypeList = GetExpenseType();            
+            foreach (var item in lst)
+            {
+                var ExpenseTypeId = db.tbl_Expense.Where(m => m.ID == item.ID).FirstOrDefault().ExpenseType;                
+                item.ExpenseTypeName = ExpenseTypeList.Where(p => p.Value == ExpenseTypeId.ToString()).First().Text;
+                //if (!string.IsNullOrEmpty(item.ExpenseTypeName.ToString()))
+                //    item.ExpenseTypeName = ExpenseTypeList.Where(p => p.Value == ExpenseTypeId.ToString()).First().Text;
+                //else
+                //    item.ExpenseTypeName = "NA";                            
+            }
+               return View(lst);
+        }
+        [HttpGet]
+        public ActionResult AddEditExpense(int? expenseId)
+        {
+            tbl_Expense model = new tbl_Expense();
+            if (expenseId > 0)
+            {
+                model = db.tbl_Expense.Where(x => x.ID == expenseId).FirstOrDefault();
+                // model.Password = RegistrationBL.DecryptPassword(model.Password, model.UserSalt);
+            }
 
+            ViewBag.ddlExpenseType = new SelectList(GetExpenseType(), "Value", "Text");
+
+
+            return PartialView("~/Views/Admin/_AddEditExpense.cshtml", model);
+
+        }
+
+        [HttpPost]
+        public ActionResult AddEditExpense(tbl_Expense model)
+        {
+            List<tbl_Expense> lstN = new List<tbl_Expense>();
+
+            if (ModelState.IsValid)
+            {
+                expenseBL.SaveExpense(model, User.Identity.Name);
+                lstN = db.tbl_Expense.OrderByDescending(expense => expense.ID).ToList();
+
+                var ExpenseTypeList = GetExpenseType();
+                foreach (var item in lstN)
+                {
+                    var ExpenseTypeId = db.tbl_Expense.Where(m => m.ID == item.ID).FirstOrDefault().ExpenseType;
+                    item.ExpenseTypeName = ExpenseTypeList.Where(p => p.Value == ExpenseTypeId.ToString()).First().Text;
+                    //if (!string.IsNullOrEmpty(item.ExpenseTypeName.ToString()))
+                    //    item.ExpenseTypeName = ExpenseTypeList.Where(p => p.Value == ExpenseTypeId.ToString()).First().Text;
+                    //else
+                    //    item.ExpenseTypeName = "NA";                            
+                }
+
+                var aa = RenderRazorViewToString("_ExpensePartial", lstN);
+
+                return new JsonResult()
+                {
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                    Data = new { message = model.ID == 0 ? "Expense has been added successfully" : "Expense has been updated successfully", success = true, result = aa }
+                };
+            }
+
+            return new JsonResult()
+            {
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                Data = new { message = "Something went wrong!!", success = false }
+            };
+         
+        }
+
+        public JsonResult GetLastExpense()
+        {
+            tbl_Expense txtItems = new tbl_Expense();
+            txtItems = db.tbl_Expense.OrderByDescending(exp => exp.ID).ToList().FirstOrDefault();
+            if (txtItems == null)
+                txtItems = new tbl_Expense();
+            return Json(txtItems, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetLastExpenseById(int id)
+        {
+            tbl_Expense txtItems = new tbl_Expense();
+            txtItems = db.tbl_Expense.Where(m=>m.ID==id).OrderByDescending(exp => exp.ID).ToList().FirstOrDefault();
+            if (txtItems == null)
+                txtItems = new tbl_Expense();
+            return Json(txtItems, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpPost]
+        public ActionResult DeleteExpense(int expenseId)
+        {
+            List<tbl_Expense> lstN = new List<tbl_Expense>();
+            expenseBL.DeleteExpense(expenseId);
+            lstN = db.tbl_Expense.OrderByDescending(person => person.ID).ToList();
+            //return PartialView("_ViewContactsPartial");
+            return Json(new { Status = "success", Message = "Deleted Successfully!!" }, JsonRequestBehavior.AllowGet);
+
+        }
+        [NonAction]
+        public List<DropdownModelGeneric> GetExpenseType()
+        {
+            try
+            {
+                List<DropdownModelGeneric> lstDropdownModelGeneric;
+                lstDropdownModelGeneric = new List<DropdownModelGeneric>  {
+                        new DropdownModelGeneric(){Text="Travelling",Value="1"},
+                         new DropdownModelGeneric(){Text="Stationary",Value="2"},
+                        new DropdownModelGeneric(){Text="Lunch/Dinner/Breakfast",Value="3"},
+                         new DropdownModelGeneric(){Text="Hardware",Value="4"},
+                        new DropdownModelGeneric(){Text="Party/Movies",Value="5"},
+                        new DropdownModelGeneric(){Text="Tea/Colddrinks",Value="6"},
+                         new DropdownModelGeneric(){Text="LightBill",Value="7"},
+                         new DropdownModelGeneric(){Text="WaterBill",Value="8"},
+                         new DropdownModelGeneric(){Text="InternetBill",Value="9"},
+                         new DropdownModelGeneric(){Text="TelephoneBill",Value="10"},
+                          new DropdownModelGeneric(){Text="Rent",Value="11"},
+                        new DropdownModelGeneric(){Text="Other",Value="12"}
+
+                    };
+                return lstDropdownModelGeneric;
+            }
+            catch (Exception ex)
+            {
+                return new List<DropdownModelGeneric>();
+            }
+        }
+        #endregion
     }
 
     internal class PdfContent:ActionResult
