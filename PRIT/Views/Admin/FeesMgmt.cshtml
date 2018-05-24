@@ -58,9 +58,30 @@
                 url: '../Admin/AddEditCourseFees?CourseFeesId=0',
                 success: function (status) {
                     if (status != null) {
-                        
                         $('#courseFeesPopUp').html(status);
-                        $('#courseFeesModal').modal('show');                       
+                        $('#courseFeesModal').modal('show');
+
+                        //modal.$el.on('shown', function () {
+                        //    $('#CandidateEmailId:text:visible:first', this).focus();
+                        //}); 
+
+                        $('#courseFeesModal').on('shown.bs.modal', function () {
+                            $('#CandidateEmailId').focus();
+                            setTimeout(function () {
+                                $('#CandidateEmailId').css("borderColor", "red")
+                            }, 500)
+                            setTimeout(function () {
+                                $('#CandidateEmailId').css("borderColor", "#99CCFF")
+                            },5000)
+                        })
+
+                        //$(document).on('focus', "CandidateEmailId", function () {
+                        //    $('#CandidateEmailId').css("borderColor", "red").fadeToggle(500);
+                        //})
+                        //$("#CandidateEmailId").focus(function () {
+                        //    $('#CandidateEmailId').css("borderColor", "red").fadeToggle(500);
+                        //    //$('#CandidateEmailId').css("borderColor", "#99CCFF").fadeIn(500);
+                        //});
                     }
                 },
                 error: function (err, status) {

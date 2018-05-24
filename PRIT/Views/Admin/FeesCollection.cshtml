@@ -3,92 +3,123 @@
     ViewBag.Title = "FeesCollection";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
+<style>
+    .box-layout {
+        border: 1px solid #428bca;
+        margin-bottom: 29px !important;
+    }
+    .panel-body-bg {
+        background:#e4edff
+    }
+    .fees-collect {
+        border-bottom: 1px solid #05c793;
+        padding-bottom: 20px;
+        background: #05c793;
+        margin-top: 0;
+        padding-top: 20px;
+        text-align: center;
+        color: #fff;
+        font-size: 23px;
+        font-family: cursive;
+    }
+    .fees-wrapper {
+        border: 1px solid #05c793;
+        margin-top: 50px;
+    }
+</style>
 
 <div class="container">
-    <h2>Fees Collection</h2>
-    @*<p>The panel-group class clears the bottom-margin. Try to remove the class and see what happens.</p>*@
-    <div class="panel-group">
-        <div class="panel panel-primary">
-            <div class="panel-heading">Course Name</div>
-            <div class="panel-body">
-                <div class="form-group">
-                    <div class="cols-sm-12">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-repeat" aria-hidden="true"></i></span>
-                            @Html.DropDownList("CourseNameId", new SelectList(ViewBag.ddlCourseName as SelectList, "Value", "Text"), "--SELECT COURSE NAME--", new { @class = "form-control inputstl" })
+    <div class="fees-wrapper">
+        <h2 class="fees-collect">Fees Collection</h2>
+        @*<p>The panel-group class clears the bottom-margin. Try to remove the class and see what happens.</p>*@
+        <div class="row" style="padding:50px;">
+            <div class="panel-group" style="width:45%;float:left;">
+                <div class="panel panel-primary box-layout">
+                    <div class="panel-heading">Course Name</div>
+                    <div class="panel-body panel-body-bg">
+                        <div class="form-group">
+                            <div class="cols-sm-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-repeat" aria-hidden="true"></i></span>
+                                    @Html.DropDownList("CourseNameId", new SelectList(ViewBag.ddlCourseName as SelectList, "Value", "Text"), "--SELECT COURSE NAME--", new { @class = "form-control inputstl" })
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="panel panel-primary">
-            <div class="panel-heading">Total Admissions of Candidates</div>
-            <div class="panel-body">
-                <div class="form-group">
-                    <div class="cols-sm-12">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
-                            @Html.TextBox("adminssions", null, new { @class = "form-control inputstl", id = "adminssions", @readonly = "readonly" })
+                <div class="panel panel-primary box-layout">
+                    <div class="panel-heading">Total Admissions of Candidates</div>
+                    <div class="panel-body panel-body-bg">
+                        <div class="form-group">
+                            <div class="cols-sm-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
+                                    @Html.TextBox("adminssions", null, new { @class = "form-control inputstl", id = "adminssions", @readonly = "readonly" })
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="panel panel-primary">
-            <div class="panel-heading">Total Fees To Collect</div>
-            <div class="panel-body">
-                <div class="form-group">
-                    <div class="cols-sm-12">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
-                            @Html.TextBox("totalFeesToCollect", null, new { @class = "form-control inputstl", id = "totalFeesToCollect", @readonly = "readonly" })
+                <div class="panel panel-primary box-layout">
+                    <div class="panel-heading">Total Fees To Collect</div>
+                    <div class="panel-body panel-body-bg">
+                        <div class="form-group">
+                            <div class="cols-sm-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
+                                    @Html.TextBox("totalFeesToCollect", null, new { @class = "form-control inputstl", id = "totalFeesToCollect", @readonly = "readonly" })
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="panel panel-primary">
-            <div class="panel-heading">Total Paid Fees</div>
-            <div class="panel-body">
-                <div class="form-group">
-                    <div class="cols-sm-12">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
-                            @Html.TextBox("totalPaidFees", null, new { @class = "form-control inputstl", id = "totalPaidFees", @readonly = "readonly" })
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-primary">
-            <div class="panel-heading">Remaining Fees To Collect</div>
-            <div class="panel-body">
-                <div class="form-group">
-                    <div class="cols-sm-12">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
-                            @Html.TextBox("remainingFeesToCollect", null, new { @class = "form-control inputstl", id = "remainingFeesToCollect", @readonly = "readonly" })
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-primary">
-            <div class="panel-heading">Total Profit</div>
-            <div class="panel-body">
-                <div class="form-group">
-                    <div class="cols-sm-12">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
-                            @Html.TextBox("remainingFeesToCollect", null, new { @class = "form-control inputstl", id = "totalProfit", @readonly = "readonly" })
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
+
+            </div>
+            <div class="panel-group" style="width:45%;float:right;">
+                <div class="panel panel-primary box-layout">
+                    <div class="panel-heading">Total Paid Fees</div>
+                    <div class="panel-body panel-body-bg">
+                        <div class="form-group">
+                            <div class="cols-sm-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
+                                    @Html.TextBox("totalPaidFees", null, new { @class = "form-control inputstl", id = "totalPaidFees", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-primary box-layout">
+                    <div class="panel-heading">Remaining Fees To Collect</div>
+                    <div class="panel-body panel-body-bg">
+                        <div class="form-group">
+                            <div class="cols-sm-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
+                                    @Html.TextBox("remainingFeesToCollect", null, new { @class = "form-control inputstl", id = "remainingFeesToCollect", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-primary box-layout">
+                    <div class="panel-heading">Total Profit</div>
+                    <div class="panel-body panel-body-bg">
+                        <div class="form-group">
+                            <div class="cols-sm-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-question-sign" aria-hidden="true"></i></span>
+                                    @Html.TextBox("remainingFeesToCollect", null, new { @class = "form-control inputstl", id = "totalProfit", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
 </div>
 
 
