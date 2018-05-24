@@ -1521,8 +1521,30 @@ namespace PRIT.Controllers
         public ActionResult FeesMgmt()
         {
             //  List<tbl_CourseFees> lst = db.tbl_CourseFees.OrderByDescending(c => c.Id).ToList();
+            List<tbl_CourseFees> lst = new List<tbl_CourseFees>();
+            
+            var lstModel = db.sp_getDistingRecordsOfEmailId().OrderByDescending(c => c.Id).ToList();
+            foreach (var item in lstModel)
+            {
+                tbl_CourseFees obj = new tbl_CourseFees();
+                obj.CandidateEmailId = item.CandidateEmailId;
+                obj.CandidateMobileNo = item.CandidateMobileNo;
+                obj.CourseNameId = item.CourseNameId;
+                obj.CreatedBy = item.CreatedBy;
+                obj.CreatedDate = item.CreatedDate;
+                obj.Id = item.Id;
+                obj.InstallmentNo = item.InstallmentNo;
+                obj.ModifiedBy = item.ModifiedBy;
+                obj.ModifiedDate = item.ModifiedDate;
+                obj.PaidFees = item.PaidFees;
+                obj.PaidOnDate = item.PaidOnDate;
+                obj.RemainingFees = item.RemainingFees;
+                obj.Remark = item.Remark;
+                obj.TotalFees = item.TotalFees;
+                obj.TotalPaidFees = item.TotalPaidFees;
 
-            var lst = db.GetDistingRecordsOfEmailId().OrderByDescending(c => c.Id).ToList();
+                lst.Add(obj);
+            }
 
             // List<tbl_CourseFees> lstMap = new List<tbl_CourseFees>();
             //tbl_CourseFees oo = new tbl_CourseFees();
@@ -1583,14 +1605,36 @@ namespace PRIT.Controllers
         [HttpPost]
         public ActionResult AddEditCourseFees(tbl_CourseFees model)
         {
-            List<tbl_CourseFees> lstN = new List<tbl_CourseFees>();
+            List<tbl_CourseFees> lstN = new List<tbl_CourseFees>();                       
 
             if (ModelState.IsValid)
             {
                 courseFeesBL.AddEditCourseFees(model, User.Identity.Name);
 
                 //lstN = db.tbl_CourseFees.OrderByDescending(person => person.Id).ToList();
-                lstN = db.GetDistingRecordsOfEmailId().OrderByDescending(c => c.Id).ToList();
+
+                var lstModel = db.sp_getDistingRecordsOfEmailId().OrderByDescending(c => c.Id).ToList();
+                foreach (var item in lstModel)
+                {
+                    tbl_CourseFees obj = new tbl_CourseFees();
+                    obj.CandidateEmailId = item.CandidateEmailId;
+                    obj.CandidateMobileNo = item.CandidateMobileNo;
+                    obj.CourseNameId = item.CourseNameId;
+                    obj.CreatedBy = item.CreatedBy;
+                    obj.CreatedDate = item.CreatedDate;
+                    obj.Id = item.Id;
+                    obj.InstallmentNo = item.InstallmentNo;
+                    obj.ModifiedBy = item.ModifiedBy;
+                    obj.ModifiedDate = item.ModifiedDate;
+                    obj.PaidFees = item.PaidFees;
+                    obj.PaidOnDate = item.PaidOnDate;
+                    obj.RemainingFees = item.RemainingFees;
+                    obj.Remark = item.Remark;
+                    obj.TotalFees = item.TotalFees;
+                    obj.TotalPaidFees = item.TotalPaidFees;                    
+
+                    lstN.Add(obj);
+                }
 
                 var CourseNameList = GetCourseName();
                 var DurationList = GetDuration();
@@ -2350,7 +2394,7 @@ namespace PRIT.Controllers
 
 
             //B.Calculate Sum(Total) of DataTable Columns using LINQ
-            var lst = db.GetDistingRecordsOfEmailId().OrderByDescending(c => c.Id).ToList();
+            var lst = db.sp_getDistingRecordsOfEmailId().OrderByDescending(c => c.Id).ToList();
             //LINQ calculate sum of all rows
             if (courseNameId == 6)
             {
