@@ -12,6 +12,7 @@ namespace PRIT.BAL
     {
         
         ContactDL contactDL = new ContactDL();
+        //test merge pravin
         public void SaveContact(tbl_Contact obj)
         {
             try

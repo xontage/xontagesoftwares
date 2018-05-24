@@ -13,7 +13,7 @@ namespace PRIT.BAL
         CandidateCourseDL candidateCourseDL = new CandidateCourseDL();
         PRITEntities db = new PRITEntities();
 
-        
+        //test merge pravin
    
         public void AddEditCandidateCourse(tbl_CandidateWithCourseDetails obj, string userName)
         {

@@ -12,7 +12,7 @@ namespace PRIT.BAL
     {
         CollegeDL collegeDL = new CollegeDL();
         PRITEntities db = new PRITEntities();
-
+        //test merge pravin
         public void AddEditCollege(tbl_Colleges obj)
         {
             try
