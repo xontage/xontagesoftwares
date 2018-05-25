@@ -33,14 +33,17 @@
 <br />
 
 
-<button id="registerModel" style="margin-left:96px;" type="button" class="btn btn-info btn-lg" data-toggle="modal" @*data-target="#myModal"*@>New Registration</button>
 
 @*bind  popup to this div*@
 <div id="userRegistationPopUp"></div>
 
-    <div id="regData">
-        @{ Html.RenderPartial("_RegistrationPartial", Model); }
+<div id="regData container">
+    <div class="row">
+        <button id="registerModel" type="button" class="btn btn-info btn-lg" data-toggle="modal" @*data-target="#myModal"*@>New Registration</button>
     </div>
+
+    @{ Html.RenderPartial("_RegistrationPartial", Model); }
+</div>
 
 
 @*<div id="progress" class="modal">
